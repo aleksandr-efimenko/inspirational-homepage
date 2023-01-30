@@ -9,9 +9,13 @@ library.add(faChevronLeft, faChevronRight);
 function App() {
   return (
     <div className="App">
-      <FontAwesomeIcon className='slide-btn' size={'5x'} icon={['fas', 'chevron-left']} />
-      <FontAwesomeIcon className='slide-btn' size={'5x'} icon={['fas', 'chevron-right']} />
-    </div>
+      <div className='slide-btn-container-left'>
+        <FontAwesomeIcon className='slide-btn ' size={'5x'} icon={['fas', 'chevron-left']} />
+      </div>
+      <div className='slide-btn-container-right'>
+        <FontAwesomeIcon className='slide-btn ' size={'5x'} icon={['fas', 'chevron-right']} />
+      </div>
+    </div >
   );
 }
 
