@@ -5,7 +5,7 @@ export interface WeatherState {
 }
 
 const initialState: WeatherState = {
-    currentWeather: '-'
+    currentWeather: '15 C'
 }
 
 export const weatherSlice = createSlice({
@@ -13,7 +13,7 @@ export const weatherSlice = createSlice({
     initialState: initialState,
     reducers: {
         getWeather: () => {
-
+            
         }
     },
     extraReducers: {
