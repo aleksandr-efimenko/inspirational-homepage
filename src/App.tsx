@@ -3,23 +3,33 @@ import './App.css';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { getNextBg, getPreviousBg, selectBackground } from './features/background/backgroundSclice';
+
 library.add(faChevronLeft, faChevronRight);
 
 
 function App() {
-  const [bgUrl, setBgUrl] = useState('');
+  const dispatch = useAppDispatch();
+  const bgUrl = useAppSelector(selectBackground);
 
-  const appStyle = {
-    backgroundImage: bgUrl
+  const handlePrevBg = () => {
+    dispatch(getPreviousBg());
+  }
+
+  const handleNextBg = () => {
+    dispatch(getNextBg());
+    console.log(bgUrl);
+    // console.log('next bg');
   }
 
   return (
-    <div className="App" style={appStyle}>
+    <div className="App" style={{ backgroundImage: `url(${bgUrl})` }}>
       <div className='slide-btn-container-left'>
-        <FontAwesomeIcon className='slide-btn ' size={'5x'} icon={['fas', 'chevron-left']} />
+        <FontAwesomeIcon onClick={handlePrevBg} className='slide-btn ' size={'5x'} icon={['fas', 'chevron-left']} />
       </div>
       <div className='slide-btn-container-right'>
-        <FontAwesomeIcon className='slide-btn ' size={'5x'} icon={['fas', 'chevron-right']} />
+        <FontAwesomeIcon onClick={handleNextBg} className='slide-btn ' size={'5x'} icon={['fas', 'chevron-right']} />
       </div>
     </div >
   );
