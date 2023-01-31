@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './App.css';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -19,8 +18,6 @@ function App() {
 
   const handleNextBg = () => {
     dispatch(getNextBg());
-    console.log(bgUrl);
-    // console.log('next bg');
   }
 
   return (

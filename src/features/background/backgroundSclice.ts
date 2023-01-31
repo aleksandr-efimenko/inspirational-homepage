@@ -20,12 +20,12 @@ export const backgroundSclice = createSlice({
     initialState: initialState,
     reducers: {
         getNextBg: (state) => {
-            const newIndex = state.currentIndex + 1 == state.imageSources.length ? 0 : state.currentIndex + 1;
+            const newIndex = state.currentIndex + 1 === state.imageSources.length ? 0 : state.currentIndex + 1;
             state.currentImg = state.imageSources[newIndex];
             state.currentIndex = newIndex;
         },
         getPreviousBg: (state) => {
-            const newIndex = state.currentIndex == 0 ? state.imageSources.length - 1 : state.currentIndex - 1;
+            const newIndex = state.currentIndex === 0 ? state.imageSources.length - 1 : state.currentIndex - 1;
             state.currentImg = state.imageSources[newIndex];
             state.currentIndex = newIndex;
         }
