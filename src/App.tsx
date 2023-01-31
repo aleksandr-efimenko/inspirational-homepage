@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -7,8 +7,14 @@ library.add(faChevronLeft, faChevronRight);
 
 
 function App() {
+  const [bgUrl, setBgUrl] = useState('');
+
+  const appStyle = {
+    backgroundImage: bgUrl
+  }
+
   return (
-    <div className="App">
+    <div className="App" style={appStyle}>
       <div className='slide-btn-container-left'>
         <FontAwesomeIcon className='slide-btn ' size={'5x'} icon={['fas', 'chevron-left']} />
       </div>

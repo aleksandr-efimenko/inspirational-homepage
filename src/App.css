@@ -1,27 +1,36 @@
 .App {
-  background: center no-repeat url('../public/img/background-1.jpg');
+  background-image: url('../public/img/background-1.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover; 
   height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
 }
 
 .slide-btn {
+  margin: auto 0;
   opacity: 0.5;
   color: black;
   cursor: pointer;
+  filter: drop-shadow(1px 0 3px white) drop-shadow(-1px 0 3px white) drop-shadow(0 1px 3px white) drop-shadow(0 -1px 3px white);
 }
 .slide-btn:hover {
   opacity: 1;
-  filter: drop-shadow(0 0 3px white)
-
+  filter: drop-shadow(5px 0 3px white) drop-shadow(-5px 0 3px white) drop-shadow(0 1px 5px white) drop-shadow(0 -1px px white);
+  /* filter: drop-shadow(5px 0 3px white); */
 }
 
 .slide-btn-container-right{
   display: flex;
   justify-content: flex-end;
   margin-right: 15px;
+  grid-column: 12;
+  grid-row: 1;
 }
 .slide-btn-container-left {
   display: flex;
   justify-content: flex-start;
   margin-left: 15px;
+  grid-column: 1;
 }
