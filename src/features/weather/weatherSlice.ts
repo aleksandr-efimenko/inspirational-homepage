@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 export interface WeatherState {
     currentWeather: string;
@@ -21,7 +22,7 @@ export const weatherSlice = createSlice({
     }
 });
 
-export const selectWeather = (state: { weather: { currentWeather: any; }; }) => state.weather.currentWeather;
+export const selectWeather = (state: RootState) => state.weather.currentWeather;
 
 export const { getWeather } = weatherSlice.actions;
 

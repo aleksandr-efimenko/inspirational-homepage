@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import IMG1 from '../../images/background-1.jpg';
 import IMG2 from '../../images/background-2.jpg';
 import IMG3 from '../../images/background-3.jpg';
+import { RootState } from "../../app/store";
 
 export interface BackgroundState {
     imageSources: string[];
@@ -32,7 +33,7 @@ export const backgroundSclice = createSlice({
     }
 })
 
-export const selectBackground = (state: { background: { currentImg: string; }; })  => state.background.currentImg;
+export const selectBackground = (state: RootState)  => state.background.currentImg;
 
 export const { getNextBg, getPreviousBg } = backgroundSclice.actions;
 

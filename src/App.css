@@ -6,6 +6,7 @@
   height: 100vh;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   transition: background-image 0.5s;
 }
 
@@ -23,13 +24,15 @@
 }
 
 .slide-btn-container-right{
+  grid-row: 1 / 7;
   display: flex;
   justify-content: flex-end;
   margin-right: 15px;
   grid-column: 12;
-  grid-row: 1;
+
 }
 .slide-btn-container-left {
+  grid-row: 1 / 7;
   display: flex;
   justify-content: flex-start;
   margin-left: 15px;
@@ -43,4 +46,10 @@
   text-shadow: 0 0 3px rgb(0, 0, 0);
   font-size: 2rem;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.quote-container {
+  grid-row: 6 / 7;
+  grid-column: 2 / 11;
+  font-size: 15vw;
 }
