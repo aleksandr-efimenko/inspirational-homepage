@@ -55,9 +55,11 @@
 }
 
 .quote-container p {
+  display: inline;
   font-size: 1.5rem;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, .2);
+  border-radius: 3px;
   color: white;
   word-wrap: break-word;
   font-style: italic;
