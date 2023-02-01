@@ -8,15 +8,17 @@ export default function Quote() {
     const quote = useAppSelector(selectQuote);
 
     useEffect(() => {
-        console.log('use effect')
         dispatch(getRandomQuoteAsync());
     }, [dispatch])
 
     return (
         <div className='quote-container'>
-            <p>"{quote.quoteText}"</p>
+            {quote.quoteText ? <p>"</p> : ''}
+            <p>{quote.quoteText}</p>
+            {quote.quoteText ? <p>"</p> : ''}
             <br />
-            <p>-{quote.quoteAuthor}</p>
+            {quote.quoteText ? <p>-</p> : ''}
+            <p>{quote.quoteAuthor}</p>
         </div>
     )
 }

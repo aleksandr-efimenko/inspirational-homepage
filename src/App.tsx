@@ -6,9 +6,9 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { getNextBg, getPreviousBg, selectBackground } from './features/background/backgroundSclice';
 import Weather from './features/weather/Weather';
 import Quote from './features/quotes/Quote';
+import { getRandomQuoteAsync } from './features/quotes/quoteSlice';
 
 library.add(faChevronLeft, faChevronRight);
-
 
 function App() {
   const dispatch = useAppDispatch();
@@ -16,10 +16,12 @@ function App() {
 
   const handlePrevBg = () => {
     dispatch(getPreviousBg());
+    dispatch(getRandomQuoteAsync());
   }
 
   const handleNextBg = () => {
     dispatch(getNextBg());
+    dispatch(getRandomQuoteAsync());
   }
 
   return (
