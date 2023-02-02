@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchWeather } from "./weatherAPI";
-import { useSelector } from "react-redux";
 import { WeatherLocation } from "./Weather";
 
 export interface WeatherState {
@@ -27,11 +26,13 @@ export const getWeatherAsync = createAsyncThunk(
         const response = await fetchWeather(location.longitude, location.latitude);
         console.log(response);
         if (response.main.temp) 
+        {
             if (response.weather.length > 0) {
                 const description = response.weather[0].description;
                 return description + ' ' + response.main.temp;
             }
             return response.main.temp;
+        }
         return '--';
     }
 )
@@ -61,7 +62,6 @@ export const weatherSlice = createSlice({
 });
 
 export const selectWeather = (state: RootState) => state.weather.currentWeather;
-const selectLocation = (state: RootState) => state.weather.location;
 
 export const { setLocation } = weatherSlice.actions;
 
