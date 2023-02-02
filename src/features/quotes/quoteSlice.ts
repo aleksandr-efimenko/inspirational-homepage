@@ -40,19 +40,14 @@ export const quotesSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getRandomQuoteAsync.pending, (state) => {
-                console.log('loading quote')
                 state.status = 'loading';
             })
             .addCase(getRandomQuoteAsync.fulfilled, (state, action) => {
-                console.log('fulfilled')
-
                 state.status = 'idle';
                 state.quote.quoteText = action.payload.quote;
                 state.quote.quoteAuthor = action.payload.author;
             })
             .addCase(getRandomQuoteAsync.rejected, (state) => {
-
-                console.log('failed');
                 state.status = 'failed';
             })
     }

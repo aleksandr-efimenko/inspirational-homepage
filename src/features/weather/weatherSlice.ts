@@ -17,8 +17,9 @@ export const weatherSlice = createSlice({
             
         }
     },
-    extraReducers: {
-
+    extraReducers: (builder) => {
+        // builder
+            // .addCase()
     }
 });
 

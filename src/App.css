@@ -48,6 +48,26 @@
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
+.weather-widget button {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 2rem;
+  color: white;
+  background-color: rgba(0,0,0,0);
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.weather-widget button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.weather-widget button:active {
+  background-color: rgba(255,255,255, 1);
+  color: black;
+}
+
 .quote-container {
   grid-column: 2 / 12;
   grid-row: 10 / 12;
@@ -64,3 +84,4 @@
   word-wrap: break-word;
   font-style: italic;
 }
+

@@ -9,7 +9,7 @@ export const store = configureStore({
     counter: counterReducer,
     background: backgroundReducer,
     weather: weatherReducer,
-    quote: quoteReducer
+    quote: quoteReducer,
   },
 });
 

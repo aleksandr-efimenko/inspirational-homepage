@@ -8,7 +8,8 @@ export default function Quote() {
     const quote = useAppSelector(selectQuote);
 
     useEffect(() => {
-        dispatch(getRandomQuoteAsync());
+        //TODO: while developing
+        // dispatch(getRandomQuoteAsync());
     }, [dispatch])
 
     return (
