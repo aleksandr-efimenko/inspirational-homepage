@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAppSelector } from '../../app/hooks'
 import { getWeatherAsync, selectWeather, setLocation } from './weatherSlice'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 
 export type WeatherLocation = {
@@ -44,7 +44,7 @@ export default function Weather() {
             }))
             dispatch(getWeatherAsync(currentLocation))
         }
-    }, [currentLocation])
+    }, [currentLocation, dispatch])
 
 
     const geoButton = <button disabled={buttonDisabled} style={buttonStyle} onClick={getGeo}>{buttonText}</button>
