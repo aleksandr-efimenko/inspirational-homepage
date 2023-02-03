@@ -15,7 +15,8 @@ export type WeatherData = {
     temperature: number,
     icon: string,
     description: string,
-    unit: string
+    unit: string,
+    location?: string
 }
 
 export default function Weather() {

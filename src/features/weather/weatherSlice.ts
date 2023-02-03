@@ -30,7 +30,8 @@ export const getWeatherAsync = createAsyncThunk(
             temperature: Number(response.main.temp.toFixed(0)),
             icon: response.weather[0].icon,
             description: response.weather[0].description,
-            unit: '°C'
+            unit: '°C',
+            location: response.name
         }
         return weatherData;
     }
