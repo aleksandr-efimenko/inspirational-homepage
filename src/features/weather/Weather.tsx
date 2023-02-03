@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useAppSelector } from '../../app/hooks'
-import { getWeatherAsync, selectWeather, setLocation } from './weatherSlice'
+import React, { useEffect, useState } from 'react';
+import { useAppSelector } from '../../app/hooks';
+import { getWeatherAsync, selectWeather, setLocation } from './weatherSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import WeatherWidget from '../../components/weather/WeatherWidget';
+import './weather.css';
 
 export type WeatherLocation = {
     longitude: number,
@@ -24,8 +25,7 @@ export default function Weather() {
     const [buttonText, setButtonText] = useState('Get weather')
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [buttonStyle, setButtonStyle] = useState({})
-
-
+    
     const [currentLocation, setCurrentLocation] = useState<WeatherLocation>({ latitude: 0, longitude: 0 });
     const getGeo = () => {
         setButtonText('Loading...');
@@ -52,8 +52,6 @@ export default function Weather() {
 
     useEffect(() => {
         if (currentLocation.latitude !== 0) {
-            console.log(currentLocation.latitude)
-            console.log('get weather')
             dispatch(setLocation({
                 latitude: currentLocation.latitude,
                 longitude: currentLocation.longitude
@@ -62,9 +60,8 @@ export default function Weather() {
         }
     }, [currentLocation, dispatch])
 
-
-    const geoButton = <button disabled={buttonDisabled} style={buttonStyle} onClick={getGeo}>{buttonText}</button>
-    const weatherWidget = <WeatherWidget weatherData={currentWeather} />;
+    const geoButton = <button disabled={buttonDisabled} style={buttonStyle} onClick={getGeo}>{buttonText}</button>;
+    const weatherWidget = <WeatherWidget {...currentWeather}  />;
 
     return (
         <div className='weather-widget'>

@@ -23,14 +23,14 @@ export const getWeatherAsync = createAsyncThunk(
     'weather/fetchWeather',
     async (location: WeatherLocation) => {
         const response:WeatherDataFromAPI = await fetchWeather(location.longitude, location.latitude);
-        if (response.weather.length == 0 || !response.main)
+        if (response.weather.length === 0 || !response.main)
             return;
 
         const weatherData:WeatherData = {
-            temperature: response.main.temp,
+            temperature: Number(response.main.temp.toFixed(0)),
             icon: response.weather[0].icon,
             description: response.weather[0].description,
-            unit: ''
+            unit: '°C'
         }
         return weatherData;
     }

@@ -1,0 +1,52 @@
+.weather-widget {
+  position: absolute;
+  right: 15px;
+  color: white;
+  text-shadow: 0 0 3px rgb(0, 0, 0);
+  font-size: 2rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  max-width: 200px;
+}
+
+.temp{
+  display: flex;
+  padding: 0;
+  justify-content: flex-end;
+}
+
+.weather-widget img {
+  height: 100%;
+  margin: auto 0;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.weather-widget p {
+  margin: auto 0;
+}
+
+.temp-description {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.weather-widget button {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 2rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.weather-widget button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.weather-widget button:active {
+  background-color: rgba(255, 255, 255, 1);
+  color: black;
+}
