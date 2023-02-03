@@ -1,16 +1,17 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchWeather } from "./weatherAPI";
-import { WeatherLocation } from "./Weather";
+import { WeatherData, WeatherLocation } from "./Weather";
+import { WeatherDataFromAPI } from "./weatherDataFromAPI";
 
-export interface WeatherState {
-    currentWeather: string;
+export interface WeatherLoadingState {
+    currentWeather: WeatherData;
     location: WeatherLocation;
     status: 'idle' | 'loading' | 'failed';
 }
 
-const initialState: WeatherState = {
-    currentWeather: '-',
+const initialState: WeatherLoadingState = {
+    currentWeather: {} as WeatherData,
     location: {
         longitude: 0,
         latitude: 0
@@ -18,22 +19,20 @@ const initialState: WeatherState = {
     status: 'idle'
 }
 
-
-
 export const getWeatherAsync = createAsyncThunk(
     'weather/fetchWeather',
-    async (location: any) => {
-        const response = await fetchWeather(location.longitude, location.latitude);
-        const temperature = response.main.temp;
-        if (temperature) 
-        {
-            if (response.weather.length > 0) {
-                const description = response.weather[0].description;
-                return description + ' ' + Number(temperature).toFixed(0);
-            }
-            return Number(temperature).toFixed(0);
+    async (location: WeatherLocation) => {
+        const response:WeatherDataFromAPI = await fetchWeather(location.longitude, location.latitude);
+        if (response.weather.length == 0 || !response.main)
+            return;
+
+        const weatherData:WeatherData = {
+            temperature: response.main.temp,
+            icon: response.weather[0].icon,
+            description: response.weather[0].description,
+            unit: ''
         }
-        return '--';
+        return weatherData;
     }
 )
 
@@ -41,7 +40,7 @@ export const weatherSlice = createSlice({
     name: 'weather',
     initialState: initialState,
     reducers: {
-        setLocation: (state, action) => {
+        setLocation: (state, action:PayloadAction<WeatherLocation>) => {
             state.location.latitude = action.payload.latitude;
             state.location.longitude = action.payload.longitude;
         }
@@ -53,7 +52,8 @@ export const weatherSlice = createSlice({
             })
             .addCase(getWeatherAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
-                state.currentWeather = action.payload;
+                if (action.payload)
+                    state.currentWeather = action.payload;
             })
             .addCase(getWeatherAsync.rejected, (state) => {
                 state.status = 'failed';
