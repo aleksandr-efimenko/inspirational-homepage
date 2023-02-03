@@ -63,12 +63,23 @@ export default function Weather() {
     }, [currentLocation, dispatch])
 
     const geoButton = <button disabled={buttonDisabled} style={buttonStyle} onClick={getGeo}>{buttonText}</button>;
-    const weatherWidget = <WeatherWidget {...currentWeather}  />;
+    const renderWeatherWidget = () => {
+        switch (weatherLoadingStatus) {
+            case 'loading':
+                return <></>
+            case 'idle':
+                return <WeatherWidget {...currentWeather} />;
+            case 'failed':
+                return <p>Error loading weather</p>;
+            default:
+                return <></>;
+        }
+    }
 
     return (
         <div className='weather-widget'>
             {/* {loadingPosition === 'pending' ? geoButton : }  */}
-            {currentLocation.latitude === 0 ? geoButton : weatherWidget}
+            {currentLocation.latitude === 0 ? geoButton : renderWeatherWidget()}
 
         </div>
     )
