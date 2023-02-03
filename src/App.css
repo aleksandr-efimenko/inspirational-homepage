@@ -41,7 +41,7 @@
 
 .quote-container {
   grid-column: 2 / 12;
-  grid-row: 12 / 13;
+  grid-row: 11 / 13;
   overflow: scroll;
   margin-bottom: 15px;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import { getWeatherAsync, selectWeather, setLocation } from './weatherSlice';
+import { getWeatherAsync, selectWeather, selectWeatherLoadingStatus, setLocation } from './weatherSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import WeatherWidget from '../../components/weather/WeatherWidget';
@@ -22,6 +22,7 @@ export type WeatherData = {
 export default function Weather() {
     const dispatch = useDispatch<AppDispatch>();
     const currentWeather:WeatherData = useAppSelector(selectWeather);
+    const weatherLoadingStatus = useAppSelector(selectWeatherLoadingStatus);
 
     const [buttonText, setButtonText] = useState('Get weather')
     const [buttonDisabled, setButtonDisabled] = useState(false);

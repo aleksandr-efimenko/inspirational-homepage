@@ -63,6 +63,7 @@ export const weatherSlice = createSlice({
 });
 
 export const selectWeather = (state: RootState) => state.weather.currentWeather;
+export const selectWeatherLoadingStatus = (state: RootState) => state.weather.status;
 
 export const { setLocation } = weatherSlice.actions;
 
