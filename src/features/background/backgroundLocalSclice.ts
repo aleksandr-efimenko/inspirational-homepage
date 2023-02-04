@@ -4,20 +4,20 @@ import IMG2 from '../../images/background-2.jpg';
 import IMG3 from '../../images/background-3.jpg';
 import { RootState } from "../../app/store";
 
-export interface BackgroundState {
+export interface BackgroundLocalState {
     imageSources: string[];
     currentImg: string;
     currentIndex: number;
 }
 
-const initialState: BackgroundState = {
+const initialState: BackgroundLocalState = {
     imageSources: [IMG1, IMG2, IMG3],
     currentImg: IMG1,
     currentIndex: 0,
 }
 
-export const backgroundSclice = createSlice({
-    name: 'background',
+export const backgroundLocalSclice = createSlice({
+    name: 'backgroundLocal',
     initialState: initialState,
     reducers: {
         getNextBg: (state) => {
@@ -33,8 +33,8 @@ export const backgroundSclice = createSlice({
     }
 })
 
-export const selectBackground = (state: RootState)  => state.background.currentImg;
+export const selectBackgroundLocal = (state: RootState)  => state.backgroundLocal.currentImg;
 
-export const { getNextBg, getPreviousBg } = backgroundSclice.actions;
+export const { getNextBg, getPreviousBg } = backgroundLocalSclice.actions;
 
-export default backgroundSclice.reducer;
+export default backgroundLocalSclice.reducer;

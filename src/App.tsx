@@ -3,7 +3,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { getNextBg, getPreviousBg, selectBackground } from './features/background/backgroundSclice';
+import { getNextBg, getPreviousBg, selectBackgroundLocal } from './features/background/backgroundLocalSclice';
 import Weather from './features/weather/Weather';
 import Quote from './features/quotes/Quote';
 import { getRandomQuoteAsync } from './features/quotes/quoteSlice';
@@ -12,7 +12,7 @@ library.add(faChevronLeft, faChevronRight);
 
 function App() {
   const dispatch = useAppDispatch();
-  const bgUrl = useAppSelector(selectBackground);
+  const bgUrl = useAppSelector(selectBackgroundLocal);
 
   const handlePrevBg = () => {
     dispatch(getPreviousBg());
