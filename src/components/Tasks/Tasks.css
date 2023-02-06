@@ -1,0 +1,11 @@
+.task-form {
+    grid-row: 2 / 4;
+    grid-column: 2 / 12;
+    background-color: rgba(155, 155, 155, .5);
+}
+
+.task-list {
+    grid-row: 5 / 10;
+    grid-column: 2 / 12;
+    background-color: rgba(155, 155, 155, .5);
+}

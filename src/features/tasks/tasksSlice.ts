@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { uuid } from "uuidv4";
+import { RootState } from "../../app/store";
 
 export interface Task {
     text: string,
@@ -12,7 +13,11 @@ export interface TasksState {
 }
 
 const initialState: TasksState = {
-    tasksList: [],
+    tasksList: [ {
+        text: 'Do something',
+        id: '324234',
+        done: false
+    }],
 }
 
 export const tasksSlice = createSlice({
@@ -34,3 +39,9 @@ export const tasksSlice = createSlice({
         }
     }
 })
+
+export const { addTask, removeTask, setTaskDone } = tasksSlice.actions;
+
+export const selectTaskList = (state: RootState) => state.tasks.tasksList;
+
+export default tasksSlice.reducer;

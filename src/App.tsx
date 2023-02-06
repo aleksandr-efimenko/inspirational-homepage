@@ -10,6 +10,7 @@ import Quote from './features/quotes/Quote';
 import { getRandomQuoteAsync } from './features/quotes/quoteSlice';
 import { useEffect } from 'react';
 import TaskForm from './components/Tasks/TaskForm';
+import TaskList from './components/Tasks/TaskList';
 
 library.add(faChevronLeft, faChevronRight);
 
@@ -19,6 +20,7 @@ function App() {
   const bgUnsplashUrl = useAppSelector(selectBackgroundUnsplash);
   const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
   const bgNeedLoad = useAppSelector(selectBackgroundUnsplashNeedNewLoad);
+
 
 
   const handlePrevBg = () => {
@@ -47,6 +49,7 @@ function App() {
         <FontAwesomeIcon onClick={handlePrevBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
       </div>
       <TaskForm />
+      <TaskList />
       <div className='slide-btn-container-right'>
         <FontAwesomeIcon onClick={handleNextBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-right']} />
       </div>

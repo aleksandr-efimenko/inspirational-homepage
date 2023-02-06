@@ -1,7 +1,10 @@
 import React from 'react'
+import { Task } from '../../features/tasks/tasksSlice'
 
-export default function Task({}) {
+export default function TaskComponent({text, done}:Task) {
   return (
-    <div className='task'>Task</div>
+    <div className='task'>
+        <p>{text}</p>
+    </div>
   )
 }
