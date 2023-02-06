@@ -5,13 +5,11 @@ import { RootState } from "../../app/store";
 
 export interface backgroundUnsplashState {
     imageUrls: string[],
-    currentImageSource?: string,
     currentIndex: number,
     status: 'idle' | 'loading' | 'failed'
 }
 
 const initialState: backgroundUnsplashState = {
-    currentImageSource: undefined,
     imageUrls: [],
     currentIndex: 0,
     status: 'idle'
@@ -33,13 +31,11 @@ export const backgroundUnsplashSlice = createSlice({
     initialState: initialState,
     reducers: {
         getNextBgUnsplash: (state) => {
-            const newIndex = state.currentIndex + 1 === state.imageUrls.length ? 0 : state.currentIndex + 1;
-            state.currentImageSource = state.imageUrls[newIndex];
+            const newIndex = state.currentIndex + 1 >= state.imageUrls.length ? 0 : state.currentIndex + 1;
             state.currentIndex = newIndex;
         },
         getPreviousBgUnsplash: (state) => {
-            const newIndex = state.currentIndex === 0 ? state.imageUrls.length - 1 : state.currentIndex - 1;
-            state.currentImageSource = state.imageUrls[newIndex];
+            const newIndex = state.currentIndex <= 0 ? state.imageUrls.length - 1 : state.currentIndex - 1;
             state.currentIndex = newIndex;
         }
     },
@@ -53,7 +49,6 @@ export const backgroundUnsplashSlice = createSlice({
                     return;
                 state.status = 'idle';
                 state.imageUrls.push(...action.payload.map(el => el.links.download));
-                state.currentImageSource = state.imageUrls[0];
             })
             .addCase(getRandomImageAsync.rejected, (state) => {
                 state.status = 'failed';
@@ -63,7 +58,7 @@ export const backgroundUnsplashSlice = createSlice({
 
 export const { getPreviousBgUnsplash, getNextBgUnsplash } = backgroundUnsplashSlice.actions;
 
-export const selectBackgroundUnsplash = (state: RootState) => state.backgroundUnsplash.currentImageSource;
+export const selectBackgroundUnsplash = (state: RootState) => state.backgroundUnsplash.imageUrls[state.backgroundUnsplash.currentIndex];
 export const selectBackgroundUnsplashStatus = (state: RootState) => state.backgroundUnsplash.status;
 export const selectBackgroundUnsplashNeedNewLoad = (state: RootState) => state.backgroundUnsplash.currentIndex + 2 >= state.backgroundUnsplash.imageUrls.length;
 

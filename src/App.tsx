@@ -41,7 +41,7 @@ function App() {
 
 
   return (
-    <div className="App" style={{ backgroundImage: `url(${bgUnsplashUrl})` }}>
+    <div className="App" style={{ backgroundImage: `url(${bgUnsplashStatus === 'failed' ? bgLocalUrl : bgUnsplashUrl})` }}>
       <Weather />
       <div className='slide-btn-container-left'>
         <FontAwesomeIcon onClick={handlePrevBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />

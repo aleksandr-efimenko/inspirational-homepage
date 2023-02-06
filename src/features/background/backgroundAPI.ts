@@ -4,7 +4,7 @@ const root = 'https://api.unsplash.com';
 const endPoint = '/photos/random';
 
 export const fetchBackgroundUnsplash = async (count:number = 3) => {
-    console.log('Unsplash API call');
+    // console.log('Unsplash API call');
     const response = await fetch(`${root}${endPoint}?count=${count}&client_id=${accessKey}`);
     return response.json();
 }
