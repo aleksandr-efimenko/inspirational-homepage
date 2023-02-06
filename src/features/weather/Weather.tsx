@@ -3,7 +3,7 @@ import { useAppSelector } from '../../app/hooks';
 import { getWeatherAsync, selectWeather, selectWeatherLoadingStatus, setLocation } from './weatherSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
-import WeatherWidget from '../../components/weather/WeatherWidget';
+import WeatherWidget from '../../components/WeatherWidget';
 import './weather.css';
 
 export type WeatherLocation = {

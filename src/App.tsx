@@ -9,6 +9,7 @@ import Weather from './features/weather/Weather';
 import Quote from './features/quotes/Quote';
 import { getRandomQuoteAsync } from './features/quotes/quoteSlice';
 import { useEffect } from 'react';
+import TaskForm from './components/Tasks/TaskForm';
 
 library.add(faChevronLeft, faChevronRight);
 
@@ -35,10 +36,9 @@ function App() {
       dispatch(getRandomImageAsync());
   }
 
-  useEffect(() => {
-    dispatch(getRandomImageAsync());
-  }, [dispatch])
-
+  // useEffect(() => {
+  //   dispatch(getRandomImageAsync());
+  // }, [dispatch])
 
   return (
     <div className="App" style={{ backgroundImage: `url(${bgUnsplashStatus === 'failed' ? bgLocalUrl : bgUnsplashUrl})` }}>
@@ -46,6 +46,7 @@ function App() {
       <div className='slide-btn-container-left'>
         <FontAwesomeIcon onClick={handlePrevBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
       </div>
+      <TaskForm />
       <div className='slide-btn-container-right'>
         <FontAwesomeIcon onClick={handleNextBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-right']} />
       </div>
