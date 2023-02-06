@@ -9,7 +9,7 @@ export default function Quote() {
 
     useEffect(() => {
         // TODO: while developing
-        dispatch(getRandomQuoteAsync());
+        // dispatch(getRandomQuoteAsync());
     }, [dispatch])
 
     return (

@@ -4,46 +4,67 @@ import { UnsplashBackground } from "./unsplashBackground";
 import { RootState } from "../../app/store";
 
 export interface backgroundUnsplashState {
-    imageSource?: string,
-    staus: 'idle' | 'loading' | 'failed'
+    imageUrls: string[],
+    currentImageSource?: string,
+    currentIndex: number,
+    status: 'idle' | 'loading' | 'failed'
 }
 
 const initialState: backgroundUnsplashState = {
-    imageSource: undefined,
-    staus: 'idle'
+    currentImageSource: undefined,
+    imageUrls: [],
+    currentIndex: 0,
+    status: 'idle'
 }
 
 export const getRandomImageAsync = createAsyncThunk(
     'backgroundUnsplash',
     async () => {
-        const response: UnsplashBackground = await fetchBackgroundUnsplash();
-        if (!response.links.download) 
+        const response: UnsplashBackground[] = await fetchBackgroundUnsplash();
+        console.log(response);
+        if (response.length === 0)
             return;
-        return response.links.download;
+        return response;
     }
 )
 
 export const backgroundUnsplashSlice = createSlice({
     name: 'backgroundUnsplash',
     initialState: initialState,
-    reducers : {
-
+    reducers: {
+        getNextBgUnsplash: (state) => {
+            const newIndex = state.currentIndex + 1 === state.imageUrls.length ? 0 : state.currentIndex + 1;
+            state.currentImageSource = state.imageUrls[newIndex];
+            state.currentIndex = newIndex;
+        },
+        getPreviousBgUnsplash: (state) => {
+            const newIndex = state.currentIndex === 0 ? state.imageUrls.length - 1 : state.currentIndex - 1;
+            state.currentImageSource = state.imageUrls[newIndex];
+            state.currentIndex = newIndex;
+        }
     },
     extraReducers: (builder) => {
         builder
             .addCase(getRandomImageAsync.pending, (state) => {
-                state.staus = 'loading'
+                state.status = 'loading'
             })
             .addCase(getRandomImageAsync.fulfilled, (state, action) => {
-                state.staus = 'idle';
-                state.imageSource = action.payload;
+                if (!action.payload)
+                    return;
+                state.status = 'idle';
+                state.imageUrls.push(...action.payload.map(el => el.links.download));
+                state.currentImageSource = state.imageUrls[0];
             })
             .addCase(getRandomImageAsync.rejected, (state) => {
-                state.staus = 'failed';
+                state.status = 'failed';
             })
     }
 })
 
-export const selectBackgroundUnsplash = (state: RootState) => state.backgroundUnsplash.imageSource;
+export const { getPreviousBgUnsplash, getNextBgUnsplash } = backgroundUnsplashSlice.actions;
+
+export const selectBackgroundUnsplash = (state: RootState) => state.backgroundUnsplash.currentImageSource;
+export const selectBackgroundUnsplashStatus = (state: RootState) => state.backgroundUnsplash.status;
+export const selectBackgroundUnsplashNeedNewLoad = (state: RootState) => state.backgroundUnsplash.currentIndex + 2 >= state.backgroundUnsplash.imageUrls.length;
 
 export default backgroundUnsplashSlice.reducer;

@@ -20,12 +20,12 @@ export const backgroundLocalSclice = createSlice({
     name: 'backgroundLocal',
     initialState: initialState,
     reducers: {
-        getNextBg: (state) => {
+        getNextBgLocal: (state) => {
             const newIndex = state.currentIndex + 1 === state.imageSources.length ? 0 : state.currentIndex + 1;
             state.currentImg = state.imageSources[newIndex];
             state.currentIndex = newIndex;
         },
-        getPreviousBg: (state) => {
+        getPreviousBgLocal: (state) => {
             const newIndex = state.currentIndex === 0 ? state.imageSources.length - 1 : state.currentIndex - 1;
             state.currentImg = state.imageSources[newIndex];
             state.currentIndex = newIndex;
@@ -35,6 +35,6 @@ export const backgroundLocalSclice = createSlice({
 
 export const selectBackgroundLocal = (state: RootState)  => state.backgroundLocal.currentImg;
 
-export const { getNextBg, getPreviousBg } = backgroundLocalSclice.actions;
+export const { getNextBgLocal, getPreviousBgLocal } = backgroundLocalSclice.actions;
 
 export default backgroundLocalSclice.reducer;
