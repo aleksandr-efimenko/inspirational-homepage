@@ -9,7 +9,7 @@ export default function TaskList() {
 
   return (
     <div className='task-list'>
-      {taskList.map(el => <TaskComponent props={el.text} />)}
+      {taskList.map(el => <TaskComponent {...el} />)}
     </div>
   )
 }

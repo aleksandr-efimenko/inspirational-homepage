@@ -8,4 +8,16 @@
     grid-row: 5 / 10;
     grid-column: 2 / 12;
     background-color: rgba(155, 155, 155, .5);
+    display: flex;
+}
+
+.task {
+    background-color: aquamarine;
+    height: 70px;
+    margin: 0.5rem;
+
+}
+
+.task p {
+    margin: auto 2px;
 }
