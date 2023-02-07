@@ -9,7 +9,9 @@ export default function TaskList() {
 
   return (
     <div className='task-list'>
-      {taskList.map(el => <TaskComponent {...el} />)}
+      <ul>
+        {taskList.map(el => <TaskComponent {...el} />)}
+      </ul>
     </div>
   )
 }

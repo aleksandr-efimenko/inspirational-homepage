@@ -1,10 +1,10 @@
 import React from 'react'
 import { Task } from '../../features/tasks/tasksSlice'
 
-export default function TaskComponent({text, done}:Task) {
+export default function TaskComponent({text, done, id}:Task) {
   return (
     <div className='task'>
-        <p>{text}</p>
+        <li key={id} className={done ? 'finished-task' : 'unfinished-task'}>{text}</li>
     </div>
   )
 }
