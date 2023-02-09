@@ -10,11 +10,10 @@
 }
 
 .task-form h1 {
-    font-size: 2rem;
+    font-size: 1.7rem;
     margin: 0;
     color: white;
 }
-
 
 .task-form {
     grid-row: 3 / 5;
@@ -26,7 +25,7 @@
     width: 100%;
     padding-top: .5rem;
     display: block;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     font-weight: 500;
     text-shadow: 0 0 3px rgb(0, 0, 0);
 
@@ -55,9 +54,41 @@
     border: 2px solid rgb(255, 255, 255);
     border-radius: .5rem;
     padding: .1rem 1rem;
+    position: relative;
+}
+
+.task:hover .task-action-container {
+    opacity: initial;
+    transition: opacity 0.3s;
 }
 
 .task p{
     color: white;
     font-size: 1.3rem;
+}
+
+.task-action-container {
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    background-color: 0;
+    display: flex;
+    opacity: 0;
+}
+
+.task-action-container button {
+    color: white;
+    border: 1px solid white;
+    border-radius: 7px;
+    margin: 0 1px;
+    cursor: pointer;
+}
+
+.remove {
+    background-color: hsl(0, 55%, 46%);
+    opacity: 0.7;
+}
+
+.done {
+    background-color: hsla(103, 55%, 46%, 0.7);
 }
