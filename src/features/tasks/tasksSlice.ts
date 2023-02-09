@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { uuid } from "uuidv4";
 import { RootState } from "../../app/store";
+import { v4 as uuid } from 'uuid';
 
 export interface Task {
     text: string,
@@ -31,7 +31,7 @@ export const tasksSlice = createSlice({
     reducers: {
         addTask: (state, action) => {
             state.tasksList.push({
-                text: action.payload.text,
+                text: action.payload,
                 id: uuid(),
                 done: false
             })
