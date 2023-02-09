@@ -13,9 +13,14 @@ export interface TasksState {
 }
 
 const initialState: TasksState = {
-    tasksList: [ {
+    tasksList: [{
         text: 'Do something',
         id: '324234',
+        done: false
+    },
+    {
+        text: 'Create a pitch',
+        id: 'dds',
         done: false
     }],
 }

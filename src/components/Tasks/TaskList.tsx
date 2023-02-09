@@ -10,8 +10,16 @@ export default function TaskList() {
   return (
     <div className='task-list'>
       <ul>
-        {taskList.map(el => <TaskComponent {...el} />)}
+        {
+          taskList.map((el) => {
+            return <TaskComponent
+              done={el.done}
+              text={el.text}
+              id={el.id} 
+              key={el.id} />
+          })
+        }
       </ul>
-    </div>
+    </div >
   )
 }
