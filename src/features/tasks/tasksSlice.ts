@@ -5,23 +5,31 @@ import { v4 as uuid } from 'uuid';
 export interface Task {
     text: string,
     id: string,
-    done: boolean
+    done: boolean,
+    bgColor?: string
 }
 
 export interface TasksState {
     tasksList: Task[]
 }
 
+const generateBGColor = () => {
+    return `hsl(${Math.floor(Math.random() * 360)}, 50%, 40%)`;
+  }
+
+
 const initialState: TasksState = {
     tasksList: [{
         text: 'Do something',
         id: '324234',
-        done: false
+        done: false,
+        bgColor: generateBGColor()
     },
     {
         text: 'Create a pitch',
         id: 'dds',
-        done: false
+        done: false,
+        bgColor: generateBGColor()
     }],
 }
 
@@ -33,7 +41,8 @@ export const tasksSlice = createSlice({
             state.tasksList.push({
                 text: action.payload,
                 id: uuid(),
-                done: false
+                done: false,
+                bgColor: generateBGColor()
             })
         },
         removeTask: (state, action) => {

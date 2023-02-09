@@ -13,6 +13,7 @@ export default function TaskList() {
         {
           taskList.map((el) => {
             return <TaskComponent
+              bgColor={el.bgColor}
               done={el.done}
               text={el.text}
               id={el.id} 
