@@ -46,10 +46,10 @@ export const tasksSlice = createSlice({
             })
         },
         removeTask: (state, action) => {
-            state.tasksList = state.tasksList.filter(el => el.id !== action.payload.id);
+            state.tasksList = state.tasksList.filter(el => el.id !== action.payload);
         },
         setTaskDone: (state, action) => {
-            state.tasksList = state.tasksList.map(el => el.id === action.payload.id ? { ...el, done: true } : el);
+            state.tasksList = state.tasksList.map(el => el.id === action.payload ? { ...el, done: true } : el);
         }
     }
 })

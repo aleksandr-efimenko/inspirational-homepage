@@ -6,7 +6,7 @@
     background-color: var(--task-bg);
     border-radius: 1rem;
     padding: 1rem;
-    height: fit-content;
+    overflow: scroll;
 }
 
 .task-form h1 {
@@ -16,7 +16,7 @@
 }
 
 .task-form {
-    grid-row: 3 / 5;
+    grid-row: 2 / 5;
     grid-column: 2 / 12;
     margin-bottom: 15px;
 }
@@ -55,11 +55,21 @@
     border-radius: .5rem;
     padding: .1rem 1rem;
     position: relative;
+    opacity: 0.9;
 }
 
 .task:hover .task-action-container {
     opacity: initial;
     transition: opacity 0.3s;
+}
+
+.finished-task {
+    opacity: 0.2;
+    transition: opacity 0.5s ;
+    transform: rotate(2deg);
+    transition: transform 0.5s ;
+
+
 }
 
 .task p{

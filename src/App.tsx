@@ -21,26 +21,27 @@ function App() {
   const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
   const bgNeedLoad = useAppSelector(selectBackgroundUnsplashNeedNewLoad);
 
-
-
   const handlePrevBg = () => {
-    // dispatch(getPreviousBgLocal());
     dispatch(getRandomQuoteAsync());
     dispatch(getPreviousBgUnsplash());
+    if (bgUnsplashStatus === 'failed') {
+      dispatch(getPreviousBgLocal());
+    }
   }
 
   const handleNextBg = () => {
-    // dispatch(getNextBgLocal());
     dispatch(getRandomQuoteAsync());
     dispatch(getNextBgUnsplash());
-    console.log(bgNeedLoad);
     if (bgNeedLoad)
       dispatch(getRandomImageAsync());
+    if (bgUnsplashStatus === 'failed') {
+      dispatch(getNextBgLocal());
+    }
   }
 
-  // useEffect(() => {
-  //   dispatch(getRandomImageAsync());
-  // }, [dispatch])
+  useEffect(() => {
+    dispatch(getRandomImageAsync());
+  }, [dispatch])
 
   return (
     <div className="App" style={{ backgroundImage: `url(${bgUnsplashStatus === 'failed' ? bgLocalUrl : bgUnsplashUrl})` }}>

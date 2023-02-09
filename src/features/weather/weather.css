@@ -17,8 +17,8 @@
 .weather-widget img {
   height: 100%;
   margin: auto 0;
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 35px;
+  max-height: 35px;
 }
 
 .weather-widget p {
@@ -26,14 +26,15 @@
 }
 
 .temp-description {
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: center;
-  margin-top: 10px;
+  /* margin-top: 10px; */
+  line-height: 80%;
 }
 
 .weather-widget button {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 2rem;
+  font-size: 1.2rem;
   color: white;
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid white;
@@ -49,4 +50,21 @@
 .weather-widget button:active {
   background-color: rgba(255, 255, 255, 1);
   color: black;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .weather-widget button {
+    font-size: 0.7rem;
+    border: 1px solid white;
+  }
+
+  .weather-widget {
+    right: 5px;
+    font-size: 1rem;
+  }
+
+  .temp-description {
+    font-size: 0.75rem;
+  }
 }
