@@ -1,21 +1,57 @@
+:root {
+    --task-bg: rgba(155, 155, 155, .4);
+}
+
+.task-form, .task-list {
+    background-color: var(--task-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.task-form h1 {
+    margin: 0;
+    color: white;
+}
+
+
 .task-form {
-    grid-row: 2 / 4;
+    grid-row: 3 / 5;
     grid-column: 2 / 12;
-    background-color: rgba(155, 155, 155, .5);
+}
+
+#task-text-input {
+    width: 100%;
+    padding-top: .5rem;
+    display: block;
+    font-size: 1.7rem;
+    font-weight: 500;
+    text-shadow: 0 0 3px rgb(0, 0, 0);
+
+    background: 0;
+    border: 0;
+    border-bottom: 2px solid white;
+    outline: none;
+    color: white;
 }
 
 .task-list {
-    grid-row: 5 / 10;
+    grid-row: 5 / 11;
     grid-column: 2 / 12;
-    background-color: rgba(155, 155, 155, .5);
+}
+
+.task-list ul {
+    padding-left: 0;
+    margin-top: 0;
     display: flex;
+    list-style-type: none;
 }
 
 .task {
     background-color: aquamarine;
     height: 70px;
     margin: 0.5rem;
-
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: .5rem;
 }
 
 .task p {
