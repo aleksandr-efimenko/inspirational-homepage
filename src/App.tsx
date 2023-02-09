@@ -44,7 +44,8 @@ function App() {
   }, [dispatch])
 
   return (
-    <div className="App" style={{ backgroundImage: `url(${bgUnsplashStatus === 'failed' ? bgLocalUrl : bgUnsplashUrl})` }}>
+    <div className="App" >
+      <div id='background-image-container' style={{ backgroundImage: `url(${bgUnsplashStatus === 'failed' ? bgLocalUrl : bgUnsplashUrl})` }}></div>
       <Weather />
       <div className='slide-btn-container-left'>
         <FontAwesomeIcon onClick={handlePrevBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
