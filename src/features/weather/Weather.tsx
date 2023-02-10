@@ -21,24 +21,26 @@ export type WeatherData = {
 
 export default function Weather() {
     const dispatch = useDispatch<AppDispatch>();
-    const currentWeather:WeatherData = useAppSelector(selectWeather);
+    const currentWeather: WeatherData = useAppSelector(selectWeather);
     const weatherLoadingStatus = useAppSelector(selectWeatherLoadingStatus);
 
     const [buttonText, setButtonText] = useState('Get weather')
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [buttonStyle, setButtonStyle] = useState({})
-    
+
     const [currentLocation, setCurrentLocation] = useState<WeatherLocation>({ latitude: 0, longitude: 0 });
     const getGeo = () => {
+        if (weatherLoadingStatus === 'loading')
+            return;
         setButtonText('Loading...');
         setButtonDisabled(true);
-        setButtonStyle({ cursor: 'wait' })
+        setButtonStyle({ cursor: 'wait',   backgroundColor: 'rgba(255, 255, 255, 0.5)'});
         const options = {
             enableHighAccuracy: true,
             timeout: 10000,
             maximumAge: 3600000
-          };
-          
+        };
+
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 setCurrentLocation({
