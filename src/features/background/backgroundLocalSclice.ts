@@ -34,6 +34,7 @@ export const backgroundLocalSclice = createSlice({
 })
 
 export const selectBackgroundLocal = (state: RootState)  => state.backgroundLocal.currentImg;
+export const selsectBGLocalList = (state: RootState) => state.backgroundLocal.imageSources;
 
 export const { getNextBgLocal, getPreviousBgLocal } = backgroundLocalSclice.actions;
 
