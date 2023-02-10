@@ -47,6 +47,7 @@ export default function Weather() {
                 })
             },
             function (error) {
+                setButtonText('Error')
                 console.error("Error Code = " + error.code + " - " + error.message);
             }, options
         );
@@ -62,7 +63,7 @@ export default function Weather() {
         }
     }, [currentLocation, dispatch])
 
-    const geoButton = <button disabled={buttonDisabled} style={buttonStyle} onClick={getGeo}>{buttonText}</button>;
+    const geoButton = <button className='white-button' disabled={buttonDisabled} style={buttonStyle} onClick={getGeo}>{buttonText}</button>;
     const renderWeatherWidget = () => {
         switch (weatherLoadingStatus) {
             case 'loading':

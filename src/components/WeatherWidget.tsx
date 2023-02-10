@@ -1,4 +1,3 @@
-import React from 'react'
 import { WeatherData } from '../features/weather/Weather'
 
 export default function WeatherWidget({ temperature, description, icon, unit, location }: WeatherData) {

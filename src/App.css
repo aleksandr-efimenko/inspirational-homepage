@@ -1,5 +1,4 @@
 .App {
-  /* background-image: url('../public/img/background-1.jpg'); */
   height: 100vh;
   grid-template-rows: repeat(12, minmax(0, 1fr));
   grid-template-columns: 3rem repeat(10, minmax(0, 1fr)) 3rem;
@@ -57,7 +56,6 @@
   overflow: scroll;
   margin-bottom: 15px;
   text-align: center;
-  align-self: end;
 }
 
 .quote-container p {
@@ -70,10 +68,41 @@
   font-style: italic;
 }
 
+
+.white-button {
+  font-size: 1.5rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.white-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.white-button:active {
+  background-color: rgba(255, 255, 255, 1);
+  color: black;
+}
+
 @media only screen and (max-width: 600px) {
+  .App {
+    row-gap: 0.5rem;
+  }
   .quote-container p {
     font-size: 1rem;
   }
 
-}
+  .white-button {
+    font-size: 1.2rem;
+    border: 1px solid white;
+  }
 
+  .quote-container {
+    grid-row: 10 / 13;
+  }
+}

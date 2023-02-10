@@ -9,7 +9,7 @@ export default function TaskForm() {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        if (!newTaskText) 
+        if (!newTaskText)
             return;
         dispatch(addTask(newTaskText))
         setNewTaskText('');
@@ -18,11 +18,14 @@ export default function TaskForm() {
         <div className='task-form' >
             <h1>What's on your mind today?</h1>
             <form onSubmit={handleSubmit}>
-                <input 
-                    id='task-text-input' 
-                    onChange={e => setNewTaskText(e.target.value)} 
-                    value={newTaskText} 
-                    type='text'></input>
+                <div className='inputs'>
+                    <input
+                        id='task-text-input'
+                        onChange={e => setNewTaskText(e.target.value)}
+                        value={newTaskText}
+                        type='text'></input>
+                    <input type='submit' className='white-button'></input>
+                </div>
             </form>
         </div>
     )

@@ -2,7 +2,8 @@
     --task-bg: rgba(155, 155, 155, .4);
 }
 
-.task-form, .task-list {
+.task-form,
+.task-list {
     background-color: var(--task-bg);
     border-radius: 1rem;
     padding: 1rem;
@@ -13,31 +14,39 @@
     font-size: 1.7rem;
     margin: 0;
     color: white;
+    display: inline;
 }
 
 .task-form {
-    grid-row: 2 / 5;
+    grid-row: 2 / 4;
     grid-column: 2 / 12;
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 #task-text-input {
-    width: 100%;
     padding-top: .5rem;
     display: block;
     font-size: 1.3rem;
     font-weight: 500;
     text-shadow: 0 0 3px rgb(0, 0, 0);
-
     background: 0;
     border: 0;
     border-bottom: 2px solid white;
     outline: none;
     color: white;
+    width: 100%;
+}
+
+.inputs {
+    display: flex;
+    /* align-self: flex-end; */
+    width: 100%;
 }
 
 .task-list {
-    grid-row: 5 / 11;
+    grid-row: 4 / 11;
     grid-column: 2 / 12;
 }
 
@@ -65,12 +74,12 @@
 
 .finished-task {
     opacity: 0.2;
-    transition: opacity 0.5s ;
+    transition: opacity 0.5s;
     transform: rotate(2deg);
-    transition: transform 0.5s ;
+    transition: transform 0.5s;
 }
 
-.task p{
+.task p {
     color: white;
     font-size: 1.3rem;
     word-break: break-all;
@@ -100,4 +109,27 @@
 
 .done {
     background-color: hsla(103, 55%, 46%, 0.7);
+}
+
+@media only screen and (max-width: 600px) {
+    .task-form h1 {
+        font-size: 1.1rem;
+    }
+
+    .task p {
+        font-size: .8rem;
+    }
+
+    .task {
+        margin: 0.2rem;
+        padding: .05rem 0.5rem;
+    }
+
+    .task-form {
+        grid-row: 2 / 4;
+    }
+
+    .task-list {
+        grid-row: 4 / 10;
+    }
 }

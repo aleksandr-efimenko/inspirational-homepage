@@ -1,5 +1,6 @@
 .weather-widget {
   position: absolute;
+  top: 10px;
   right: 15px;
   color: white;
   text-shadow: 0 0 3px rgb(0, 0, 0);
@@ -27,37 +28,13 @@
 .temp-description {
   font-size: 1rem;
   text-align: center;
-  /* margin-top: 10px; */
   line-height: 80%;
-}
-
-.weather-widget button {
-  font-size: 1.5rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0);
-  border: 2px solid white;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-.weather-widget button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.weather-widget button:active {
-  background-color: rgba(255, 255, 255, 1);
-  color: black;
 }
 
 @media only screen and (max-width: 600px) {
 
-  .weather-widget button {
-    font-size: 0.7rem;
-    border: 1px solid white;
-  }
-
   .weather-widget {
+    top: 5px;
     right: 5px;
     font-size: 1rem;
   }

@@ -20,14 +20,14 @@ const generateBGColor = () => {
 
 const initialState: TasksState = {
     tasksList: [{
-        text: 'Do something',
-        id: '324234',
+        text: 'Create new feature',
+        id: uuid(),
         done: false,
         bgColor: generateBGColor()
     },
     {
-        text: 'Create a pitch',
-        id: 'dds',
+        text: 'Workout for 30 minutes',
+        id: uuid(),
         done: false,
         bgColor: generateBGColor()
     }],
