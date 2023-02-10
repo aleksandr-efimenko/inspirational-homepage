@@ -27,11 +27,10 @@ export const getRandomQuoteAsync = createAsyncThunk(
         if (response.length === 0)
             return;
 
-        // console.log(response);
-        return response.map(item => <QuoteData>{
+        return response.map(item => ({
             quoteText: item.quote,
             quoteAuthor: item.author
-        });
+        } as QuoteData) );
     }
 )
 
