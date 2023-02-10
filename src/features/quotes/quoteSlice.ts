@@ -1,31 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchQuote } from "./quoteAPI";
+import { QuotesAPIType } from "./quoteAPI";
+
+export interface QuoteData {
+    quoteText: string,
+    quoteAuthor: string,
+}
 
 export interface QuotesState {
-    quote: {
-        quoteText: string,
-        quoteAuthor: string,
-    }
+    currentIndex: number,
+    quoteList: QuoteData[],
     status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: QuotesState = {
-    quote: {
-        quoteText: '',
-        quoteAuthor: ''
-    },
+    currentIndex: 0,
+    quoteList: [],
     status: 'idle'
 }
 
 export const getRandomQuoteAsync = createAsyncThunk(
     'quote/fetchQuote',
     async () => {
-        const response = await fetchQuote();
-        if (response.lenght === 0)
+        const response: QuotesAPIType[] = await fetchQuote();
+        if (response.length === 0)
             return;
-        const quote = response[0];
-        return quote;
+
+        // console.log(response);
+        return response.map(item => <QuoteData>{
+            quoteText: item.quote,
+            quoteAuthor: item.author
+        });
     }
 )
 
@@ -33,9 +39,14 @@ export const quotesSlice = createSlice({
     name: 'quote',
     initialState: initialState,
     reducers: {
-        // getNewQuote: (state) => {
-
-        // }
+        getNextQuote: (state) => {
+            const newIndex = state.currentIndex + 1 >= state.quoteList.length ? 0 : state.currentIndex + 1;
+            state.currentIndex = newIndex;
+        },
+        getPreviousQuote: (state) => {
+            const newIndex = state.currentIndex <= 0 ? state.quoteList.length - 1 : state.currentIndex - 1;
+            state.currentIndex = newIndex;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -43,9 +54,10 @@ export const quotesSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(getRandomQuoteAsync.fulfilled, (state, action) => {
+                if (!action.payload)
+                    return;
                 state.status = 'idle';
-                state.quote.quoteText = action.payload.quote;
-                state.quote.quoteAuthor = action.payload.author;
+                state.quoteList.push(...action.payload);
             })
             .addCase(getRandomQuoteAsync.rejected, (state) => {
                 state.status = 'failed';
@@ -53,8 +65,10 @@ export const quotesSlice = createSlice({
     }
 })
 
-export const selectQuote = (state: RootState) => state.quote.quote;
+export const selectQuote = (state: RootState) => state.quote.quoteList[state.quote.currentIndex];
+//Load new array of quotes when reach the end of array
+export const selectQuoteNeedsNewLoad = (state: RootState) => state.quote.currentIndex + 2 >= state.quote.quoteList.length;
 
-// export const { getNewQuote } = quotesSlice.actions;
+export const { getNextQuote, getPreviousQuote } = quotesSlice.actions;
 
 export default quotesSlice.reducer;

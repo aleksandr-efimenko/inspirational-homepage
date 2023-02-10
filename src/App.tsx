@@ -6,8 +6,8 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { getNextBgLocal, getPreviousBgLocal } from './features/background/backgroundLocalSclice';
 import { getNextBgUnsplash, getPreviousBgUnsplash, getRandomImageAsync, selectBackgroundUnsplashNeedNewLoad, selectBackgroundUnsplashStatus } from './features/background/backgroundUnsplashSlice';
 import Weather from './features/weather/Weather';
-import Quote from './features/quotes/Quote';
-import { getRandomQuoteAsync } from './features/quotes/quoteSlice';
+import Quote from './components/Quote';
+import { getNextQuote, getPreviousQuote, getRandomQuoteAsync, selectQuoteNeedsNewLoad } from './features/quotes/quoteSlice';
 import TaskForm from './components/Tasks/TaskForm';
 import TaskList from './components/Tasks/TaskList';
 import Background from './components/Background';
@@ -17,18 +17,24 @@ library.add(faChevronLeft, faChevronRight);
 function App() {
   const dispatch = useAppDispatch();
   const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
+  //If user currently on the last image from array load next array of image sources
   const bgNeedLoad = useAppSelector(selectBackgroundUnsplashNeedNewLoad);
 
-  const handlePrevBg = () => {
-    dispatch(getRandomQuoteAsync());
+  const quoteNeesLoad = useAppSelector(selectQuoteNeedsNewLoad);
+
+  const handlePrevBgAndQuote = () => {
+    dispatch(getPreviousQuote());
     dispatch(getPreviousBgUnsplash());
     if (bgUnsplashStatus === 'failed') {
       dispatch(getPreviousBgLocal());
     }
   }
 
-  const handleNextBg = () => {
-    dispatch(getRandomQuoteAsync());
+  const handleNextBgAndQuote = () => {
+    dispatch(getNextQuote());
+    if(quoteNeesLoad)
+      dispatch(getRandomQuoteAsync());
+      
     dispatch(getNextBgUnsplash());
     if (bgNeedLoad)
       dispatch(getRandomImageAsync());
@@ -42,12 +48,12 @@ function App() {
       <Background />
       <Weather />
       <div className='slide-btn-container-left'>
-        <FontAwesomeIcon onClick={handlePrevBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
+        <FontAwesomeIcon onClick={handlePrevBgAndQuote} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
       </div>
       <TaskForm />
       <TaskList />
       <div className='slide-btn-container-right'>
-        <FontAwesomeIcon onClick={handleNextBg} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-right']} />
+        <FontAwesomeIcon onClick={handleNextBgAndQuote} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-right']} />
       </div>
       <Quote />
     </div >
