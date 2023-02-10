@@ -49,7 +49,7 @@ export default function Weather() {
                 })
             },
             function (error) {
-                setButtonText('Error')
+                setButtonText('Error, location is not defined')
                 console.error("Error Code = " + error.code + " - " + error.message);
             }, options
         );
