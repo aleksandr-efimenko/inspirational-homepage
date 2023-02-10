@@ -48,7 +48,7 @@ export const backgroundUnsplashSlice = createSlice({
                 if (!action.payload)
                     return;
                 state.status = 'idle';
-                state.imageUrls.push(...action.payload.map(el => el.links.download));
+                state.imageUrls.push(...action.payload.map(el => el.urls.regular));
             })
             .addCase(getRandomImageAsync.rejected, (state) => {
                 state.status = 'failed';
@@ -59,6 +59,7 @@ export const backgroundUnsplashSlice = createSlice({
 export const { getPreviousBgUnsplash, getNextBgUnsplash } = backgroundUnsplashSlice.actions;
 
 export const selectBackgroundUnsplash = (state: RootState) => state.backgroundUnsplash.imageUrls[state.backgroundUnsplash.currentIndex];
+export const selectBGImagesUrls = (state: RootState) => state.backgroundUnsplash.imageUrls;
 export const selectBackgroundUnsplashStatus = (state: RootState) => state.backgroundUnsplash.status;
 export const selectBackgroundUnsplashNeedNewLoad = (state: RootState) => state.backgroundUnsplash.currentIndex + 2 >= state.backgroundUnsplash.imageUrls.length;
 
