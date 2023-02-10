@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { getWeatherAsync, selectWeather, selectWeatherLoadingStatus, setLocation } from './weatherSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../app/store';
 import WeatherWidget from '../../components/WeatherWidget';
 import './weather.css';
+import { AppDispatch } from '../../app/store';
 
 export type WeatherLocation = {
     longitude: number,
@@ -58,7 +58,7 @@ export default function Weather() {
                 latitude: currentLocation.latitude,
                 longitude: currentLocation.longitude
             }))
-            dispatch(getWeatherAsync(currentLocation))
+            dispatch(getWeatherAsync(currentLocation));
         }
     }, [currentLocation, dispatch])
 

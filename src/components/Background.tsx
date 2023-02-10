@@ -18,7 +18,6 @@ export default function Background() {
 
     //Preload images from array for quick slide
     useEffect(() => {
-        console.log('')
         const loadImage = (url: string) => {
             return new Promise((resolve, reject) => {
                 const loadImg = new Image();
