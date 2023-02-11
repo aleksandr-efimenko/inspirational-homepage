@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getRandomImageAsync, selectBGImagesUrls, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectBackgroundLocal, selsectBGLocalList } from "../features/background/backgroundLocalSclice";
@@ -36,13 +36,13 @@ export default function Background() {
 
     const getBgStyle = () => {
         if (bgUnsplashStatus === 'idle') {
-            return bgUnsplashUrl;
+            return bgUnsplashUrl || bgLocalUrl;
         }
         if (bgUnsplashStatus === 'failed') {
             return bgLocalUrl;
         }
         if (bgUnsplashStatus === 'loading') {
-            return bgLocalUrl;
+            return bgUnsplashUrl || bgLocalUrl;
         }
         return bgLocalUrl;
     }

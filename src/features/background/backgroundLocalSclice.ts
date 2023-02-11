@@ -6,13 +6,11 @@ import { RootState } from "../../app/store";
 
 export interface BackgroundLocalState {
     imageSources: string[];
-    currentImg: string;
     currentIndex: number;
 }
 
 const initialState: BackgroundLocalState = {
     imageSources: [IMG1, IMG2, IMG3],
-    currentImg: IMG1,
     currentIndex: 0,
 }
 
@@ -22,18 +20,16 @@ export const backgroundLocalSclice = createSlice({
     reducers: {
         getNextBgLocal: (state) => {
             const newIndex = state.currentIndex + 1 === state.imageSources.length ? 0 : state.currentIndex + 1;
-            state.currentImg = state.imageSources[newIndex];
             state.currentIndex = newIndex;
         },
         getPreviousBgLocal: (state) => {
             const newIndex = state.currentIndex === 0 ? state.imageSources.length - 1 : state.currentIndex - 1;
-            state.currentImg = state.imageSources[newIndex];
             state.currentIndex = newIndex;
         }
     }
 })
 
-export const selectBackgroundLocal = (state: RootState)  => state.backgroundLocal.currentImg;
+export const selectBackgroundLocal = (state: RootState)  => state.backgroundLocal.imageSources[state.backgroundLocal.currentIndex];
 export const selsectBGLocalList = (state: RootState) => state.backgroundLocal.imageSources;
 
 export const { getNextBgLocal, getPreviousBgLocal } = backgroundLocalSclice.actions;
