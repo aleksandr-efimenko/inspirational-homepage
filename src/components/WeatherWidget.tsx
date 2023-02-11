@@ -4,7 +4,7 @@ export default function WeatherWidget({ temperature, description, icon, unit, lo
     return (
         <>
             <div className='temp'>
-                {icon ? <img src={`http://openweathermap.org/img/w/${icon}.png`} alt='weather-pic' /> : <></> }
+                {icon ? <img src={`https://openweathermap.org/img/w/${icon}.png`} alt='weather-pic' /> : <></> }
                 <p>{temperature} {unit}</p>
             </div>
             <p className='temp-description'>{location}</p>
