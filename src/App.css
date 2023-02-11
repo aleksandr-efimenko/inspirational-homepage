@@ -18,8 +18,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover; 
-  transition: background-image 1s linear;
 }
+
 
 .slide-btn {
   margin: auto 0;

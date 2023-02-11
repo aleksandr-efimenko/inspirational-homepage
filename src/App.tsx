@@ -31,11 +31,11 @@ function App() {
   }
 
   const handleNextBgAndQuote = () => {
+    dispatch(getNextBgUnsplash());
     dispatch(getNextQuote());
     if(quoteNeesLoad)
       dispatch(getRandomQuoteAsync());
       
-    dispatch(getNextBgUnsplash());
     if (bgNeedLoad)
       dispatch(getRandomImageAsync());
     if (bgUnsplashStatus === 'failed') {
