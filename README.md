@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+# Inspirational Homepage
+This is a React-Redux to-do list application which allows the user to set their tasks. The user's visual experience is enriched with images, quotes and weather information fetched from APIs.
+> [Live demo hosted by Netlify](https://inspirational-page-react.netlify.app/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+## Table of Contents
+* [Features](#features)
+* [Technologies Used](#technologies-used)
+* [Screenshots](#screenshots)
+* [Setup](#installation-and-setup-instructions)
+* [Acknowledgements](#acknowledgements)
 
-## Available Scripts
+## Features
+### Weather
+The app uses users' coordinates in order to fetch the local weather from openweathermap.org at your current location. Users should allow sharing their's location.
 
-In the project directory, you can run:
+### Goals
+You can type in your tasks to put them on the list. The goals can be marked as done and they can be removed. The goals get random colors with contrast with white font, The tasks marked as done gets 80% opacity. All tasks could be deleted to disappear from the screen.
 
-### `npm start`
+### Quote
+You get a random daily inspirational quote from api-ninjas.com. One query takes series of 10 quotes from the API, and when the user reaches the last quote, the app gets new series of quotes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Image
+The homepage fetches series of 15 background images from Unsplash that you can toogle through. If there is not connection or API limit is reached then the app uses 3 local images.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## Technologies Used
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- HTML5
+- CSS3
+- [Netlify functions](https://docs.netlify.com/functions/overview/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Screenshots
+![Screenshot](./public/Inspirational-page-screenshot.png)
 
-### `npm run build`
+## Installation and Setup Instructions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Clone this repo and run npm install to install dependencies. This project will require connecting to [Unsplash](https://unsplash.com/), [Open Weather](https://openweathermap.org/) and [API-Ninjas](https://api-ninjas.com/) APIs - which will involve setting up an account with each service. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Acknowledgements
+- The idea of the application was taken on [CodeAcademy](https://www.codecademy.com/projects/portfolio/inspirational-homepage)
+- Many thanks to Joseph Mawa for the Freecodecamp's article on how to use serverless Netlify functions to access external APIs and secure API secrets. https://www.freecodecamp.org/news/how-to-access-secret-api-keys-using-netlify-functions-in-a-react-app/
