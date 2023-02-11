@@ -1,6 +1,6 @@
 # Inspirational Homepage
 This is a React-Redux to-do list application which allows the user to set their tasks. The user's visual experience is enriched with images, quotes and weather information fetched from APIs.
-> [Live demo hosted by Netlify](https://inspirational-page-react.netlify.app/)
+> [Live demo hosted on Netlify](https://inspirational-page-react.netlify.app/)
 
 ## Table of Contents
 * [Features](#features)
@@ -41,4 +41,4 @@ Clone this repo and run npm install to install dependencies. This project will r
 
 ## Acknowledgements
 - The idea of the application was taken on [CodeAcademy](https://www.codecademy.com/projects/portfolio/inspirational-homepage)
-- Many thanks to Joseph Mawa for the Freecodecamp's article on how to use serverless Netlify functions to access external APIs and secure API secrets. https://www.freecodecamp.org/news/how-to-access-secret-api-keys-using-netlify-functions-in-a-react-app/
+- Many thanks to Joseph Mawa for the [Freecodecamp's article](https://www.freecodecamp.org/news/how-to-access-secret-api-keys-using-netlify-functions-in-a-react-app/) on how to use serverless Netlify functions to access external APIs and secure API secrets. 
