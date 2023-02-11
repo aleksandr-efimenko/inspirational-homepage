@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getRandomImageAsync, selectBGImagesUrls, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectBackgroundLocal, selsectBGLocalList } from "../features/background/backgroundLocalSclice";
@@ -33,8 +33,21 @@ export default function Background() {
         Promise.all(bgLocalList.map(image => loadImage(image)))
             .catch(err => console.log("Falied to load images", err));
     }, [bgUnsplashUrls, bgLocalList])
+
+    const getBgStyle = () => {
+        if (bgUnsplashStatus === 'idle') {
+            return bgUnsplashUrl;
+        }
+        if (bgUnsplashStatus === 'failed') {
+            return bgLocalUrl;
+        }
+        if (bgUnsplashStatus === 'loading') {
+            return bgLocalUrl;
+        }
+        return bgLocalUrl;
+    }
     return (
-        <div id='background-image-container' style={{ backgroundImage: `url(${bgUnsplashStatus === 'failed' ? bgLocalUrl : bgUnsplashUrl})` }}></div>
+        <div id='background-image-container'  style={ { backgroundImage: `url(${getBgStyle()})` }}></div>
     )
 }
 
