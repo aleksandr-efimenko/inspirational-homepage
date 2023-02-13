@@ -37,8 +37,8 @@ export default function Weather() {
         setButtonStyle({ cursor: 'wait',   backgroundColor: 'rgba(255, 255, 255, 0.5)'});
         const options = {
             enableHighAccuracy: false,
-            timeout: 20000,
-            maximumAge: 3600000
+            timeout: 20_000,
+            maximumAge: 60_000
         };
 
         navigator.geolocation.getCurrentPosition(
