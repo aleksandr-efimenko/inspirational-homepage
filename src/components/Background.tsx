@@ -58,7 +58,7 @@ export default function Background() {
                 backgroundImage: `url(${bgLocalUrl})`
             });
         }
-    }, [bgUnsplashUrl])
+    }, [bgUnsplashUrl, bgLocalUrl, bgUnsplashStatus])
     return (
         <div id='background-image-container' style={bgStyle}></div>
     )
