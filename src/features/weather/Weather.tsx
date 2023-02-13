@@ -36,8 +36,8 @@ export default function Weather() {
         setButtonDisabled(true);
         setButtonStyle({ cursor: 'wait',   backgroundColor: 'rgba(255, 255, 255, 0.5)'});
         const options = {
-            enableHighAccuracy: true,
-            timeout: 10000,
+            enableHighAccuracy: false,
+            timeout: 1000,
             maximumAge: 3600000
         };
 
@@ -49,7 +49,8 @@ export default function Weather() {
                 })
             },
             function (error) {
-                setButtonText('Error, location is not defined')
+                setButtonText('Location is not defined')
+                setButtonStyle({ fontSize: '.8rem', cursor: 'not-allowed',   backgroundColor: 'rgba(255, 255, 255, 0.5)'});
                 console.error("Error Code = " + error.code + " - " + error.message);
             }, options
         );
