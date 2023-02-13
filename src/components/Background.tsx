@@ -16,6 +16,7 @@ export default function Background() {
     useEffect(() => {
         dispatch(getRandomImageAsync());
     }, [dispatch])
+    
 
     //Preload images from array for quick slide
     useEffect(() => {
@@ -34,19 +35,6 @@ export default function Background() {
         Promise.all(bgLocalList.map(image => loadImage(image)))
             .catch(err => console.log("Falied to load images", err));
     }, [bgUnsplashUrls, bgLocalList])
-
-    // const getBgStyle = () => {
-    //     if (bgUnsplashStatus === 'idle') {
-    //         return bgUnsplashUrl;
-    //     }
-    //     if (bgUnsplashStatus === 'failed') {
-    //         return bgLocalUrl;
-    //     }
-        // if (bgUnsplashStatus === 'loading') {
-        //     return bgUnsplashUrl;
-        // }
-        // return bgLocalUrl;
-    // }
 
     useEffect(() => {
         if (bgUnsplashUrl) {

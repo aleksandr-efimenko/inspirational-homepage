@@ -1,4 +1,4 @@
-const accessKey = '9DNyZdurkOKkfnlk55Q-W80JWPLs_BERiw57O0P1WSs';
+const accessKey = process.env.REACT_APP_UNSPLASH_PUBLIC_KEY as string;
 
 const root = 'https://api.unsplash.com';
 const endPoint = '/photos/random';
