@@ -14,7 +14,7 @@ export interface TasksState {
 }
 
 const generateBGColor = () => {
-    return `hsl(${Math.floor(Math.random() * 360)}, 50%, 40%)`;
+    return `hsl(${Math.floor(Math.random() * 361)}, 50%, 40%)`;
   }
 
 

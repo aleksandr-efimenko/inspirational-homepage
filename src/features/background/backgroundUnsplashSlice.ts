@@ -12,7 +12,7 @@ export interface backgroundUnsplashState {
 const initialState: backgroundUnsplashState = {
     imageUrls: [],
     currentIndex: 0,
-    status: 'idle'
+    status: 'loading'
 }
 
 export const getRandomImageAsync = createAsyncThunk(

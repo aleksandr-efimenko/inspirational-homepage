@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getRandomImageAsync, selectBGImagesUrls, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectBackgroundLocal, selsectBGLocalList } from "../features/background/backgroundLocalSclice";
@@ -12,6 +12,7 @@ export default function Background() {
     const bgUnsplashUrl = useAppSelector(selectBackgroundUnsplash);
     const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
 
+    const [bgStyle, setBgStyle] = useState({});
     useEffect(() => {
         dispatch(getRandomImageAsync());
     }, [dispatch])
@@ -34,20 +35,32 @@ export default function Background() {
             .catch(err => console.log("Falied to load images", err));
     }, [bgUnsplashUrls, bgLocalList])
 
-    const getBgStyle = () => {
-        if (bgUnsplashStatus === 'idle') {
-            return bgUnsplashUrl || bgLocalUrl;
+    // const getBgStyle = () => {
+    //     if (bgUnsplashStatus === 'idle') {
+    //         return bgUnsplashUrl;
+    //     }
+    //     if (bgUnsplashStatus === 'failed') {
+    //         return bgLocalUrl;
+    //     }
+        // if (bgUnsplashStatus === 'loading') {
+        //     return bgUnsplashUrl;
+        // }
+        // return bgLocalUrl;
+    // }
+
+    useEffect(() => {
+        if (bgUnsplashUrl) {
+            setBgStyle((prev) => prev = {
+                backgroundImage: `url(${bgUnsplashUrl})`
+            });
+        } else if (bgUnsplashStatus !== 'loading') {
+            setBgStyle((prev) => prev = {
+                backgroundImage: `url(${bgLocalUrl})`
+            });
         }
-        if (bgUnsplashStatus === 'failed') {
-            return bgLocalUrl;
-        }
-        if (bgUnsplashStatus === 'loading') {
-            return bgUnsplashUrl || bgLocalUrl;
-        }
-        return bgLocalUrl;
-    }
+    }, [bgUnsplashUrl])
     return (
-        <div id='background-image-container'  style={ { backgroundImage: `url(${getBgStyle()})` }}></div>
+        <div id='background-image-container' style={bgStyle}></div>
     )
 }
 
