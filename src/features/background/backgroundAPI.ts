@@ -6,7 +6,9 @@ const endPoint = '/photos/random';
 export const fetchBackgroundUnsplash = async (count: number = 15) => {
     try {
         const response = await fetch(`${root}${endPoint}?count=${count}&client_id=${accessKey}`);
-        return response.json();
+        if (response.ok)
+           return response.json();
+        console.log(response.ok)
     }
     catch (error) {
         console.warn(error);
