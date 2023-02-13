@@ -45,8 +45,10 @@ export const backgroundUnsplashSlice = createSlice({
                 state.status = 'loading'
             })
             .addCase(getRandomImageAsync.fulfilled, (state, action) => {
-                if (!action.payload)
+                if (!action.payload || action.payload.length === 0) {
+                    state.status = 'failed';
                     return;
+                }
                 state.status = 'idle';
                 state.imageUrls.push(...action.payload.map(el => el.urls.regular));
             })
