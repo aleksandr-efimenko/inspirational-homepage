@@ -84,11 +84,15 @@
 
 .white-button:hover {
   background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+
 }
 
 .white-button:active {
   background-color: rgba(255, 255, 255, 1);
   color: black;
+  border-radius: 4px;
+
 }
 
 @media only screen and (max-width: 600px) {
