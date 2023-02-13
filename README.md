@@ -1,5 +1,6 @@
 # Inspirational Homepage
 This is a React-Redux to-do list application which allows the user to set their tasks. The user's visual experience is enriched with images, quotes and weather information fetched from APIs.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e087e702-3af8-41bf-8321-0b01c48e8daa/deploy-status)](https://app.netlify.com/sites/inspirational-page-react/deploys)
 > [Live demo hosted on Netlify](https://inspirational-page-react.netlify.app/)
 
 ## Table of Contents
