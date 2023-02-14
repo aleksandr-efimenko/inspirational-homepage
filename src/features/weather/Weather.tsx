@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import WeatherWidget from '../../components/WeatherWidget';
 import './weather.css';
 import { AppDispatch } from '../../app/store';
+// import { classNames } from '../../classNames';
 
 export type WeatherLocation = {
     longitude: number,
@@ -19,22 +20,20 @@ export type WeatherData = {
     location?: string
 }
 
+export type GeoPositionStatus = 'idle' | 'loading' | 'failed';
+
 export default function Weather() {
     const dispatch = useDispatch<AppDispatch>();
+    const [geoPositionLoadingStatus, setGeoPositionLoading] = useState<GeoPositionStatus>('idle');
+
     const currentWeather: WeatherData = useAppSelector(selectWeather);
     const weatherLoadingStatus = useAppSelector(selectWeatherLoadingStatus);
 
-    const [buttonText, setButtonText] = useState('Get weather')
-    const [buttonDisabled, setButtonDisabled] = useState(false);
-    const [buttonStyle, setButtonStyle] = useState({})
-
     const [currentLocation, setCurrentLocation] = useState<WeatherLocation>({ latitude: 0, longitude: 0 });
     const getGeo = () => {
-        if (weatherLoadingStatus === 'loading')
+        if (geoPositionLoadingStatus === 'loading' || weatherLoadingStatus === 'loading')
             return;
-        setButtonText('Loading...');
-        setButtonDisabled(true);
-        setButtonStyle({ cursor: 'wait',   backgroundColor: 'rgba(255, 255, 255, 0.5)'});
+        setGeoPositionLoading('loading');
         const options = {
             enableHighAccuracy: false,
             timeout: 20_000,
@@ -49,8 +48,7 @@ export default function Weather() {
                 })
             },
             function (error) {
-                setButtonText('Location is not defined')
-                setButtonStyle({ fontSize: '.9rem', cursor: 'not-allowed',   backgroundColor: 'rgba(255, 255, 255, 0.5)'});
+                setGeoPositionLoading('failed');
                 console.error("Error Code = " + error.code + " - " + error.message);
             }, options
         );
@@ -66,7 +64,17 @@ export default function Weather() {
         }
     }, [currentLocation, dispatch])
 
-    const geoButton = <button className='white-button' disabled={buttonDisabled} style={buttonStyle} onClick={getGeo}>{buttonText}</button>;
+    const renderGeoButton = () => {
+        return (
+            <button
+                // className={classNames('white-button', geoPositionLoadingStatus !== 'idle' && 'button-disabled')}
+                className='white-button'
+                disabled={geoPositionLoadingStatus !== 'idle'}
+                onClick={getGeo}>
+                {geoPositionLoadingStatus === 'loading' ? 'Loading...' : 'Get weather'}
+            </button>
+        )
+    }
     const renderWeatherWidget = () => {
         switch (weatherLoadingStatus) {
             case 'loading':
@@ -74,17 +82,29 @@ export default function Weather() {
             case 'idle':
                 return <WeatherWidget {...currentWeather} />;
             case 'failed':
-                return <p>Error loading weather</p>;
+                return <p className='weather-error-message'>Error loading weather</p>;
             default:
                 return <></>;
         }
     }
 
+    const renderButtonOrWidget = () => {
+        //If there were not attmpts to get location show button
+        if (currentLocation.latitude === 0 && geoPositionLoadingStatus !== 'failed') {
+            return renderGeoButton();
+        //If attempt to get location was not succesful show message
+        } else if (geoPositionLoadingStatus === 'failed') {
+            return <p className='weather-error-message'>User denied Geolocation</p>
+        } 
+        //If location was determined show weather
+        else {
+            return renderWeatherWidget();
+        }
+    }
+
     return (
         <div className='weather-widget'>
-            {/* {loadingPosition === 'pending' ? geoButton : }  */}
-            {currentLocation.latitude === 0 ? geoButton : renderWeatherWidget()}
-
+            {renderButtonOrWidget()}
         </div>
     )
 }

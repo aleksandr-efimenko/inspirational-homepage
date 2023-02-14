@@ -17,11 +17,10 @@
   filter: blur(5px) brightness(50%);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover; 
+  background-size: cover;
   background-color: black;
   transition: background-image .1s;
 }
-
 
 .slide-btn {
   margin: auto 0;
@@ -30,13 +29,14 @@
   cursor: pointer;
   filter: drop-shadow(1px 0 3px white) drop-shadow(-1px 0 3px white) drop-shadow(0 1px 3px white) drop-shadow(0 -1px 3px white);
 }
+
 .slide-btn:hover {
   opacity: 1;
   filter: drop-shadow(5px 0 3px white) drop-shadow(-5px 0 3px white) drop-shadow(0 1px 5px white) drop-shadow(0 -1px px white);
   /* filter: drop-shadow(5px 0 3px white); */
 }
 
-.slide-btn-container-right{
+.slide-btn-container-right {
   grid-row: 1 / 13;
   display: flex;
   justify-content: flex-end;
@@ -44,6 +44,7 @@
   grid-column: 12;
 
 }
+
 .slide-btn-container-left {
   grid-row: 1 / 13;
   display: flex;
@@ -70,7 +71,6 @@
   font-style: italic;
 }
 
-
 .white-button {
   font-size: 1.5rem;
   color: white;
@@ -85,20 +85,27 @@
 .white-button:hover {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 4px;
-
 }
 
 .white-button:active {
   background-color: rgba(255, 255, 255, 1);
   color: black;
   border-radius: 4px;
+}
 
+button:disabled,
+button[disabled],
+button[disabled]:active {
+  cursor: not-allowed;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: white;
 }
 
 @media only screen and (max-width: 600px) {
   .App {
     row-gap: 0.5rem;
   }
+
   .quote-container p {
     font-size: 1rem;
   }
