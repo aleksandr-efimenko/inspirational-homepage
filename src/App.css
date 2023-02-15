@@ -1,6 +1,6 @@
 .App {
   height: 100vh;
-  grid-template-rows: repeat(12, minmax(0, 1fr));
+  grid-template-rows: 4rem  repeat(11, minmax(0, 1fr));
   grid-template-columns: 3rem repeat(10, minmax(0, 1fr)) 3rem;
   row-gap: 1rem;
   display: grid;
