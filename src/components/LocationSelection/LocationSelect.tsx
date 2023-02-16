@@ -33,7 +33,7 @@ export default function LocationSelect() {
 
         //Filter duplicates
         return cities.filter((tag, index, array) => array.findIndex(t => t.city === tag.city && t.country === tag.country) === index)
-    }, [searchText])
+    }, [searchText, citiesWithCountry])
 
     const handleSeach = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);

@@ -11,6 +11,7 @@ import { getNextQuote, getPreviousQuote, getRandomQuoteAsync, selectQuoteNeedsNe
 import TaskForm from './components/Tasks/TaskForm';
 import TaskList from './components/Tasks/TaskList';
 import Background from './components/Background';
+import ModalWindow from './components/ModalWindow/ModalWindow';
 
 library.add(faChevronLeft, faChevronRight);
 
@@ -46,6 +47,7 @@ function App() {
   return (
     <div className="App" >
       <Background />
+      <ModalWindow />
       <Weather />
       <div className='slide-btn-container-left'>
         <FontAwesomeIcon onClick={handlePrevBgAndQuote} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
