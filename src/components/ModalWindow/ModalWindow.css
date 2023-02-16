@@ -1,5 +1,5 @@
 .modal {
-    display: block; 
+    display: none; 
     position: fixed; 
     z-index: 1;
     left: 0;
@@ -34,22 +34,22 @@
     cursor: pointer;
   }
   
-  input {
+   .modal-container input {
     width: 100%;
   }
   
-  ul {
+   .modal-container ul {
     padding: 0;
     list-style-type: none;
   }
   
-  li {
+   .modal-container li {
     
     border: 1px solid rgba(0,0,0,0);
   
   }
   
-  li:hover {
+  .modal-container li:hover {
     border: 1px solid black;
     cursor: pointer;
   }
