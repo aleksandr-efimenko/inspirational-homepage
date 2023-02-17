@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { v4 as uuid } from 'uuid';
+import { nanoid } from "nanoid";
 
 export interface Task {
     text: string,
@@ -21,13 +21,13 @@ const generateBGColor = () => {
 const initialState: TasksState = {
     tasksList: [{
         text: 'Create new feature',
-        id: uuid(),
+        id: nanoid(),
         done: false,
         bgColor: generateBGColor()
     },
     {
         text: 'Workout for 30 minutes',
-        id: uuid(),
+        id: nanoid(),
         done: false,
         bgColor: generateBGColor()
     }],
@@ -40,7 +40,7 @@ export const tasksSlice = createSlice({
         addTask: (state, action) => {
             state.tasksList.push({
                 text: action.payload,
-                id: uuid(),
+                id: nanoid(),
                 done: false,
                 bgColor: generateBGColor()
             })
