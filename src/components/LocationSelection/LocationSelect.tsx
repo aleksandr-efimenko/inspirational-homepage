@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useMemo, useState } from 'react'
 import data from './countries.min.json';
+import { nanoid } from 'nanoid';
 
 
 type CityWithCountry = {
@@ -29,7 +30,7 @@ export default function LocationSelect() {
 
         const cities = citiesWithCountry.filter((el) =>
             el.city.toLowerCase().includes(searchText.toLowerCase())
-        ).sort().slice(0, 5);
+        ).sort().slice(0, 100);
 
         //Filter duplicates
         return cities.filter((tag, index, array) => array.findIndex(t => t.city === tag.city && t.country === tag.country) === index)
@@ -48,12 +49,13 @@ export default function LocationSelect() {
     return (
         <>
           <span className="close">&times;</span>
-          <input type='text' id='city-input' list='cities-list' onChange={handleSeach}></input>
-          <ul className='items-list'>
+          <h1>Search city</h1>
+          <input type='text' id='city-input' className='task-text-input' onChange={handleSeach}></input>
+          <ul className='locations-list'>
             {searchResults.map((el) => {
-              return <li className='location-item-container'
+              return <li className='location-item-container white-button'
                 onClick={() => handleSelect(el)}
-                // key={nanoid()}
+                key={nanoid()}
               >{el.country}, {el.city}</li>
             })
             }
