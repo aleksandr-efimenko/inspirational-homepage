@@ -89,6 +89,10 @@ export default function Weather() {
                 return <></>;
         }
     }
+    const handleManuallySetLocation = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        dispatch(showModalWindow(true));
+    }
 
     const renderButtonOrWidget = () => {
         //If there were not attmpts to get location show button
@@ -96,7 +100,7 @@ export default function Weather() {
             return renderGeoButton();
         //If attempt to get location was not succesful show message
         } else if (geoPositionLoadingStatus === 'failed') {
-            return <p className='weather-error-message'>User denied Geolocation</p>
+            return <p className='weather-error-message'>User denied Geolocation <a href='/' onClick={handleManuallySetLocation}>set manually</a></p>
         } 
         //If location was determined show weather
         else {

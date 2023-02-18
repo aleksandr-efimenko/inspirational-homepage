@@ -28,6 +28,10 @@
 .weather-error-message {
   font-size: 1rem;
 }
+.weather-error-message a {
+  color: blue;
+  text-shadow: none;
+}
 
 .temp-description {
   font-size: 1rem;
@@ -35,6 +39,8 @@
   line-height: 80%;
   text-align: right;
 }
+
+
 
 @media only screen and (max-width: 600px) {
 
