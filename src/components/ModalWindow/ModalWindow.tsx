@@ -10,6 +10,7 @@ export default function ModalWindow() {
   return (
     <>{showModal &&
       <div className='modal'>
+        <div className='overlay' onClick={() => dispatch(showModalWindow(false))}></div>
         <div className='modal-container'>
           <span className="close" onClick={() => dispatch(showModalWindow(false))}>&times;</span>
           <LocationSelect />

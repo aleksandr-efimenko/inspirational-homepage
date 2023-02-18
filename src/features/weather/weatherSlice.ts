@@ -1,18 +1,18 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchWeather } from "./weatherAPI";
-import { WeatherData, WeatherLocation } from "./Weather";
+import { WeatherData, AutoDetectedLocation } from "./Weather";
 import { WeatherDataFromAPI } from "./weatherDataFromAPI";
 
 export interface WeatherLoadingState {
     currentWeather: WeatherData;
-    location: WeatherLocation;
+    autoDetectedLocation: AutoDetectedLocation;
     status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: WeatherLoadingState = {
     currentWeather: {} as WeatherData,
-    location: {
+    autoDetectedLocation: {
         longitude: 0,
         latitude: 0
     },
@@ -21,7 +21,7 @@ const initialState: WeatherLoadingState = {
 
 export const getWeatherAsync = createAsyncThunk(
     'weather/fetchWeather',
-    async (location: WeatherLocation) => {
+    async (location: AutoDetectedLocation) => {
         const response:WeatherDataFromAPI = await fetchWeather(location.longitude, location.latitude);
         if (response.weather.length === 0 || !response.main)
             return;
@@ -41,9 +41,9 @@ export const weatherSlice = createSlice({
     name: 'weather',
     initialState: initialState,
     reducers: {
-        setLocation: (state, action:PayloadAction<WeatherLocation>) => {
-            state.location.latitude = action.payload.latitude;
-            state.location.longitude = action.payload.longitude;
+        setLocation: (state, action:PayloadAction<AutoDetectedLocation>) => {
+            state.autoDetectedLocation.latitude = action.payload.latitude;
+            state.autoDetectedLocation.longitude = action.payload.longitude;
         }
     },
     extraReducers: (builder) => {

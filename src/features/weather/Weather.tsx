@@ -8,7 +8,7 @@ import { AppDispatch } from '../../app/store';
 import { showModalWindow } from '../locationSelection/locationSelectionSlice';
 // import { classNames } from '../../classNames';
 
-export type WeatherLocation = {
+export type AutoDetectedLocation = {
     longitude: number,
     latitude: number
 }
@@ -30,7 +30,7 @@ export default function Weather() {
     const currentWeather: WeatherData = useAppSelector(selectWeather);
     const weatherLoadingStatus = useAppSelector(selectWeatherLoadingStatus);
 
-    const [currentLocation, setCurrentLocation] = useState<WeatherLocation>({ latitude: 0, longitude: 0 });
+    const [currentLocation, setCurrentLocation] = useState<AutoDetectedLocation>({ latitude: 0, longitude: 0 });
     const getGeo = () => {
         if (geoPositionLoadingStatus === 'loading' || weatherLoadingStatus === 'loading')
             return;
