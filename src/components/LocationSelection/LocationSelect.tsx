@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useMemo, useState } from 'react'
 import data from './countries.min.json';
 import { nanoid } from 'nanoid';
+import { useAppDispatch } from '../../app/hooks';
 
-
-type CityWithCountry = {
+export interface CityWithCountry {
     city: string
     country: string,
 }
 
-
 export default function LocationSelect() {
+    const dispatch = useAppDispatch();
     const [searchText, setSearchText] = useState('');
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
@@ -44,22 +44,22 @@ export default function LocationSelect() {
         console.log(cityWithCountry)
         setCity(cityWithCountry.city)
         setCountry(cityWithCountry.country)
+
     }
 
     return (
         <>
-          <span className="close">&times;</span>
-          <h1>Search city</h1>
-          <input type='text' id='city-input' className='task-text-input' onChange={handleSeach}></input>
-          <ul className='locations-list'>
-            {searchResults.map((el) => {
-              return <li className='location-item-container white-button'
-                onClick={() => handleSelect(el)}
-                key={nanoid()}
-              >{el.country}, {el.city}</li>
-            })
-            }
-          </ul>
-          </>
+            <h1>Search city</h1>
+            <input type='text' id='city-input' className='task-text-input' onChange={handleSeach}></input>
+            <ul className='locations-list'>
+                {searchResults.map((el) => {
+                    return <li className='location-item-container white-button'
+                        onClick={() => handleSelect(el)}
+                        key={nanoid()}
+                    >{el.country}, {el.city}</li>
+                })
+                }
+            </ul>
+        </>
     )
 }
