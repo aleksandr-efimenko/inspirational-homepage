@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import LocationSelect from '../LocationSelection/LocationSelect'
 import './ModalWindow.css'
+import { selectShowModal, showModalWindow } from '../../features/locationSelection/locationSelectionSlice'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
 export default function ModalWindow() {
-  const [modal, setModal] = useState(false);
-  
+  const dispatch = useAppDispatch();
+  const showModal: boolean = useAppSelector(selectShowModal);
+
 
   return (
-    <>{modal &&
+    <>{showModal &&
       <div className='modal'>
         <div className='modal-container'>
-        <span className="close" onClick={() => setModal(false)}>&times;</span>
+          <span className="close" onClick={() => dispatch(showModalWindow(false))}>&times;</span>
           <LocationSelect />
         </div>
       </div>}
     </>
-    )
+  )
 }

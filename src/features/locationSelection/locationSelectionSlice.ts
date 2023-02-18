@@ -3,12 +3,12 @@ import { CityWithCountry } from "../../components/LocationSelection/LocationSele
 import { RootState } from "../../app/store";
 
 interface LocationSelectState {
-    settingLocationManually: boolean,
+    modalWindowDisplay: boolean,
     manualLocation: CityWithCountry
 }
 
 const initialState: LocationSelectState = {
-    settingLocationManually: false,
+    modalWindowDisplay: false,
     manualLocation: {} as CityWithCountry
 }
 
@@ -16,19 +16,20 @@ const locationSelectionSlice = createSlice({
     name: 'locationManually',
     initialState: initialState,
     reducers: {
-        setLocationManually: (state) => {
-            state.settingLocationManually = true;
+        showModalWindow: (state, action) => {
+            state.modalWindowDisplay = action.payload;
         },
         setLocationCityAndCountry: (state, action) => {
-            state.settingLocationManually = false;
+            state.modalWindowDisplay = false;
             state.manualLocation.city = action.payload.city;
             state.manualLocation.country = action.payload.country;
         }
     }
 })
 
-export const selectCurrentLocation = (state:RootState) => { return state.LocationSelect.manualLocation }
+export const selectShowModal = (state:RootState) => { return state.locationManually.modalWindowDisplay }
+export const selectCurrentLocation = (state:RootState) => { return state.locationManually.manualLocation }
 
-export const { setLocationManually, setLocationCityAndCountry } = locationSelectionSlice.actions;
+export const { showModalWindow, setLocationCityAndCountry } = locationSelectionSlice.actions;
 
 export default locationSelectionSlice.reducer;

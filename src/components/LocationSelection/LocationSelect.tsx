@@ -2,6 +2,7 @@ import React, { ChangeEvent, useMemo, useState } from 'react'
 import data from './countries.min.json';
 import { nanoid } from 'nanoid';
 import { useAppDispatch } from '../../app/hooks';
+import { setLocationCityAndCountry, showModalWindow } from '../../features/locationSelection/locationSelectionSlice';
 
 export interface CityWithCountry {
     city: string
@@ -11,8 +12,6 @@ export interface CityWithCountry {
 export default function LocationSelect() {
     const dispatch = useAppDispatch();
     const [searchText, setSearchText] = useState('');
-    const [city, setCity] = useState('');
-    const [country, setCountry] = useState('');
 
     // Transform the array to be in object CityWithCountry: {country: '', city: ''}
     const citiesWithCountry: CityWithCountry[] = Object.entries(data).map(([country, cities]) =>
@@ -42,9 +41,11 @@ export default function LocationSelect() {
 
     const handleSelect = (cityWithCountry: CityWithCountry) => {
         console.log(cityWithCountry)
-        setCity(cityWithCountry.city)
-        setCountry(cityWithCountry.country)
-
+        dispatch(setLocationCityAndCountry({
+            city: cityWithCountry.city,
+            country: cityWithCountry.country
+        }))
+        showModalWindow(false);
     }
 
     return (

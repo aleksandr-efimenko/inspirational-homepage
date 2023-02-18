@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import WeatherWidget from '../../components/WeatherWidget';
 import './weather.css';
 import { AppDispatch } from '../../app/store';
+import { showModalWindow } from '../locationSelection/locationSelectionSlice';
 // import { classNames } from '../../classNames';
 
 export type WeatherLocation = {
@@ -50,6 +51,7 @@ export default function Weather() {
             function (error) {
                 setGeoPositionLoading('failed');
                 console.error("Error Code = " + error.code + " - " + error.message);
+                dispatch(showModalWindow(true));
             }, options
         );
     }
