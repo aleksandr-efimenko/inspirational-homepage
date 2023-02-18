@@ -29,7 +29,7 @@ export default function LocationSelect() {
 
         const cities = citiesWithCountry.filter((el) =>
             el.city.toLowerCase().includes(searchText.toLowerCase())
-        ).sort().slice(0, 100);
+        ).sort().slice(0, 20);
 
         //Filter duplicates
         return cities.filter((tag, index, array) => array.findIndex(t => t.city === tag.city && t.country === tag.country) === index)

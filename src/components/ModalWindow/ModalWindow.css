@@ -29,8 +29,11 @@
 .close {
   color: rgb(255, 255, 255);
   float: right;
-  font-size: 28px;
+  font-size: 2rem;
   font-weight: bold;
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
 }
 
 .close:hover,
@@ -55,17 +58,3 @@
   padding: 0.5rem 1rem;
   margin: 0.5rem 0.5rem 0 0;
 }
-
-/* .modal-container input {
-    width: 100%;
-  }
-   .modal-container li {
-    
-    border: 1px solid rgba(0,0,0,0);
-  
-  }
-  
-  .modal-container li:hover {
-    border: 1px solid black;
-    cursor: pointer;
-  }  */
