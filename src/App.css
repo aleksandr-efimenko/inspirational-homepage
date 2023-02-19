@@ -119,3 +119,16 @@ button[disabled]:active {
     grid-row: 10 / 13;
   }
 }
+
+.spinner {
+  animation: spin infinite 1s linear;
+}
+
+@keyframes spin {
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+}

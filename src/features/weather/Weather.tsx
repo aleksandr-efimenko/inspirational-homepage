@@ -6,6 +6,12 @@ import WeatherWidget from '../../components/WeatherWidget';
 import './weather.css';
 import { AppDispatch } from '../../app/store';
 import { showModalWindow } from '../locationSelection/locationSelectionSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faCircleNotch);
+
 // import { classNames } from '../../classNames';
 
 export type AutoDetectedLocation = {
@@ -73,14 +79,14 @@ export default function Weather() {
                 className='white-button'
                 disabled={geoPositionLoadingStatus !== 'idle'}
                 onClick={getGeo}>
-                {geoPositionLoadingStatus === 'loading' ? 'Loading...' : 'Get weather'}
+                Get weather
             </button>
         )
     }
     const renderWeatherWidget = () => {
         switch (weatherLoadingStatus) {
             case 'loading':
-                return <></>
+                return <FontAwesomeIcon className='spinner' size={'1x'} icon={['fas', 'circle-notch']} />
             case 'idle':
                 return <WeatherWidget {...currentWeather} />;
             case 'failed':
@@ -96,12 +102,18 @@ export default function Weather() {
 
     const renderButtonOrWidget = () => {
         //If there were not attmpts to get location show button
-        if (currentLocation.latitude === 0 && geoPositionLoadingStatus !== 'failed') {
+        if (currentLocation.latitude === 0 && geoPositionLoadingStatus === 'idle') {
             return renderGeoButton();
-        //If attempt to get location was not succesful show message
-        } else if (geoPositionLoadingStatus === 'failed') {
-            return <p className='weather-error-message'>User denied Geolocation <a href='/' onClick={handleManuallySetLocation}>set manually</a></p>
+            //If attempt to get location was not succesful show message
+        } else if (currentLocation.latitude === 0 && geoPositionLoadingStatus ==='loading') {
+            return <FontAwesomeIcon className='spinner' size={'1x'} icon={['fas', 'circle-notch']} />
         } 
+        else if (geoPositionLoadingStatus === 'failed') {
+            return <p className='weather-error-message'>
+                User denied Geolocation
+                <a href='/' onClick={handleManuallySetLocation}>set manually</a>
+            </p>
+        }
         //If location was determined show weather
         else {
             return renderWeatherWidget();
