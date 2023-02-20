@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import citiesWithCountries from './countries.min.json';
 import countryCodes from './country_codex.json';
 import { nanoid } from 'nanoid';
@@ -10,10 +10,6 @@ export interface CityWithCountry {
     country: string,
     countryCode: string
 }
-
-// const setCountryCodes = (country: string) => {
-//     return countryCodes.find(codeEl => codeEl.name.toLocaleLowerCase().includes(country.toLowerCase()))?.['alpha-2']
-// }
 
 export default function LocationSelect() {
     const dispatch = useAppDispatch();
@@ -48,16 +44,23 @@ export default function LocationSelect() {
     const handleSelect = (cityWithCountry: CityWithCountry) => {
         dispatch(setLocationCityAndCountry({
             city: cityWithCountry.city,
-            // country: cityWithCountry.country,
             countryCode: countryCodes.find(codeEl => codeEl.name.toLowerCase().includes(cityWithCountry.country.toLowerCase()))?.['alpha-2']
         }))
         showModalWindow(false);
     }
 
+    useEffect(() => {
+        const handleEsc = (event: KeyboardEvent) => {
+            if (event.code === 'Escape') dispatch(showModalWindow(false));
+        }
+        window.addEventListener('keydown', handleEsc);
+        return () => { window.removeEventListener('keydown', handleEsc); }
+    }, [])
+
     return (
         <>
             <h1>Search city</h1>
-            <input type='text' id='city-input' className='task-text-input' onChange={handleSeach}></input>
+            <input autoFocus type='text' id='city-input' className='task-text-input' onChange={handleSeach}></input>
             <ul className='locations-list'>
                 {searchResults.map((el) => {
                     return <li className='location-item-container white-button'
