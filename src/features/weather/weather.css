@@ -5,7 +5,7 @@
   color: white;
   text-shadow: 0 0 3px rgb(0, 0, 0);
   font-size: 2rem;
-  max-width: 200px;
+  /* max-width: 250px; */
 }
 
 .temp {
@@ -37,7 +37,7 @@
 .temp-description {
   font-size: 1rem;
   text-align: center;
-  line-height: 80%;
+  line-height: 90%;
   text-align: right;
 }
 
