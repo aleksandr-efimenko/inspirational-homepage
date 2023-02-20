@@ -9,7 +9,7 @@ import { selectManualLocationStatus, showModalWindow } from '../locationSelectio
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { selectAutoGeoposition, selectAutoGeopositionStatus, setAutoLocationStatus, setLocationAuto  } from '../locationSelection/locationAutoSlice';
+import { selectAutoGeoposition, selectAutoGeopositionStatus, setAutoLocationStatus, setLocationAuto } from '../locationSelection/locationAutoSlice';
 import { selectManualLocation } from "../locationSelection/locationManuallySlice"
 
 library.add(faCircleNotch);
@@ -60,7 +60,7 @@ export default function Weather() {
             console.log('get weather from location', currentManualLocation)
             dispatch(getWeatherFromManualLocationAsync(currentManualLocation))
         }
-    }, [dispatch, currentAutoLocation, currentAutoLocationStatus, currentManualLocation, currentAutoLocationStatus])
+    }, [dispatch, currentAutoLocation, currentAutoLocationStatus, currentManualLocation, currentManualLocationStatus])
 
     const renderGeoButton = () => {
         return (
