@@ -55,7 +55,7 @@ export default function LocationSelect() {
         }
         window.addEventListener('keydown', handleEsc);
         return () => { window.removeEventListener('keydown', handleEsc); }
-    }, [])
+    }, [dispatch])
 
     return (
         <>
