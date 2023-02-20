@@ -1,5 +1,5 @@
 import './App.css';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from './app/hooks';
@@ -13,7 +13,7 @@ import TaskList from './components/Tasks/TaskList';
 import Background from './components/Background';
 import ModalWindow from './components/ModalWindow/ModalWindow';
 
-library.add(faChevronLeft, faChevronRight);
+library.add(faChevronLeft, faChevronRight, faCircleNotch);
 
 function App() {
   const dispatch = useAppDispatch();
@@ -34,9 +34,9 @@ function App() {
   const handleNextBgAndQuote = () => {
     dispatch(getNextBgUnsplash());
     dispatch(getNextQuote());
-    if(quoteNeesLoad)
+    if (quoteNeesLoad)
       dispatch(getRandomQuoteAsync());
-      
+
     if (bgNeedLoad)
       dispatch(getRandomImageAsync());
     if (bgUnsplashStatus === 'failed') {

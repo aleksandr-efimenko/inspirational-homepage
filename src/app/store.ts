@@ -4,7 +4,8 @@ import weatherReducer from '../features/weather/weatherSlice';
 import quoteReducer from '../features/quotes/quoteSlice';
 import backgroundUnsplashReducer from '../features/background/backgroundUnsplashSlice';
 import tasksReducer from '../features/tasks/tasksSlice';
-import locationManuallyReducer from '../features/locationSelection/locationSelectionSlice'
+import locationManuallyReducer from '../features/locationSelection/locationManuallySlice';
+import locationAutoReducer from '../features/locationSelection/locationAutoSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     weather: weatherReducer,
     quote: quoteReducer,
     tasks: tasksReducer,
-    locationManually: locationManuallyReducer
+    locationManually: locationManuallyReducer,
+    locationAuto: locationAutoReducer
   },
 });
 

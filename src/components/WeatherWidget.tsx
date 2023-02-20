@@ -1,4 +1,4 @@
-import { WeatherData } from '../features/weather/Weather'
+import { WeatherData } from '../features/weather/weatherSlice'
 
 export default function WeatherWidget({ temperature, description, icon, unit, location }: WeatherData) {
     return (

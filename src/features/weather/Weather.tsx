@@ -1,46 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import { getWeatherAsync, selectWeather, selectWeatherLoadingStatus, setLocation } from './weatherSlice';
+import { WeatherData, getWeatherAsync, selectWeather, selectWeatherLoadingStatus } from './weatherSlice';
 import { useDispatch } from 'react-redux';
 import WeatherWidget from '../../components/WeatherWidget';
 import './weather.css';
 import { AppDispatch } from '../../app/store';
-import { showModalWindow } from '../locationSelection/locationSelectionSlice';
+import { showModalWindow } from '../locationSelection/locationManuallySlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { selectAutoGeoposition, setLocationAuto, setLocationAutoStatus as setAutoLocationStatus } from '../locationSelection/locationAutoSlice';
 
 library.add(faCircleNotch);
 
 // import { classNames } from '../../classNames';
 
-export type AutoDetectedLocation = {
-    longitude: number,
-    latitude: number
-}
-
-export type WeatherData = {
-    temperature: number,
-    icon: string,
-    description: string,
-    unit: string,
-    location?: string
-}
-
-export type GeoPositionStatus = 'idle' | 'loading' | 'failed';
-
 export default function Weather() {
     const dispatch = useDispatch<AppDispatch>();
-    const [geoPositionLoadingStatus, setGeoPositionLoading] = useState<GeoPositionStatus>('idle');
-
     const currentWeather: WeatherData = useAppSelector(selectWeather);
     const weatherLoadingStatus = useAppSelector(selectWeatherLoadingStatus);
 
-    const [currentLocation, setCurrentLocation] = useState<AutoDetectedLocation>({ latitude: 0, longitude: 0 });
+    const currentAutoLocation = useAppSelector(selectAutoGeoposition)
+
     const getGeo = () => {
-        if (geoPositionLoadingStatus === 'loading' || weatherLoadingStatus === 'loading')
+        if (currentAutoLocation.status === 'loading' || weatherLoadingStatus === 'loading')
             return;
-        setGeoPositionLoading('loading');
+        dispatch(setAutoLocationStatus('loading'));
         const options = {
             enableHighAccuracy: false,
             timeout: 20_000,
@@ -49,13 +34,13 @@ export default function Weather() {
 
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                setCurrentLocation({
+                setLocationAuto({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 })
             },
             function (error) {
-                setGeoPositionLoading('failed');
+                setAutoLocationStatus('failed');
                 console.error("Error Code = " + error.code + " - " + error.message);
                 dispatch(showModalWindow(true));
             }, options
@@ -63,21 +48,21 @@ export default function Weather() {
     }
 
     useEffect(() => {
-        if (currentLocation.latitude !== 0) {
-            dispatch(setLocation({
-                latitude: currentLocation.latitude,
-                longitude: currentLocation.longitude
+        if (currentAutoLocation.status === 'loaded') {
+            dispatch(setLocationAuto({
+                latitude: currentAutoLocation.latitude,
+                longitude: currentAutoLocation.longitude
             }))
-            dispatch(getWeatherAsync(currentLocation));
+            dispatch(getWeatherAsync(currentAutoLocation));
         }
-    }, [currentLocation, dispatch])
+    }, [currentAutoLocation, dispatch])
 
     const renderGeoButton = () => {
         return (
             <button
                 // className={classNames('white-button', geoPositionLoadingStatus !== 'idle' && 'button-disabled')}
                 className='white-button'
-                disabled={geoPositionLoadingStatus !== 'idle'}
+                disabled={currentAutoLocation.status === 'not-set'}
                 onClick={getGeo}>
                 Get weather
             </button>
@@ -102,17 +87,19 @@ export default function Weather() {
 
     const renderButtonOrWidget = () => {
         //If there were not attmpts to get location show button
-        if (currentLocation.latitude === 0 && geoPositionLoadingStatus === 'idle') {
+        if (currentAutoLocation.latitude === 0 && currentAutoLocation.status === 'not-set') {
             return renderGeoButton();
             //If attempt to get location was not succesful show message
-        } else if (currentLocation.latitude === 0 && geoPositionLoadingStatus ==='loading') {
+        } else if (currentAutoLocation.latitude === 0 && currentAutoLocation.status === 'loading') {
             return <FontAwesomeIcon className='spinner' size={'1x'} icon={['fas', 'circle-notch']} />
-        } 
-        else if (geoPositionLoadingStatus === 'failed') {
-            return <p className='weather-error-message'>
-                User denied Geolocation
-                <a href='/' onClick={handleManuallySetLocation}>set manually</a>
-            </p>
+        }
+        else if (currentAutoLocation.status === 'failed') {
+            return <>
+                <p className='weather-error-message'>User denied Geolocation
+                    <br />
+                    <a href='/' onClick={handleManuallySetLocation}>Set Geolocation</a>
+                </p>
+            </>
         }
         //If location was determined show weather
         else {

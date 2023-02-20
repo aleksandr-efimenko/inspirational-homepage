@@ -22,7 +22,7 @@ const locationSelectionSlice = createSlice({
         setLocationCityAndCountry: (state, action) => {
             state.modalWindowDisplay = false;
             state.manualLocation.city = action.payload.city;
-            state.manualLocation.country = action.payload.country;
+            state.manualLocation.countryCode = action.payload.countryCode;
         }
     }
 })

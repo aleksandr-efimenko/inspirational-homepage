@@ -3,7 +3,7 @@ import citiesWithCountries from './countries.min.json';
 import countryCodes from './country_codex.json';
 import { nanoid } from 'nanoid';
 import { useAppDispatch } from '../../app/hooks';
-import { setLocationCityAndCountry, showModalWindow } from '../../features/locationSelection/locationSelectionSlice';
+import { setLocationCityAndCountry, showModalWindow } from '../../features/locationSelection/locationManuallySlice';
 
 export interface CityWithCountry {
     city: string
