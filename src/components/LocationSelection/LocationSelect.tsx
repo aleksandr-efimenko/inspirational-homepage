@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useMemo, useState } from 'react'
-import data from './countries.min.json';
+import citiesWithCountries from './countries.min.json';
+import countryCodes from './country_codex.json';
 import { nanoid } from 'nanoid';
 import { useAppDispatch } from '../../app/hooks';
 import { setLocationCityAndCountry, showModalWindow } from '../../features/locationSelection/locationSelectionSlice';
@@ -7,18 +8,23 @@ import { setLocationCityAndCountry, showModalWindow } from '../../features/locat
 export interface CityWithCountry {
     city: string
     country: string,
+    countryCode: string
 }
+
+// const setCountryCodes = (country: string) => {
+//     return countryCodes.find(codeEl => codeEl.name.toLocaleLowerCase().includes(country.toLowerCase()))?.['alpha-2']
+// }
 
 export default function LocationSelect() {
     const dispatch = useAppDispatch();
     const [searchText, setSearchText] = useState('');
-
     // Transform the array to be in object CityWithCountry: {country: '', city: ''}
-    const citiesWithCountry: CityWithCountry[] = Object.entries(data).map(([country, cities]) =>
+    const citiesWithCountry: CityWithCountry[] = Object.entries(citiesWithCountries).map(([country, cities]) =>
         cities.map(city => {
             return {
                 country: country,
-                city: city
+                city: city,
+                countryCode: ''
             }
         })
     ).flat();
@@ -43,7 +49,8 @@ export default function LocationSelect() {
         console.log(cityWithCountry)
         dispatch(setLocationCityAndCountry({
             city: cityWithCountry.city,
-            country: cityWithCountry.country
+            // country: cityWithCountry.country,
+            countryCode: countryCodes.find(codeEl => codeEl.name.toLowerCase().includes(cityWithCountry.country.toLowerCase()))?.['alpha-2']
         }))
         showModalWindow(false);
     }
