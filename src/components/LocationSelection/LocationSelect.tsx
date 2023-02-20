@@ -46,7 +46,6 @@ export default function LocationSelect() {
     }
 
     const handleSelect = (cityWithCountry: CityWithCountry) => {
-        console.log(cityWithCountry)
         dispatch(setLocationCityAndCountry({
             city: cityWithCountry.city,
             // country: cityWithCountry.country,

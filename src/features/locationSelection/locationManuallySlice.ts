@@ -4,12 +4,14 @@ import { RootState } from "../../app/store";
 
 interface LocationSelectState {
     modalWindowDisplay: boolean,
-    manualLocation: CityWithCountry
+    manualLocation: CityWithCountry,
+    status: 'set' | 'not-set'
 }
 
 const initialState: LocationSelectState = {
     modalWindowDisplay: false,
-    manualLocation: {} as CityWithCountry
+    manualLocation: {} as CityWithCountry,
+    status: 'not-set'
 }
 
 const locationSelectionSlice = createSlice({
@@ -23,12 +25,14 @@ const locationSelectionSlice = createSlice({
             state.modalWindowDisplay = false;
             state.manualLocation.city = action.payload.city;
             state.manualLocation.countryCode = action.payload.countryCode;
+            state.status = 'set';
         }
     }
 })
 
-export const selectShowModal = (state:RootState) => { return state.locationManually.modalWindowDisplay }
-export const selectCurrentLocation = (state:RootState) => { return state.locationManually.manualLocation }
+export const selectShowModal = (state:RootState) => state.locationManually.modalWindowDisplay;
+export const selectManualLocation = (state:RootState) => state.locationManually.manualLocation;
+export const selectManualLocationStatus = (state: RootState) => state.locationManually.status;
 
 export const { showModalWindow, setLocationCityAndCountry } = locationSelectionSlice.actions;
 
