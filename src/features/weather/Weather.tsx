@@ -40,10 +40,10 @@ export default function Weather() {
 
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                setLocationAuto({
+                dispatch(setLocationAuto({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
-                })
+                }))
             },
             function (error) {
                 dispatch(setAutoLocationStatus('failed'));
@@ -60,7 +60,7 @@ export default function Weather() {
             console.log('get weather from location', currentManualLocation)
             dispatch(getWeatherFromManualLocationAsync(currentManualLocation))
         }
-    }, [currentAutoLocation, dispatch, currentManualLocation])
+    }, [dispatch, currentAutoLocation, currentAutoLocationStatus, currentManualLocation, currentAutoLocationStatus])
 
     const renderGeoButton = () => {
         return (
@@ -95,7 +95,7 @@ export default function Weather() {
         //If there were not attmpts to get location show button
         if (currentAutoLocationStatus === 'not-set') {
             return renderGeoButton();
-        } else if (currentAutoLocationStatus === 'loading' || weatherLoadingStatus === 'loading') {
+        } else if (currentAutoLocationStatus === 'loading') {
             return <FontAwesomeIcon className='spinner' size={'1x'} icon={['fas', 'circle-notch']} />
         }
         else if (currentAutoLocationStatus === 'failed' && currentManualLocationStatus === 'not-set') {

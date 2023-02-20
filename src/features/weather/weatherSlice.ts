@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchWeatherByCity, fetchWeatherByAutoLocation } from "./weatherAPI";
 import { WeatherDataFromAPI } from "./weatherDataFromAPI";
-import { AutoDetectedLocationState, Coordinates } from "../locationSelection/locationAutoSlice";
+import { Coordinates } from "../locationSelection/locationAutoSlice";
 import { CityWithCountry } from "../../components/LocationSelection/LocationSelect";
 
 export type WeatherData = {
@@ -15,16 +15,11 @@ export type WeatherData = {
 
 export interface WeatherLoadingState {
     currentWeather: WeatherData;
-    autoDetectedLocation: Coordinates;
     status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: WeatherLoadingState = {
     currentWeather: {} as WeatherData,
-    autoDetectedLocation: {
-        longitude: 0,
-        latitude: 0
-    },
     status: 'idle'
 }
 
@@ -66,7 +61,6 @@ export const weatherSlice = createSlice({
     name: 'weather',
     initialState: initialState,
     reducers: {
-
     },
     extraReducers: (builder) => {
         builder
