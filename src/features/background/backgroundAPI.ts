@@ -5,7 +5,7 @@ const endPoint = '/photos/random';
 
 export const fetchBackgroundUnsplash = async (count: number = 15) => {
     if (!accessKey) {
-        console.error('Access key not set');
+        console.error('Access key UNSPLASH is not set');
         // throw new Error('Access key not set');
         return;
     }
