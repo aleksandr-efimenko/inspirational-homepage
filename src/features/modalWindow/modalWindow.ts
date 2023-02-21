@@ -31,6 +31,7 @@ const modalWindowSlice = createSlice({
 })
 
 export const selectShowModal = (state: RootState) => state.modalWindow.modalWindowDisplay;
+export const selectModalContent = (state: RootState) => state.modalWindow.content;
 
 export const { openLoginForm, openLocationSelect, closeModalWindow } = modalWindowSlice.actions;
 

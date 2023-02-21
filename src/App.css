@@ -1,10 +1,11 @@
 .App {
   height: 100vh;
-  grid-template-rows: 4rem  repeat(11, minmax(0, 1fr));
+  grid-template-rows: 4rem repeat(11, minmax(0, 1fr));
   grid-template-columns: 3rem repeat(10, minmax(0, 1fr)) 3rem;
   row-gap: 1rem;
   display: grid;
   font-family: Arial, Helvetica, sans-serif;
+  --link-color: rgb(183, 183, 255);
 }
 
 #background-image-container {
@@ -78,8 +79,7 @@
   border: 2px solid white;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 0.5rem;
-  margin-left: 1rem;
+
 }
 
 .white-button:hover {
@@ -99,6 +99,20 @@ button[disabled]:active {
   cursor: not-allowed;
   background-color: rgba(255, 255, 255, 0.5);
   color: white;
+}
+
+.white-text-input {
+  padding-top: .5rem;
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-shadow: 0 0 3px rgb(0, 0, 0);
+  background: 0;
+  border: 0;
+  border-bottom: 2px solid white;
+  outline: none;
+  color: white;
+  width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -125,10 +139,11 @@ button[disabled]:active {
 }
 
 @keyframes spin {
-from {
-  transform: rotate(0deg);
-}
-to {
-  transform: rotate(360deg);
-}
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

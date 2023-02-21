@@ -21,7 +21,7 @@ export default function TaskForm() {
                 <div className='inputs'>
                     <input
                         type='text'
-                        className='task-text-input'
+                        className='white-text-input'
                         ref={newTaskText}
                         ></input>
                     <input type='submit' className='white-button'></input>

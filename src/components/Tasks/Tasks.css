@@ -26,18 +26,9 @@ h1 {
     justify-content: space-around;
 }
 
-.task-text-input {
-    padding-top: .5rem;
-    display: block;
-    font-size: 1.3rem;
-    font-weight: 500;
-    text-shadow: 0 0 3px rgb(0, 0, 0);
-    background: 0;
-    border: 0;
-    border-bottom: 2px solid white;
-    outline: none;
-    color: white;
-    width: 100%;
+.task-form .white-button {
+    margin-top: 0.5rem;
+    margin-left: 1rem;
 }
 
 .inputs {

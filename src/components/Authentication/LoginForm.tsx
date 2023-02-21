@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { MouseEvent } from 'react'
 
 export default function LoginForm() {
+    const handleCreateAccount = (e: MouseEvent) => {
+        e.preventDefault();
+    }
     return (
-        <form>
-            LoginForm
-            <label htmlFor="">Email
-                <input type='email'></input>
+        <form className='login-form'>
+            <h1>Login</h1>
+            <label htmlFor=""><p>Email</p>
+                <input className='white-text-input' autoFocus type='email'></input>
             </label>
-            <label >
-                <input type='password'></input>
+            <label > <p>Password</p>
+                <input className='white-text-input' type='password'></input>
             </label>
-            <input type='submit'></input>
+            <div id='sign-container'>
+                <button className='white-button' type='submit'>Submit</button>
+                <p><a href='/' onClick={handleCreateAccount} >Create account</a></p>
+            </div>
         </form>
     )
 }

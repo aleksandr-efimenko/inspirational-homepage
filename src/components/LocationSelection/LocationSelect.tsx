@@ -61,7 +61,7 @@ export default function LocationSelect() {
     return (
         <>
             <h1>Search city</h1>
-            <input autoFocus type='text' id='city-input' className='task-text-input' onChange={handleSeach}></input>
+            <input autoFocus type='text' id='city-input' className='white-text-input' onChange={handleSeach}></input>
             <ul className='locations-list'>
                 {searchResults.map((el) => {
                     return <li className='location-item-container white-button'
