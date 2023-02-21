@@ -4,7 +4,7 @@ import countryCodes from './country_codex.json';
 import { nanoid } from 'nanoid';
 import { useAppDispatch } from '../../app/hooks';
 import { setLocationCityAndCountry } from '../../features/locationSelection/locationManuallySlice';
-import { closeModalWindow, openLocationSelect } from '../../features/modalWindow/modalWindow';
+import { closeModalWindow, openLocationSelect } from '../../features/modalWindow/modalWindowSlice';
 
 export interface CityWithCountry {
     city: string

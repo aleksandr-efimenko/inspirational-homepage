@@ -1,7 +1,7 @@
 import React from 'react';
 import './Auth.css';
 import { useAppDispatch } from '../../app/hooks';
-import { openLoginForm } from '../../features/modalWindow/modalWindow';
+import { openLoginForm } from '../../features/modalWindow/modalWindowSlice';
 
 export default function AuthWidget() {
     const dispatch = useAppDispatch();

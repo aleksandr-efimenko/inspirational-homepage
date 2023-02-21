@@ -1,6 +1,6 @@
 import LocationSelect from '../LocationSelection/LocationSelect'
 import './ModalWindow.css'
-import { selectShowModal, selectModalContent, closeModalWindow } from '../../features/modalWindow/modalWindow';
+import { selectShowModal, selectModalContent, closeModalWindow } from '../../features/modalWindow/modalWindowSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import LoginForm from '../Authentication/LoginForm';
 

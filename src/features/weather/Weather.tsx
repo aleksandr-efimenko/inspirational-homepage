@@ -11,7 +11,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { selectAutoGeoposition, selectAutoGeopositionStatus, setAutoLocationStatus, setLocationAuto } from '../locationSelection/locationAutoSlice';
 import { selectManualLocation } from "../locationSelection/locationManuallySlice";
-import { openLocationSelect } from '../modalWindow/modalWindow';
+import { openLocationSelect } from '../modalWindow/modalWindowSlice';
 
 library.add(faCircleNotch);
 
