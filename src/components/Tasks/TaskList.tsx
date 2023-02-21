@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
 import './Tasks.css';
 import { useAppSelector } from '../../app/hooks';
 import { Task, selectTaskList } from '../../features/tasks/tasksSlice';
 import TaskComponent from './Task';
 
-
-const setWithPersist = <T,>(value: T) => {
-
-}
 
 export default function TaskList() {
   const taskList: Task[] = useAppSelector(selectTaskList);
