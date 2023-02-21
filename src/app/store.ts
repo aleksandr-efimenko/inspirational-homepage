@@ -6,6 +6,7 @@ import backgroundUnsplashReducer from '../features/background/backgroundUnsplash
 import tasksReducer from '../features/tasks/tasksSlice';
 import locationManuallyReducer from '../features/locationSelection/locationManuallySlice';
 import locationAutoReducer from '../features/locationSelection/locationAutoSlice';
+import modalWindowReducer from '../features/modalWindow/modalWindow';
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     quote: quoteReducer,
     tasks: tasksReducer,
     locationManually: locationManuallyReducer,
-    locationAuto: locationAutoReducer
+    locationAuto: locationAutoReducer,
+    modalWindow: modalWindowReducer,
   },
 });
 

@@ -3,7 +3,8 @@ import citiesWithCountries from './countries.min.json';
 import countryCodes from './country_codex.json';
 import { nanoid } from 'nanoid';
 import { useAppDispatch } from '../../app/hooks';
-import { setLocationCityAndCountry, showModalWindow } from '../../features/locationSelection/locationManuallySlice';
+import { setLocationCityAndCountry } from '../../features/locationSelection/locationManuallySlice';
+import { showModalWindow } from '../../features/modalWindow/modalWindow';
 
 export interface CityWithCountry {
     city: string
@@ -46,7 +47,7 @@ export default function LocationSelect() {
             city: cityWithCountry.city,
             countryCode: countryCodes.find(codeEl => codeEl.name.toLowerCase().includes(cityWithCountry.country.toLowerCase()))?.['alpha-2']
         }))
-        showModalWindow(false);
+        dispatch(showModalWindow(false));
     }
 
     useEffect(() => {

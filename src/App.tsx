@@ -13,9 +13,14 @@ import TaskList from './components/Tasks/TaskList';
 import Background from './components/Background';
 import ModalWindow from './components/ModalWindow/ModalWindow';
 
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './app/firebase';
+
 library.add(faChevronLeft, faChevronRight, faCircleNotch);
 
 function App() {
+  const [user] = useAuthState(auth);
+
   const dispatch = useAppDispatch();
   const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
   //If user currently on the last image from array load next array of image sources

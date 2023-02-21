@@ -1,6 +1,6 @@
 import LocationSelect from '../LocationSelection/LocationSelect'
 import './ModalWindow.css'
-import { selectShowModal, showModalWindow } from '../../features/locationSelection/locationManuallySlice'
+import { selectShowModal, showModalWindow } from '../../features/modalWindow/modalWindow';
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
 export default function ModalWindow() {
