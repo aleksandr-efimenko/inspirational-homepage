@@ -2,14 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 export type AuthenticationState = {
-    email: string;
-    password: string;
     user: object;
 }
 
 const initialState: AuthenticationState = {
-    email: 'test@test.com',
-    password: 'testpass',
     user: {}
 }
 
