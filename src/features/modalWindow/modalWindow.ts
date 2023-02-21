@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-export type ModalContentState = 'Auth' | 'locationSelect' | undefined
+export type ModalContentState = 'LoginForm' | 'locationSelect' | undefined
 export type ModalState = {
     modalWindowDisplay: boolean,
     content: ModalContentState
@@ -16,20 +16,22 @@ const modalWindowSlice = createSlice({
     name: 'modalWindow',
     initialState: initialState,
     reducers: {
-        showModalWindow: (state, action) => {
-            state.modalWindowDisplay = action.payload;
-        },
-        openAuth: (state) => {
-            state.content = 'Auth';
+        openLoginForm: (state) => {
+            state.modalWindowDisplay = true;
+            state.content = 'LoginForm';
         },
         openLocationSelect: (state) => {
+            state.modalWindowDisplay = true;
             state.content = 'locationSelect';
-        }
+        },
+        closeModalWindow: (state) => {
+            state.modalWindowDisplay = false;
+        },
     }
 })
 
 export const selectShowModal = (state: RootState) => state.modalWindow.modalWindowDisplay;
 
-export const { showModalWindow, openAuth, openLocationSelect } = modalWindowSlice.actions;
+export const { openLoginForm, openLocationSelect, closeModalWindow } = modalWindowSlice.actions;
 
 export default modalWindowSlice.reducer;

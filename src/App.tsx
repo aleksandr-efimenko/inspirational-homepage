@@ -12,6 +12,7 @@ import TaskForm from './components/Tasks/TaskForm';
 import TaskList from './components/Tasks/TaskList';
 import Background from './components/Background';
 import ModalWindow from './components/ModalWindow/ModalWindow';
+import AuthWidget from './components/Authentication/AuthWidget';
 
 // import { useAuthState } from 'react-firebase-hooks/auth';
 // import { auth } from './app/firebase';
@@ -19,8 +20,6 @@ import ModalWindow from './components/ModalWindow/ModalWindow';
 library.add(faChevronLeft, faChevronRight, faCircleNotch);
 
 function App() {
-  // const [user] = useAuthState(auth);
-
   const dispatch = useAppDispatch();
   const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
   //If user currently on the last image from array load next array of image sources
@@ -52,6 +51,7 @@ function App() {
   return (
     <div className="App" >
       <Background />
+      <AuthWidget />
       <ModalWindow />
       <Weather />
       <div className='slide-btn-container-left'>

@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import citiesWithCountries from './countries.min.json';
+import citiesWithCountries from './countries.json';
 import countryCodes from './country_codex.json';
 import { nanoid } from 'nanoid';
 import { useAppDispatch } from '../../app/hooks';
 import { setLocationCityAndCountry } from '../../features/locationSelection/locationManuallySlice';
-import { showModalWindow } from '../../features/modalWindow/modalWindow';
+import { closeModalWindow, openLocationSelect } from '../../features/modalWindow/modalWindow';
 
 export interface CityWithCountry {
     city: string
@@ -47,12 +47,12 @@ export default function LocationSelect() {
             city: cityWithCountry.city,
             countryCode: countryCodes.find(codeEl => codeEl.name.toLowerCase().includes(cityWithCountry.country.toLowerCase()))?.['alpha-2']
         }))
-        dispatch(showModalWindow(false));
+        dispatch(closeModalWindow());
     }
 
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
-            if (event.code === 'Escape') dispatch(showModalWindow(false));
+            if (event.code === 'Escape') dispatch(closeModalWindow());
         }
         window.addEventListener('keydown', handleEsc);
         return () => { window.removeEventListener('keydown', handleEsc); }

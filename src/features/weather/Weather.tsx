@@ -11,7 +11,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { selectAutoGeoposition, selectAutoGeopositionStatus, setAutoLocationStatus, setLocationAuto } from '../locationSelection/locationAutoSlice';
 import { selectManualLocation } from "../locationSelection/locationManuallySlice";
-import { showModalWindow } from '../modalWindow/modalWindow';
+import { openLocationSelect } from '../modalWindow/modalWindow';
 
 library.add(faCircleNotch);
 
@@ -49,7 +49,7 @@ export default function Weather() {
             function (error) {
                 dispatch(setAutoLocationStatus('failed'));
                 // console.error("Error Code = " + error.code + " - " + error.message);
-                dispatch(showModalWindow(true));
+                dispatch(openLocationSelect());
             }, options
         );
     }
@@ -88,7 +88,7 @@ export default function Weather() {
 
     const handleManuallySetLocation = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
-        dispatch(showModalWindow(true));
+        dispatch(openLocationSelect());
     }
 
     const renderButtonOrWidget = () => {

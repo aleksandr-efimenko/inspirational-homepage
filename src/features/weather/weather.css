@@ -7,6 +7,9 @@
   font-size: 2rem;
   /* max-width: 250px; */
 }
+.weather-widget .white-button {
+  margin: 0;
+}
 
 .temp {
   display: flex;
