@@ -3,23 +3,36 @@ import './Auth.css';
 import { useAppDispatch } from '../../app/hooks';
 import { openLoginForm } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
+import { signOut } from 'firebase/auth';
+import { logout } from '../../features/authentication/authenticationSlice';
+import { useAuthState, useSignOut} from 'react-firebase-hooks/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AuthWidget() {
     const dispatch = useAppDispatch();
+    const [user, loadingUser] = useAuthState(auth)
+    const [signOut, loadingSignOut] = useSignOut(auth);
+    const loading = loadingUser || loadingSignOut;
 
     const openAuthForm = () => {
         dispatch(openLoginForm());
     }
 
+
     const handleLogout = (e: MouseEvent) => {
         e.preventDefault();
+        signOut();
+    }
+
+    if (loading) {
+        return <p><FontAwesomeIcon className='spinner' size={'2x'} icon={['fas', 'circle-notch']} /></p>
 
     }
 
     const renderAuthWidget = () => {
-        if (auth.currentUser) {
+        if (user) {
             return (<>
-                <p>{auth.currentUser?.displayName ?? auth.currentUser?.email}</p>
+                <p>{user?.displayName ?? user?.email}</p>
                 <p><a href='/' onClick={handleLogout} >Logout</a></p>
             </>)
 

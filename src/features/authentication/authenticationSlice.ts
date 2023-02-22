@@ -1,8 +1,6 @@
-import { Action, PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { authorize } from "./authAPI";
-import { FirebaseError } from "firebase/app";
-import { User } from "firebase/auth";
 
 export type AuthenticationState = {
     status: 'not-authorized' | 'loading' | 'authorized' | 'failed';
@@ -29,9 +27,10 @@ export const authorizeAsync = createAsyncThunk(
 
 const handleAuthError = (errorMessage: string) => {
     if (errorMessage.includes('user-not-found')) {
+        console.log(errorMessage)
         return 'User not found'
     }
-    return 'Errors';
+    return 'Error';
 }
 
 export const authenticationSlice = createSlice({
@@ -39,7 +38,11 @@ export const authenticationSlice = createSlice({
     initialState: initialState,
     reducers: {
         logout: (state) => {
-            state.status = 'not-authorized'
+            state.status = 'not-authorized';
+            state.errorMessage = '';
+        },
+        resetErrorMessage: (state) => {
+            state.errorMessage = '';
         }
     },
     extraReducers: (builder) => {
@@ -67,7 +70,7 @@ export const authenticationSlice = createSlice({
 
 export const selectAuthStatus = (state: RootState) => state.authentication;
 
-export const { logout } = authenticationSlice.actions;
+export const { logout, resetErrorMessage } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
 

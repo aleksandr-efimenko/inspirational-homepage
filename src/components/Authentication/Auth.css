@@ -30,13 +30,17 @@
 #sign-container {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
 }
 
 #sign-container a,
 .auth-widget a {
     color: var(--link-color);
     text-shadow: none;
+}
+
+p.login-error-msg {
+    color:rgb(249, 163, 163)
 }
 
 @media only screen and (max-width: 600px) {
