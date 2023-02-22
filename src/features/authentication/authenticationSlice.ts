@@ -6,15 +6,11 @@ import { User } from "firebase/auth";
 
 export type AuthenticationState = {
     status: 'not-authorized' | 'loading' | 'authorized' | 'failed';
-    userEmail: string;
-    userId: string;
     errorMessage: string;
 }
 
 const initialState: AuthenticationState = {
     status: 'not-authorized',
-    userEmail: '',
-    userId: '',
     errorMessage: ''
 }
 
@@ -26,22 +22,24 @@ export type LoginCredentials = {
 export const authorizeAsync = createAsyncThunk(
     'authentication/authorize',
     async (loginData: LoginCredentials) => {
-            return await authorize(loginData.email, loginData.password);
+        return await authorize(loginData.email, loginData.password);
     }
 )
+
+
+const handleAuthError = (errorMessage: string) => {
+    if (errorMessage.includes('user-not-found')) {
+        return 'User not found'
+    }
+    return 'Errors';
+}
 
 export const authenticationSlice = createSlice({
     name: 'authentication',
     initialState: initialState,
     reducers: {
-        login: (state, action) => {
-            state.userEmail = action.payload.userEmail;
-            state.userId = action.payload.userId;
-        },
         logout: (state) => {
             state.status = 'not-authorized'
-            state.userEmail = '';
-            state.userId = '';
         }
     },
     extraReducers: (builder) => {
@@ -50,23 +48,26 @@ export const authenticationSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(authorizeAsync.fulfilled, (state, action) => {
-                state.status = 'authorized';
+                if (typeof action.payload === 'string') {
+                    state.status = 'failed';
+                    state.errorMessage = handleAuthError(action.payload);
+                }
                 if (typeof action.payload !== 'string') {
-                    state.userEmail = action.payload.email || '';
-                    state.userId = action.payload.uid;
+                    state.status = 'authorized';
+                    state.errorMessage = '';
                 }
             })
             .addCase(authorizeAsync.rejected, (state, action) => {
                 state.status = 'failed';
                 if (typeof action.payload === 'string')
-                    state.errorMessage = action.payload;
+                    state.errorMessage = action.payload || '';
             })
     }
 })
 
 export const selectAuthStatus = (state: RootState) => state.authentication;
 
-export const { login, logout } = authenticationSlice.actions;
+export const { logout } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
 
