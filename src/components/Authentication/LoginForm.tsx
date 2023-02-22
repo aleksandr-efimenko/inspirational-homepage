@@ -55,7 +55,7 @@ const LoginForm: React.FC = () => {
     useEffect(() => {
         if (user)
             dispatch(closeModalWindow())
-    }, [user]);
+    }, [dispatch, user]);
 
     const renderLoginButton = () => {
         if (loading) {

@@ -3,8 +3,6 @@ import './Auth.css';
 import { useAppDispatch } from '../../app/hooks';
 import { openLoginForm } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
-import { signOut } from 'firebase/auth';
-import { logout } from '../../features/authentication/authenticationSlice';
 import { useAuthState, useSignOut} from 'react-firebase-hooks/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -18,7 +16,6 @@ export default function AuthWidget() {
         dispatch(openLoginForm());
     }
 
-
     const handleLogout = (e: MouseEvent) => {
         e.preventDefault();
         signOut();
@@ -26,7 +23,6 @@ export default function AuthWidget() {
 
     if (loading) {
         return <p><FontAwesomeIcon className='spinner' size={'2x'} icon={['fas', 'circle-notch']} /></p>
-
     }
 
     const renderAuthWidget = () => {

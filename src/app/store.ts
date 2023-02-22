@@ -7,7 +7,6 @@ import tasksReducer from '../features/tasks/tasksSlice';
 import locationManuallyReducer from '../features/locationSelection/locationManuallySlice';
 import locationAutoReducer from '../features/locationSelection/locationAutoSlice';
 import modalWindowReducer from '../features/modalWindow/modalWindowSlice';
-import authenticationReducer  from '../features/authentication/authenticationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +18,6 @@ export const store = configureStore({
     locationManually: locationManuallyReducer,
     locationAuto: locationAutoReducer,
     modalWindow: modalWindowReducer,
-    authentication: authenticationReducer,
   },
 });
 
