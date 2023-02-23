@@ -1,13 +1,10 @@
 import React, { FormEvent, MouseEvent, memo, useEffect, useRef, useState } from 'react'
 import { useAppDispatch } from '../../app/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { closeModalWindow } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
-
-library.add(faCircleNotch);
+import { getTasksFromFirestoreAsync, setUid } from '../../features/tasks/tasksSlice';
 
 const testAccount = {
     email: 'test@test.com',
@@ -15,6 +12,7 @@ const testAccount = {
 }
 
 const useInput = (initialValue: string) => {
+
     const [value, setValue] = useState(initialValue);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +30,7 @@ const useInput = (initialValue: string) => {
 const LoginForm: React.FC = () => {
     const { reset: resetEmail, setValue: setEmail, ...emailProps } = useInput(testAccount.email);
     const { reset: resetPassword, setValue: setPassword, ...passwordProps } = useInput(testAccount.password);
-    const [signIn, user, loading, error] = useSignInWithEmailAndPassword(auth);
+    const [signIn, user, loading, errorAuth] = useSignInWithEmailAndPassword(auth);
     const dirty = useRef(false);
     const dispatch = useAppDispatch();
 
@@ -53,8 +51,11 @@ const LoginForm: React.FC = () => {
     }
 
     useEffect(() => {
-        if (user)
+        if (user) {
             dispatch(closeModalWindow())
+            dispatch(setUid(user.user.uid));
+            dispatch(getTasksFromFirestoreAsync(user.user.uid));
+        }
     }, [dispatch, user]);
 
     const renderLoginButton = () => {
@@ -68,7 +69,7 @@ const LoginForm: React.FC = () => {
     }
 
     const getErrorMessage = () => {
-        if (error?.code.includes('user-not-found')) {
+        if (errorAuth?.code.includes('user-not-found')) {
             return 'User not found';
         }
         return 'Error, try again'
@@ -83,7 +84,7 @@ const LoginForm: React.FC = () => {
             <label > <p>Password</p>
                 <input {...passwordProps} onFocus={handleInputFocus} className='white-text-input' type='password'></input>
             </label>
-            {error && <p className='login-error-msg'>{getErrorMessage()}</p>}
+            {errorAuth && <p className='login-error-msg'>{getErrorMessage()}</p>}
             <div id='sign-container'>
                 {renderLoginButton()}
                 <p><a href='/' onClick={handleCreateAccountLink} >Create account</a></p>

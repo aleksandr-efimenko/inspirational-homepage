@@ -1,15 +1,16 @@
 import './Tasks.css';
 import { useAppSelector } from '../../app/hooks';
-import { Task, selectTaskList } from '../../features/tasks/tasksSlice';
+import { Task, selectTasksState } from '../../features/tasks/tasksSlice';
 import TaskComponent from './Task';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function TaskList() {
-  const taskList: Task[] = useAppSelector(selectTaskList);
+  const taskList: Task[] = useAppSelector(selectTasksState).tasksList;
+  const tasksStatus = useAppSelector(selectTasksState).status;
 
-  return (
-    <div className='task-list'>
-      <ul>
+  const renderTaskList = () => {
+    if (tasksStatus === 'idle') {
+      return <ul>
         {
           taskList.map((el) => {
             return <TaskComponent
@@ -21,6 +22,15 @@ export default function TaskList() {
           })
         }
       </ul>
+    } else if (tasksStatus === 'loading') {
+      return <p><FontAwesomeIcon className='spinner' size={'2x'} icon={['fas', 'circle-notch']} /></p>
+    } else {
+      return <p>No tasks</p>
+    }
+  }
+  return (
+    <div className='task-list'>
+      {renderTaskList()}
     </div >
   )
 }

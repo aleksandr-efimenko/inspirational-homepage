@@ -2,8 +2,12 @@ import React, { FormEvent, useRef } from 'react'
 import './Tasks.css';
 import { useAppDispatch } from '../../app/hooks';
 import { addTask } from '../../features/tasks/tasksSlice';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../app/firebase';
 
 export default function TaskForm() {
+    const [user, loadingUser, errorUser] = useAuthState(auth);
+
     const dispatch = useAppDispatch();
     const newTaskText = useRef<HTMLInputElement>(null);
     const charLimit = 1000;
@@ -11,7 +15,12 @@ export default function TaskForm() {
         e.preventDefault();
         if (!newTaskText.current || !newTaskText.current.value)
             return;
-        dispatch(addTask(newTaskText.current.value.slice(0, charLimit)))
+
+        dispatch(addTask(
+            {
+                text: newTaskText.current.value.slice(0, charLimit),
+                uid: user?.uid
+            }))
         newTaskText.current.value = '';
     }
     return (
@@ -23,7 +32,7 @@ export default function TaskForm() {
                         type='text'
                         className='white-text-input'
                         ref={newTaskText}
-                        ></input>
+                    ></input>
                     <input type='submit' className='white-button'></input>
                 </div>
             </form>
