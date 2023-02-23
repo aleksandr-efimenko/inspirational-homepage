@@ -6,7 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
 
 export default function TaskForm() {
-    const [user, loadingUser, errorUser] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
     const dispatch = useAppDispatch();
     const newTaskText = useRef<HTMLInputElement>(null);
