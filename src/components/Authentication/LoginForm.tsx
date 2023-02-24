@@ -1,7 +1,7 @@
 import React, { FormEvent, MouseEvent, memo, useEffect, useRef, useState } from 'react'
 import { useAppDispatch } from '../../app/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { closeModalWindow } from '../../features/modalWindow/modalWindowSlice';
+import { closeModalWindow, openRegistrationForm } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { getTasksFromFirestoreAsync, setUid } from '../../features/tasks/tasksSlice';
@@ -36,6 +36,7 @@ const LoginForm: React.FC = () => {
 
     const handleCreateAccountLink = (e: MouseEvent) => {
         e.preventDefault();
+        dispatch(openRegistrationForm());
     }
 
     const handleSubmit = (e: FormEvent) => {
