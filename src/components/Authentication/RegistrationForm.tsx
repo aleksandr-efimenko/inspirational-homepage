@@ -2,13 +2,15 @@ import React, { FormEvent, MouseEvent, useEffect, useState } from 'react'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { closeModalWindow } from '../../features/modalWindow/modalWindowSlice';
+import { closeModalWindow, openLoginForm } from '../../features/modalWindow/modalWindowSlice';
 import { useAppDispatch } from '../../app/hooks';
 
 export default function RegistrationForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorEnter, seterrorEnter] = useState('');
+
     const dispatch = useAppDispatch();
     const [
         createUserWithEmailAndPassword,
@@ -19,14 +21,16 @@ export default function RegistrationForm() {
 
     const handleLoginLink = (e: MouseEvent) => {
         e.preventDefault();
-
+        dispatch(openLoginForm());
     }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (password === confirmPassword)
             createUserWithEmailAndPassword(email, password);
-
+        else {
+            seterrorEnter('Passwords do not match');
+        }
 
     }
 
@@ -52,19 +56,26 @@ export default function RegistrationForm() {
                 <input onChange={(e) => setEmail(e.target.value)} className='white-text-input' type='email'></input>
             </label>
             <div className='login'><label > <p>Password</p>
-                <input onChange={(e) => setPassword(e.target.value)} className='white-text-input' type='password'></input>
+                <input onChange={(e) => {
+                    seterrorEnter('');
+                    setPassword(e.target.value)
+                }} className='white-text-input' type='password'></input>
             </label>
                 <label > <p>Confirm password</p>
-                    <input onChange={(e) => setConfirmPassword(e.target.value)} className='white-text-input' type='password'></input>
+                    <input onChange={(e) => {
+                        seterrorEnter('');
+                        setConfirmPassword(e.target.value)
+                    }} className='white-text-input' type='password'></input>
                 </label>
             </div>
             {errorRegister && <p className='login-error-msg'>{errorRegister.message}</p>}
+            {errorEnter && <p className='login-error-msg'>{errorEnter}</p>}
 
 
             <div id='sign-container'>
                 {renderRegisterButton()}
                 <p><a href='/' onClick={handleLoginLink} >Login</a></p>
             </div>
-        </form>
+        </form >
     )
 }
