@@ -3,7 +3,6 @@ import './ModalWindow.css'
 import { selectShowModal, selectModalContent, closeModalWindow } from '../../features/modalWindow/modalWindowSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import LoginForm from '../Authentication/LoginForm';
-import SIgnUpForm from '../Authentication/RegistrationForm';
 import RegistrationForm from '../Authentication/RegistrationForm';
 
 export default function ModalWindow() {
