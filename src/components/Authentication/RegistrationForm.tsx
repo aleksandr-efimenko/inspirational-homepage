@@ -17,8 +17,8 @@ export default function RegistrationForm() {
         user,
         loadingRegister,
         errorRegister,
-    ] = useCreateUserWithEmailAndPassword(auth);
-
+    ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true });
+    
     const handleLoginLink = (e: MouseEvent) => {
         e.preventDefault();
         dispatch(openLoginForm());
