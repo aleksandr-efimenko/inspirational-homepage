@@ -2,7 +2,7 @@ import React, { FormEvent, MouseEvent, useEffect, useState } from 'react'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { closeModalWindow, openLoginForm } from '../../features/modalWindow/modalWindowSlice';
+import { closeModalWindow, openLoginForm, openResetPasswordForm } from '../../features/modalWindow/modalWindowSlice';
 import { useAppDispatch } from '../../app/hooks';
 
 export default function RegistrationForm() {
@@ -17,11 +17,16 @@ export default function RegistrationForm() {
         user,
         loadingRegister,
         errorRegister,
-    ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true });
-    
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+
     const handleLoginLink = (e: MouseEvent) => {
         e.preventDefault();
         dispatch(openLoginForm());
+    }
+
+    const handleResetPasswordLink = (e: MouseEvent) => {
+        e.preventDefault();
+        dispatch(openResetPasswordForm());
     }
 
     const handleSubmit = (e: FormEvent) => {
@@ -74,7 +79,9 @@ export default function RegistrationForm() {
 
             <div id='sign-container'>
                 {renderRegisterButton()}
+                <p><a href='/' onClick={handleResetPasswordLink} >Reset password</a></p>
                 <p><a href='/' onClick={handleLoginLink} >Login</a></p>
+
             </div>
         </form >
     )

@@ -1,7 +1,7 @@
 import React, { FormEvent, MouseEvent, memo, useEffect, useRef, useState } from 'react'
 import { useAppDispatch } from '../../app/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { closeModalWindow, openRegistrationForm } from '../../features/modalWindow/modalWindowSlice';
+import { closeModalWindow, openRegistrationForm, openResetPasswordForm } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { getTasksFromFirestoreAsync, setUid } from '../../features/tasks/tasksSlice';
@@ -37,6 +37,11 @@ const LoginForm: React.FC = () => {
     const handleCreateAccountLink = (e: MouseEvent) => {
         e.preventDefault();
         dispatch(openRegistrationForm());
+    }
+
+    const handleResetPasswordLink = (e: MouseEvent) => {
+        e.preventDefault();
+        dispatch(openResetPasswordForm());
     }
 
     const handleSubmit = (e: FormEvent) => {
@@ -88,6 +93,7 @@ const LoginForm: React.FC = () => {
             {errorAuth && <p className='login-error-msg'>{getErrorMessage()}</p>}
             <div id='sign-container'>
                 {renderLoginButton()}
+                <p><a href='/' onClick={handleResetPasswordLink} >Reset password</a></p>
                 <p><a href='/' onClick={handleCreateAccountLink} >Create account</a></p>
             </div>
         </form>

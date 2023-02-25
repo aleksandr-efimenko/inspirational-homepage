@@ -39,11 +39,9 @@ export default function ResetPasswordForm() {
                 <input onChange={(e) => setEmail(e.target.value)} className='white-text-input' type='email'></input>
             </label>
             {errorReset && <p className='login-error-msg'>{errorReset.message}</p>}
-
-
             <div id='sign-container'>
                 {renderResetButton()}
-                <p><a href='/' onClick={handleLoginLink} >Login</a></p>
+                <p><a href='/' onClick={handleLoginLink}>Login</a></p>
             </div>
         </form >
     )

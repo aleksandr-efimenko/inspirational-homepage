@@ -4,6 +4,7 @@ import { selectShowModal, selectModalContent, closeModalWindow } from '../../fea
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import LoginForm from '../Authentication/LoginForm';
 import RegistrationForm from '../Authentication/RegistrationForm';
+import ResetPasswordForm from '../Authentication/ResetPasswordForm';
 
 export default function ModalWindow() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,8 @@ export default function ModalWindow() {
         return <LocationSelect />;
       case 'RegistrationForm':
         return <RegistrationForm />;
+      case 'ResetPasswordForm':
+        return <ResetPasswordForm />;
       default:
         return <></>
     }
