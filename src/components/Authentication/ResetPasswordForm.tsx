@@ -1,4 +1,4 @@
-import React, { FormEvent, MouseEvent, useEffect, useState } from 'react'
+import React, { FormEvent, MouseEvent, useState } from 'react'
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
