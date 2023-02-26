@@ -79,9 +79,10 @@ export default function RegistrationForm() {
 
             <div id='sign-container'>
                 {renderRegisterButton()}
-                <p><a href='/' onClick={handleResetPasswordLink} >Reset password</a></p>
                 <p><a href='/' onClick={handleLoginLink} >Login</a></p>
-
+            </div>
+            <div id='sign-container'>
+                <p>Forgot password? <a href='/' onClick={handleResetPasswordLink}>Reset</a></p>
             </div>
         </form >
     )

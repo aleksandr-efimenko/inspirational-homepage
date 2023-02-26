@@ -93,8 +93,11 @@ const LoginForm: React.FC = () => {
             {errorAuth && <p className='login-error-msg'>{getErrorMessage()}</p>}
             <div id='sign-container'>
                 {renderLoginButton()}
-                <p><a href='/' onClick={handleResetPasswordLink} >Reset password</a></p>
                 <p><a href='/' onClick={handleCreateAccountLink} >Create account</a></p>
+
+            </div>
+            <div id='sign-container'>
+                <p>Forgot password? <a href='/' onClick={handleResetPasswordLink}>Reset</a></p>
             </div>
         </form>
     )
