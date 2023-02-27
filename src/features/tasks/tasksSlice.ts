@@ -22,11 +22,12 @@ const generateBGColor = () => {
 
 const key = 'taskList'
 
-const getTasksFromLocalStorage = (key: string) => {
-    const tasks = JSON.parse(localStorage.getItem(key) ?? 'null') as Task[]
-    if (tasks)
-        return tasks;
-}
+// const getTasksFromLocalStorage = (key: string) => {
+//     const tasks = JSON.parse(localStorage.getItem(key) ?? 'null') as Task[]
+//     if (!tasks)
+//         return [] as Task[];
+//     return tasks;
+// }
 
 //Set local storage with 
 const setTasksInBrowserStorage = (tasks: Task[], key: string) => {
@@ -35,12 +36,14 @@ const setTasksInBrowserStorage = (tasks: Task[], key: string) => {
     }
 }
 
+const TASKS_COLLECTION = "tasks";
 
 export const getTasksFromFirestoreAsync =
     createAsyncThunk(
         'tasks/getTasksFromFirestore',
-        async (uid: string) => {
-            const q = query(collection(db, "tasks"), where('uid', '==', uid));
+        async () => {
+            if (!auth.currentUser) return [];
+            const q = query(collection(db, TASKS_COLLECTION), where('uid', '==', auth.currentUser?.uid));
             const tasks: Task[] = [];
             await getDocs(q).then(response =>
                 response.forEach(doc => {
@@ -71,7 +74,8 @@ const initialTaskList = [{
 }];
 
 const initialState: TasksState = {
-    tasksList: getTasksFromLocalStorage(key) || initialTaskList,
+    tasksList: [],
+    // tasksList: getTasksFromLocalStorage(key) || initialTaskList,
     status: 'idle',
 }
 
@@ -88,39 +92,45 @@ export const tasksSlice = createSlice({
                 uid: action.payload.uid
             };
             state.tasksList.push(newTask)
-            console.log(auth.currentUser);
-            if (action.payload.uid) {
-                setDoc(doc(db, 'tasks', newTask.id), {
-                    ...newTask
-                }).catch(error => console.log(error));
+
+            if (auth.currentUser) {
+                if (action.payload.uid) {
+                    setDoc(doc(db, TASKS_COLLECTION, newTask.id), {
+                        ...newTask
+                    }).catch(error => console.log(error));
+                }
+            } else {
+                setTasksInBrowserStorage(state.tasksList, key);
             }
-            // if (!state.uid)
-            setTasksInBrowserStorage(state.tasksList, key);
         },
         removeTask: (state, action) => {
             state.tasksList = state.tasksList.filter(el => el.id !== action.payload);
             if (auth.currentUser) {
-                deleteDoc(doc(db, "tasks", action.payload));
-            } 
-            // else {
+                deleteDoc(doc(db, TASKS_COLLECTION, action.payload));
+            }
+            else {
                 setTasksInBrowserStorage(state.tasksList, key);
-            // }
+            }
         },
         setTaskDone: (state, action) => {
             state.tasksList = state.tasksList.map(el => el.id === action.payload ? { ...el, done: true } : el);
 
             if (auth.currentUser) {
-                const cityRef = doc(db, 'tasks', action.payload);
+                const cityRef = doc(db, TASKS_COLLECTION, action.payload);
                 setDoc(cityRef, { done: true }, { merge: true });
-            } 
-            // else {
+            }
+            else {
                 setTasksInBrowserStorage(state.tasksList, key);
-            // }
+            }
         },
-        setTasksFromInitialState: (state) => {
-            state.tasksList = initialTaskList;
-            // if (!state.uid)
+        initializeTasksFromLocalStorage: (state) => {
+            const tasks = JSON.parse(localStorage.getItem(key) ?? 'null') as Task[]
+            if (tasks) {
+                state.tasksList = tasks;
+            } else {
+                state.tasksList = initialTaskList;
                 setTasksInBrowserStorage(state.tasksList, key);
+            }
         }
     },
     extraReducers: (builder) => {
@@ -141,7 +151,7 @@ export const tasksSlice = createSlice({
     }
 })
 
-export const { addTask, removeTask, setTaskDone, setTasksFromInitialState } = tasksSlice.actions;
+export const { addTask, removeTask, setTaskDone, initializeTasksFromLocalStorage } = tasksSlice.actions;
 
 export const selectTasksState = (state: RootState) => state.tasks;
 

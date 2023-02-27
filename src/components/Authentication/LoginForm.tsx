@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
     useEffect(() => {
         if (user) {
             dispatch(closeModalWindow())
-            dispatch(getTasksFromFirestoreAsync(user.user.uid));
+            dispatch(getTasksFromFirestoreAsync());
         }
     }, [dispatch, user]);
 

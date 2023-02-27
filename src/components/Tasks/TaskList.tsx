@@ -1,13 +1,23 @@
 import './Tasks.css';
-import { useAppSelector } from '../../app/hooks';
-import { Task, selectTasksState } from '../../features/tasks/tasksSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Task, getTasksFromFirestoreAsync, initializeTasksFromLocalStorage, selectTasksState } from '../../features/tasks/tasksSlice';
 import TaskComponent from './Task';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect } from 'react';
+import { auth } from '../../app/firebase';
 
 export default function TaskList() {
   const taskList: Task[] = useAppSelector(selectTasksState).tasksList;
   const tasksStatus = useAppSelector(selectTasksState).status;
 
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (auth.currentUser) {
+      dispatch(getTasksFromFirestoreAsync());
+    } else {
+      dispatch(initializeTasksFromLocalStorage());
+    }
+  }, [auth.currentUser])
   const renderTaskList = () => {
     if (tasksStatus === 'idle') {
       return <ul>
