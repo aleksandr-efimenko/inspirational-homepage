@@ -5,7 +5,7 @@ import { openLoginForm } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
 import { useAuthState, useSignOut} from 'react-firebase-hooks/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { setTasksFromInitialState, setUid } from '../../features/tasks/tasksSlice';
+import { setTasksFromInitialState } from '../../features/tasks/tasksSlice';
 
 export default function AuthWidget() {
     const dispatch = useAppDispatch();
@@ -21,7 +21,6 @@ export default function AuthWidget() {
         e.preventDefault();
         signOut();
         dispatch(setTasksFromInitialState());
-        dispatch(setUid(null));
     }
 
     if (loading) {

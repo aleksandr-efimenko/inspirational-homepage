@@ -2,20 +2,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { nanoid } from "nanoid";
 import { collection, deleteDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore";
-import { db } from "../../app/firebase";
+import { auth, db } from "../../app/firebase";
 
 export interface Task {
     text: string,
     id: string,
     done: boolean,
-    bgColor?: string,
-    uid?: string
+    bgColor?: string
 }
 
 export interface TasksState {
     tasksList: Task[],
-    status?: 'idle' | 'loading' | 'failed',
-    uid?: string
+    status?: 'idle' | 'loading' | 'failed'
 }
 
 const generateBGColor = () => {
@@ -81,9 +79,6 @@ export const tasksSlice = createSlice({
     name: 'tasks',
     initialState: initialState,
     reducers: {
-        setUid: (state, action) => {
-            state.uid = action.payload;
-        },
         addTask: (state, action) => {
             const newTask = {
                 text: action.payload.text,
@@ -93,7 +88,7 @@ export const tasksSlice = createSlice({
                 uid: action.payload.uid
             };
             state.tasksList.push(newTask)
-
+            console.log(auth.currentUser);
             if (action.payload.uid) {
                 setDoc(doc(db, 'tasks', newTask.id), {
                     ...newTask
@@ -104,7 +99,7 @@ export const tasksSlice = createSlice({
         },
         removeTask: (state, action) => {
             state.tasksList = state.tasksList.filter(el => el.id !== action.payload);
-            if (state.uid) {
+            if (auth.currentUser) {
                 deleteDoc(doc(db, "tasks", action.payload));
             } 
             // else {
@@ -114,7 +109,7 @@ export const tasksSlice = createSlice({
         setTaskDone: (state, action) => {
             state.tasksList = state.tasksList.map(el => el.id === action.payload ? { ...el, done: true } : el);
 
-            if (state.uid) {
+            if (auth.currentUser) {
                 const cityRef = doc(db, 'tasks', action.payload);
                 setDoc(cityRef, { done: true }, { merge: true });
             } 
@@ -146,7 +141,7 @@ export const tasksSlice = createSlice({
     }
 })
 
-export const { addTask, removeTask, setTaskDone, setTasksFromInitialState, setUid } = tasksSlice.actions;
+export const { addTask, removeTask, setTaskDone, setTasksFromInitialState } = tasksSlice.actions;
 
 export const selectTasksState = (state: RootState) => state.tasks;
 
