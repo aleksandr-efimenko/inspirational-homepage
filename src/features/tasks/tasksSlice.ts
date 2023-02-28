@@ -8,15 +8,20 @@ export interface Task {
     text: string,
     id: string,
     done: boolean,
-    bgColor?: string
+    dateAdd?: Date,
+    bgColor?: string,
+    uid?: string
 }
 
 export interface TasksState {
     tasksList: Task[],
-    status?: 'idle' | 'loading' | 'failed'
+    LoadingTaskStatus?: 'idle' | 'loading' | 'failed',
+    AddTaksStatus?: 'idle' | 'loading' | 'failed',
+    RemoveTaskStatus?: 'idle' | 'loading' | 'failed',
+    ChangeTaskStatus?: 'idle' | 'loading' | 'failed',
 }
 
-const generateBGColor = () => {
+export const generateBGColor = () => {
     return `hsl(${Math.floor(Math.random() * 361)}, 50%, 40%)`;
 }
 
@@ -53,56 +58,67 @@ export const getTasksFromFirestoreAsync =
                             uid: doc.data().uid,
                             done: doc.data().done,
                             id: doc.data().id,
+                            dateAdd: doc.data().dateAdd.toDate(),
                             bgColor: doc.data().bgColor
                         } as Task)
                 }));
             return tasks;
         }
-    )
+    );
+export const addTaskAsync = createAsyncThunk(
+    'tasks/addTask',
+    async (newTask: Task) => {
+        return setDoc(doc(db, TASKS_COLLECTION, newTask.id), {
+            ...newTask
+        })
+            .then(() => { return newTask })
+            .catch(() => { return '' });
+    }
+)
 
 const initialTaskList = [{
     text: 'Create new feature',
     id: nanoid(),
     done: false,
+    dateAdd: new Date(),
     bgColor: generateBGColor()
 },
 {
     text: 'Workout for 30 minutes',
     id: nanoid(),
     done: false,
+    dateAdd: new Date(),
     bgColor: generateBGColor()
 }];
 
 const initialState: TasksState = {
     tasksList: [],
     // tasksList: getTasksFromLocalStorage(key) || initialTaskList,
-    status: 'idle',
+    LoadingTaskStatus: 'idle',
 }
 
 export const tasksSlice = createSlice({
     name: 'tasks',
     initialState: initialState,
     reducers: {
-        addTask: (state, action) => {
-            const newTask = {
-                text: action.payload.text,
-                id: nanoid(),
-                done: false,
-                bgColor: generateBGColor(),
-                uid: action.payload.uid
-            };
-            state.tasksList.push(newTask)
+        // addTask: (state, action) => {
+            // const newTask = {
+            //     text: action.payload.text,
+            //     id: nanoid(),
+            //     done: false,
+            //     dateAdd: new Date(),
+            //     bgColor: generateBGColor(),
+            //     uid: action.payload.uid
+            // };
+        //     state.tasksList.push(newTask)
 
-            if (auth.currentUser) {
-                if (action.payload.uid) {
-                    setDoc(doc(db, TASKS_COLLECTION, newTask.id), {
-                        ...newTask
-                    }).catch(error => console.log(error));
-                }
-            } else {
-                setTasksInBrowserStorage(state.tasksList, key);
-            }
-        },
+        //     if (auth.currentUser) {
+
+
+        //     } else {
+        //         setTasksInBrowserStorage(state.tasksList, key);
+        //     }
+        // },
         removeTask: (state, action) => {
             state.tasksList = state.tasksList.filter(el => el.id !== action.payload);
             if (auth.currentUser) {
@@ -136,22 +152,34 @@ export const tasksSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getTasksFromFirestoreAsync.pending, (state) => {
-                state.status = 'loading';
+                state.LoadingTaskStatus = 'loading';
             })
             .addCase(getTasksFromFirestoreAsync.fulfilled, (state, action) => {
-                state.status = 'idle';
+                state.LoadingTaskStatus = 'idle';
                 if (action.payload) {
                     state.tasksList = action.payload;
-                    setTasksInBrowserStorage(state.tasksList, key);
+                    // setTasksInBrowserStorage(state.tasksList, key);
                 }
             })
             .addCase(getTasksFromFirestoreAsync.rejected, (state) => {
-                state.status = 'failed';
+                state.LoadingTaskStatus = 'failed';
+            })
+            .addCase(addTaskAsync.pending, (state) => {
+                state.AddTaksStatus = 'loading';
+            })
+            .addCase(addTaskAsync.fulfilled, (state, action) => {
+                state.AddTaksStatus = 'idle';
+                if (typeof action.payload !== 'string') {
+                    state.tasksList.push(action.payload);
+                }
+            })
+            .addCase(addTaskAsync.rejected, (state) => {
+                state.AddTaksStatus = 'failed';
             })
     }
 })
 
-export const { addTask, removeTask, setTaskDone, initializeTasksFromLocalStorage } = tasksSlice.actions;
+export const { removeTask, setTaskDone, initializeTasksFromLocalStorage } = tasksSlice.actions;
 
 export const selectTasksState = (state: RootState) => state.tasks;
 

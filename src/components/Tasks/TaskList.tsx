@@ -8,7 +8,7 @@ import { auth } from '../../app/firebase';
 
 export default function TaskList() {
   const taskList: Task[] = useAppSelector(selectTasksState).tasksList;
-  const tasksStatus = useAppSelector(selectTasksState).status;
+  const tasksStatus = useAppSelector(selectTasksState).LoadingTaskStatus;
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function TaskList() {
     } else {
       dispatch(initializeTasksFromLocalStorage());
     }
-  }, [auth.currentUser])
+  }, [dispatch])
   const renderTaskList = () => {
     if (tasksStatus === 'idle') {
       return <ul>
@@ -25,6 +25,7 @@ export default function TaskList() {
           taskList.map((el) => {
             return <TaskComponent
               bgColor={el.bgColor}
+              dateAdd={el.dateAdd}
               done={el.done}
               text={el.text}
               id={el.id}

@@ -1,9 +1,10 @@
 import React, { FormEvent, useRef } from 'react'
 import './Tasks.css';
 import { useAppDispatch } from '../../app/hooks';
-import { addTask } from '../../features/tasks/tasksSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
+import { addTaskAsync, generateBGColor } from '../../features/tasks/tasksSlice';
+import { nanoid } from 'nanoid';
 
 export default function TaskForm() {
     const [user] = useAuthState(auth);
@@ -16,9 +17,13 @@ export default function TaskForm() {
         if (!newTaskText.current || !newTaskText.current.value)
             return;
 
-        dispatch(addTask(
-            {
+        dispatch(addTaskAsync(
+             {
                 text: newTaskText.current.value.slice(0, charLimit),
+                id: nanoid(),
+                done: false,
+                dateAdd: new Date(),
+                bgColor: generateBGColor(),
                 uid: user?.uid
             }))
         newTaskText.current.value = '';
