@@ -14,7 +14,7 @@ export default function TaskList() {
   const dispatch = useAppDispatch();
 
   const TASKS_COLLECTION = "tasks";
-  const [user] = useAuthState(auth);
+  const [user, userLoading] = useAuthState(auth);
   const receiptsQuery = query(collection(db, TASKS_COLLECTION), where("uid", "==", user?.uid || '-'));
   const [taskDocList, loading, error] = useCollectionData(receiptsQuery);
 
@@ -25,7 +25,7 @@ export default function TaskList() {
   }, [user, dispatch])
 
   const renderTasks = () => {
-    if (!user) {
+    if (!user && !userLoading) {
       return renderTaskList(localTaskList);
     }
 
@@ -36,9 +36,8 @@ export default function TaskList() {
     } else if (taskDocList) {
       return renderTaskList(taskDocList);
     }
-    else {
-      return <p>No tasks</p>
-    }
+
+    return <p>No tasks</p>
   }
 
   const renderTaskList = (taskList: Task[] | DocumentData[]) => {
