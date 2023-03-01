@@ -1,16 +1,26 @@
 import React from 'react'
-import { Task, removeTaskAsync, setTaskDoneAsync } from '../../features/tasks/tasksSlice'
+import { Task, removeTaskAsync, removeTaskLocal, setTaskDoneAsync, setTaskDoneLocal } from '../../features/tasks/tasksSlice'
 import { useAppDispatch } from '../../app/hooks'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../app/firebase';
 
 export default function TaskComponent({ done, text, bgColor, id }: Task) {
+  const [user] = useAuthState(auth);
+
   const dispatch = useAppDispatch();
 
   const handleDeleteTask = (id: string) => {
-    dispatch(removeTaskAsync(id));
+    if (user)
+      dispatch(removeTaskAsync(id));
+    else
+      dispatch(removeTaskLocal(id));
   }
 
   const handleDoneTask = (id: string) => {
-    dispatch(setTaskDoneAsync(id));
+    if (user)
+      dispatch(setTaskDoneAsync(id));
+    else
+      dispatch(setTaskDoneLocal(id));
   }
 
   return (

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { nanoid } from "nanoid";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../app/firebase";
+import { db } from "../../app/firebase";
 
 export interface Task {
     text: string,

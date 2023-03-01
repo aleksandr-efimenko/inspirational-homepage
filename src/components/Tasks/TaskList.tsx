@@ -1,23 +1,29 @@
 import './Tasks.css';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TaskComponent from './Task';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
 import { auth, db } from '../../app/firebase';
-import { query, collection, where, orderBy } from 'firebase/firestore';
+import { query, collection, where } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { Task, selectTasksState } from '../../features/tasks/tasksSlice';
+import { Task, initializeTasksFromLocalStorage, selectTasksState } from '../../features/tasks/tasksSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function TaskList() {
   const localTaskList: Task[] = useAppSelector(selectTasksState).tasksList;
+  const dispatch = useAppDispatch();
 
   const TASKS_COLLECTION = "tasks";
   const [user] = useAuthState(auth);
   const receiptsQuery = query(collection(db, TASKS_COLLECTION), where("uid", "==", user?.uid || '-'));
   const [taskDocList, loading, error] = useCollectionData(receiptsQuery);
-
   const taskList = user ? taskDocList : localTaskList;
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(initializeTasksFromLocalStorage());
+    }
+  }, [user, dispatch])
 
   const renderTaskList = () => {
     if (!loading && taskDocList) {
@@ -26,7 +32,6 @@ export default function TaskList() {
           taskList?.map((el) => {
             return <TaskComponent
               bgColor={el.bgColor}
-              dateAdd={el['dateAdd'].toDate()}
               done={el.done}
               text={el.text}
               id={el.id}
