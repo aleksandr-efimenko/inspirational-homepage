@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { closeModalWindow, openRegistrationForm, openResetPasswordForm } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
-import { getTasksFromFirestoreAsync } from '../../features/tasks/tasksSlice';
 
 const testAccount = {
     email: 'test@test.com',
@@ -56,12 +55,12 @@ const LoginForm: React.FC = () => {
         setPassword('')
     }
 
-    useEffect(() => {
-        if (user) {
-            dispatch(closeModalWindow())
-            dispatch(getTasksFromFirestoreAsync());
-        }
-    }, [dispatch, user]);
+    // useEffect(() => {
+    //     if (user) {
+    //         dispatch(closeModalWindow())
+    //         dispatch(getTasksFromFirestoreAsync());
+    //     }
+    // }, [dispatch, user]);
 
     const renderLoginButton = () => {
         if (loading) {
