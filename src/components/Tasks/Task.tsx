@@ -1,16 +1,16 @@
 import React from 'react'
-import { Task, removeTask, setTaskDone } from '../../features/tasks/tasksSlice'
+import { Task, removeTaskAsync, setTaskDoneAsync } from '../../features/tasks/tasksSlice'
 import { useAppDispatch } from '../../app/hooks'
 
 export default function TaskComponent({ done, text, bgColor, id }: Task) {
   const dispatch = useAppDispatch();
 
   const handleDeleteTask = (id: string) => {
-    dispatch(removeTask(id));
+    dispatch(removeTaskAsync(id));
   }
 
   const handleDoneTask = (id: string) => {
-    dispatch(setTaskDone(id));
+    dispatch(setTaskDoneAsync(id));
   }
 
   return (

@@ -55,12 +55,11 @@ const LoginForm: React.FC = () => {
         setPassword('')
     }
 
-    // useEffect(() => {
-    //     if (user) {
-    //         dispatch(closeModalWindow())
-    //         dispatch(getTasksFromFirestoreAsync());
-    //     }
-    // }, [dispatch, user]);
+    useEffect(() => {
+        if (user) {
+            dispatch(closeModalWindow())
+        }
+    }, [dispatch, user]);
 
     const renderLoginButton = () => {
         if (loading) {

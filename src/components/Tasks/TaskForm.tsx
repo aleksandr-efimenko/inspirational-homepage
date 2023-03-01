@@ -3,7 +3,7 @@ import './Tasks.css';
 import { useAppDispatch } from '../../app/hooks';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
-import { addTaskAsync, generateBGColor } from '../../features/tasks/tasksSlice';
+import { addTaskAsync, addTaskLocal, generateBGColor } from '../../features/tasks/tasksSlice';
 import { nanoid } from 'nanoid';
 
 export default function TaskForm() {
@@ -17,15 +17,21 @@ export default function TaskForm() {
         if (!newTaskText.current || !newTaskText.current.value)
             return;
 
-        dispatch(addTaskAsync(
-             {
-                text: newTaskText.current.value.slice(0, charLimit),
-                id: nanoid(),
-                done: false,
-                dateAdd: new Date(),
-                bgColor: generateBGColor(),
-                uid: user?.uid
-            }))
+        const newTask = {
+            text: newTaskText.current.value.slice(0, charLimit),
+            id: nanoid(),
+            done: false,
+            dateAdd: new Date(),
+            bgColor: generateBGColor(),
+            uid: user?.uid
+        };
+
+        if (user) {
+            dispatch(addTaskAsync(newTask));
+        } else {
+            dispatch(addTaskLocal(newTask));
+        }
+
         newTaskText.current.value = '';
     }
     return (

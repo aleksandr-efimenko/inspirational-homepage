@@ -1,27 +1,29 @@
 import './Tasks.css';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
 import TaskComponent from './Task';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
-import { app, auth, db } from '../../app/firebase';
+import { auth, db } from '../../app/firebase';
 import { query, collection, where, orderBy } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { Task, selectTasksState } from '../../features/tasks/tasksSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function TaskList() {
-  const taskList: Task[] = useAppSelector(selectTasksState).tasksList;
-  // const tasksStatus = useAppSelector(selectTasksState).LoadingTaskStatus;
+  const localTaskList: Task[] = useAppSelector(selectTasksState).tasksList;
+
   const TASKS_COLLECTION = "tasks";
   const [user] = useAuthState(auth);
-  const receiptsQuery = query(collection(db, TASKS_COLLECTION), where("uid", "==", auth.currentUser?.uid || '-'));
-  const [taskDocList, loading, error, snapshot] = useCollectionData (receiptsQuery);
+  const receiptsQuery = query(collection(db, TASKS_COLLECTION), where("uid", "==", user?.uid || '-'));
+  const [taskDocList, loading, error] = useCollectionData(receiptsQuery);
+
+  const taskList = user ? taskDocList : localTaskList;
 
   const renderTaskList = () => {
     if (!loading && taskDocList) {
       return <ul>
         {
-          taskDocList.map((el) => {
+          taskList?.map((el) => {
             return <TaskComponent
               bgColor={el.bgColor}
               dateAdd={el['dateAdd'].toDate()}
@@ -34,7 +36,10 @@ export default function TaskList() {
       </ul>
     } else if (loading) {
       return <p><FontAwesomeIcon className='spinner' size={'2x'} icon={['fas', 'circle-notch']} /></p>
-    } else {
+    } else if (error) {
+      return <p>Error loading</p>
+    }
+    else {
       return <p>No tasks</p>
     }
   }
