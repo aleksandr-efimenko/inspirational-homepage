@@ -11,11 +11,11 @@ This is a React-Redux to-do list application which allows the user to set their 
 * [Acknowledgements](#acknowledgements)
 
 ## Features
-### Weather
-The app uses users' coordinates in order to fetch the local weather from openweathermap.org at your current location. Users should allow sharing their's location.
-
 ### Goals
 You can type in your tasks to put them on the list. The goals can be marked as done and they can be removed. The goals get random colors with contrast with white font, The tasks marked as done gets 80% opacity. All tasks could be deleted to disappear from the screen.
+
+### Weather
+The app uses users' coordinates in order to fetch the local weather from openweathermap.org at your current location. Users should allow sharing their's location.
 
 ### Quote
 You get a random daily inspirational quote from api-ninjas.com. One query takes series of 10 quotes from the API, and when the user reaches the last quote, the app gets new series of quotes.
@@ -32,6 +32,8 @@ The homepage fetches series of 15 background images from Unsplash that you can t
 - HTML5
 - CSS3
 - [Netlify functions](https://docs.netlify.com/functions/overview/)
+- [Firebase](https://firebase.google.com/)
+- [React Firebase Hooks](https://github.com/CSFrequency/react-firebase-hooks/tree/09bf06b28c82b4c3c1beabb1b32a8007232ed045)
 
 ## Screenshots
 ![Screenshot](./public/Inspirational-page-screenshot.png)
