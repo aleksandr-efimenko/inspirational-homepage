@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { closeModalWindow, openRegistrationForm, openResetPasswordForm } from '../../features/modalWindow/modalWindowSlice';
 import { auth } from '../../app/firebase';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth'
 
 const testAccount = {
     email: 'test@test.com',
@@ -33,6 +33,8 @@ const LoginForm: React.FC = () => {
     const dirty = useRef(false);
     const dispatch = useAppDispatch();
 
+    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
+
     const handleCreateAccountLink = (e: MouseEvent) => {
         e.preventDefault();
         dispatch(openRegistrationForm());
@@ -56,10 +58,10 @@ const LoginForm: React.FC = () => {
     }
 
     useEffect(() => {
-        if (user) {
+        if (user || userGoogle) {
             dispatch(closeModalWindow())
         }
-    }, [dispatch, user]);
+    }, [dispatch, user, userGoogle]);
 
     const renderLoginButton = () => {
         if (loading) {
@@ -67,6 +69,19 @@ const LoginForm: React.FC = () => {
         } else {
             return (
                 <button className='white-button' type='submit'>Submit</button>
+            )
+        }
+    }
+
+    const renderGoogleLoginButton = () => {
+        if (loadingGoogle) {
+            return <p><FontAwesomeIcon className='spinner' size={'2x'} icon={['fas', 'circle-notch']} /></p>
+        } else {
+            return (
+                <div onClick={() => signInWithGoogle()} id="googleBtn" className="customGPlusSignIn">
+                    <span className="google-icon"></span>
+                    <span className="google-buttonText">Google</span>
+                </div>
             )
         }
     }
@@ -88,6 +103,8 @@ const LoginForm: React.FC = () => {
                 <input {...passwordProps} onFocus={handleInputFocus} className='white-text-input' type='password'></input>
             </label>
             {errorAuth && <p className='login-error-msg'>{getErrorMessage()}</p>}
+            {errorGoogle && <p className='login-error-msg'>{errorGoogle.message}</p>}
+
             <div id='sign-container'>
                 {renderLoginButton()}
                 <p><a href='/' onClick={handleCreateAccountLink} >Create account</a></p>
@@ -96,6 +113,9 @@ const LoginForm: React.FC = () => {
             <div id='sign-container'>
                 <p>Forgot password? <a href='/' onClick={handleResetPasswordLink}>Reset</a></p>
             </div>
+
+            {renderGoogleLoginButton()}
+
         </form>
     )
 }

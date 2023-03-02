@@ -1,11 +1,13 @@
 import React, { FormEvent, MouseEvent, useEffect, useState } from 'react'
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { closeModalWindow, openLoginForm, openResetPasswordForm } from '../../features/modalWindow/modalWindowSlice';
 import { useAppDispatch } from '../../app/hooks';
 
 export default function RegistrationForm() {
+    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -49,8 +51,21 @@ export default function RegistrationForm() {
         }
     }
 
+    const renderGoogleLoginButton = () => {
+        if (loadingGoogle) {
+            return <p><FontAwesomeIcon className='spinner' size={'2x'} icon={['fas', 'circle-notch']} /></p>
+        } else {
+            return (
+                <div onClick={() => signInWithGoogle()} id="googleBtn" className="customGPlusSignIn">
+                    <span className="google-icon"></span>
+                    <span className="google-buttonText">Google</span>
+                </div>
+            )
+        }
+    }
+
     useEffect(() => {
-        if (user) {
+        if (user || userGoogle) {
             dispatch(closeModalWindow())
         }
     })
@@ -75,7 +90,7 @@ export default function RegistrationForm() {
             </div>
             {errorRegister && <p className='login-error-msg'>{errorRegister.message}</p>}
             {errorEnter && <p className='login-error-msg'>{errorEnter}</p>}
-
+            {errorGoogle && <p className='login-error-msg'>{errorGoogle.message}</p>}
 
             <div id='sign-container'>
                 {renderRegisterButton()}
@@ -84,6 +99,9 @@ export default function RegistrationForm() {
             <div id='sign-container'>
                 <p>Forgot password? <a href='/' onClick={handleResetPasswordLink}>Reset</a></p>
             </div>
+
+            {renderGoogleLoginButton()}
+
         </form >
     )
 }
