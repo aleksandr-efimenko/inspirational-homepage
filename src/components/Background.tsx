@@ -28,12 +28,13 @@ export default function Background() {
                 const loadImg = new Image();
                 loadImg.src = url;
                 loadImg.onerror = err => reject(err);
+                return loadImg.complete;
             })
         }
-        Promise.all(bgUnsplashUrls.slice(0, bgUnspashIndex + 2).map(image => loadImage(image)))
+        Promise.all(bgUnsplashUrls.slice(bgUnspashIndex + 1, bgUnspashIndex + 2).map(image => loadImage(image)))
             .catch(err => console.log("Falied to load images", err));
 
-        if (!bgUnsplashUrls)
+        if (bgUnsplashUrls.length === 0)
             Promise.all(bgLocalList.map(image => loadImage(image)))
                 .catch(err => console.log("Falied to load images", err));
     }, [bgUnsplashUrls, bgLocalList, bgUnspashIndex])
