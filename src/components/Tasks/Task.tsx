@@ -34,11 +34,12 @@ export default function TaskComponent({ done, text, bgColor, id }: Task) {
     <li className={done ? 'finished-task' : ''}>
       <div className='task' style={{ backgroundColor: bgColor }}>
         <div className='task-action-container'>
-          <button onClick={() => handleDeleteTask(id)} className='remove'>Remove</button>
           <button onClick={() => handleDoneTask(id)} className='done'>Done</button>
           <button onClick={() => handleEditTask(id)} className='edit'>Edit</button>
-
         </div>
+        <div className='task-action-container-remove'>
+        <button onClick={() => handleDeleteTask(id)} className='remove'>Remove</button>
+          </div>
         <p>{text}</p>
       </div>
     </li>

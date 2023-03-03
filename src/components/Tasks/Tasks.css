@@ -57,15 +57,22 @@ h1 {
     padding: .1rem 1rem;
     position: relative;
     opacity: 0.9;
-    animation: task .5s 1 cubic-bezier(.4,0,.2,1);
+    animation: task .5s 1 cubic-bezier(.4, 0, .2, 1);
 }
 
 @keyframes task {
-  0% { transform:  scale(0); }
-  100% { transform:  scale(1); }
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
-.task:hover .task-action-container {
+
+.task:hover .task-action-container,
+.task:hover .task-action-container-remove {
     opacity: initial;
     transition: opacity 0.3s;
 }
@@ -73,7 +80,7 @@ h1 {
 .finished-task {
     opacity: 0.2;
     transition: opacity 0.5s;
-    transform: rotate(2deg);
+    transform: rotate(1deg);
     transition: transform 0.5s;
 }
 
@@ -83,16 +90,23 @@ h1 {
     word-break: break-all;
 }
 
-.task-action-container {
+.task-action-container,
+.task-action-container-remove {
     position: absolute;
     top: -10px;
     right: -15px;
-    background-color: 0;
+    /* background-color: 0; */
     display: flex;
     opacity: 0;
 }
 
-.task-action-container button {
+.task-action-container-remove {
+    top: inherit;
+    bottom: -10px;
+}
+
+.task-action-container button,
+.task-action-container-remove button {
     color: white;
     border: 1px solid white;
     border-radius: 7px;
@@ -120,12 +134,12 @@ h1 {
     }
 
     .task p {
-        font-size: .8rem;
+        font-size: 1rem;
     }
 
     .task {
-        margin: 0.2rem;
-        padding: .05rem 0.5rem;
+        margin: .3rem .4rem;
+        padding: 0 .5rem;
     }
 
     .task-form {
