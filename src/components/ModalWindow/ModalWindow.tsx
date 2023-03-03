@@ -1,12 +1,16 @@
-import LocationSelect from '../LocationSelection/LocationSelect'
+// import LocationSelect from '../LocationSelection/LocationSelect'
 import './ModalWindow.css'
 import { selectShowModal, selectModalContent, closeModalWindow } from '../../features/modalWindow/modalWindowSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import LoginForm from '../Authentication/LoginForm';
 import RegistrationForm from '../Authentication/RegistrationForm';
 import ResetPasswordForm from '../Authentication/ResetPasswordForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Suspense } from 'react';
 
 export default function ModalWindow() {
+  const LocationSelect = React.lazy(() => import('../LocationSelection/LocationSelect'));
+
   const dispatch = useAppDispatch();
   const showModal: boolean = useAppSelector(selectShowModal);
   const modalWindowContent = useAppSelector(selectModalContent);
@@ -16,7 +20,9 @@ export default function ModalWindow() {
       case 'LoginForm':
         return <LoginForm />;
       case 'locationSelect':
-        return <LocationSelect />;
+        return (<Suspense fallback={<FontAwesomeIcon className='spinner' size={'2x'} icon={['fas', 'circle-notch']} />}>
+          <LocationSelect />
+        </Suspense>);
       case 'RegistrationForm':
         return <RegistrationForm />;
       case 'ResetPasswordForm':
