@@ -22,6 +22,7 @@ export default function TaskComponent({ done, text, bgColor, id }: Task) {
     else
       dispatch(setTaskDoneLocal(id));
   }
+  
   const handleEditTask = (id: string) => {
     if (user)
       dispatch(setTaskIDForEditFromFirestore(id));

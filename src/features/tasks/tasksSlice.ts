@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { nanoid } from "nanoid";
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../app/firebase";
 
 export interface Task {
@@ -56,7 +56,8 @@ export const setTaskDoneAsync = createAsyncThunk(
     'tasks/setTaskDone',
     async (taskId: string) => {
         const taskRef = doc(db, TASKS_COLLECTION, taskId);
-        setDoc(taskRef, { done: true }, { merge: true });
+        const document = await getDoc(taskRef);
+        setDoc(taskRef, { done: !document.data()?.done }, { merge: true });
     }
 )
 
@@ -105,7 +106,7 @@ export const tasksSlice = createSlice({
             setTasksInBrowserStorage(state.tasksList, key);
         },
         setTaskDoneLocal: (state, action) => {
-            state.tasksList = state.tasksList.map(el => el.id === action.payload ? { ...el, done: true } : el);
+            state.tasksList = state.tasksList.map(el => el.id === action.payload ? { ...el, done: !el.done } : el);
             setTasksInBrowserStorage(state.tasksList, key);
         },
         editTaskTextLocal: (state, action) => {
