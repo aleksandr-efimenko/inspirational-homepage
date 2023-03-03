@@ -36,7 +36,7 @@ export default function Background() {
         if (!bgUnsplashUrls)
             Promise.all(bgLocalList.map(image => loadImage(image)))
                 .catch(err => console.log("Falied to load images", err));
-    }, [bgUnsplashUrls, bgLocalList])
+    }, [bgUnsplashUrls, bgLocalList, bgUnspashIndex])
 
     useEffect(() => {
         if (bgUnsplashUrl) {
