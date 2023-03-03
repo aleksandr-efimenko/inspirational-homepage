@@ -34,7 +34,7 @@ export default function Background() {
             })
         }
         Promise.all(bgUnsplashUrls
-            .slice(0, bgUnsplashIndex + 3)
+            .slice(bgUnsplashIndex, bgUnsplashIndex + 3)
             .filter(image => preloadedImgs.indexOf(image) < 0)
             .map(image => loadImage(image)))
             .catch(err => console.log("Falied to load images", err));
