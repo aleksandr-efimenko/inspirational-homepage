@@ -28,8 +28,8 @@ export default function Background() {
                 return;
             return new Promise((resolve, reject) => {
                 const loadImg = new Image();
-                loadImg.src = url;
                 setPreloadedImgs(items => [...items, url]);
+                loadImg.src = url;
                 loadImg.onerror = err => reject(err);
             })
         }
