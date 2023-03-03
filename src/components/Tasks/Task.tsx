@@ -22,6 +22,12 @@ export default function TaskComponent({ done, text, bgColor, id }: Task) {
     else
       dispatch(setTaskDoneLocal(id));
   }
+  const handleEditTask = (id: string) => {
+    // if (user)
+    //   dispatch(setTaskDoneAsync(id));
+    // else
+    //   dispatch(setTaskDoneLocal(id));
+  }
 
   return (
     <li className={done ? 'finished-task' : ''}>
@@ -29,6 +35,8 @@ export default function TaskComponent({ done, text, bgColor, id }: Task) {
         <div className='task-action-container'>
           <button onClick={() => handleDeleteTask(id)} className='remove'>Remove</button>
           <button onClick={() => handleDoneTask(id)} className='done'>Done</button>
+          <button onClick={() => handleEditTask(id)} className='edit'>Edit</button>
+
         </div>
         <p>{text}</p>
       </div>
