@@ -32,7 +32,9 @@ export default function Background() {
                 loadImg.onerror = err => reject(err);
             })
         }
-        Promise.all(bgUnsplashUrls.filter(image => preloadedImgs.indexOf(image) > 0).map(image => loadImage(image)))
+        Promise.all(bgUnsplashUrls
+            .filter(image => preloadedImgs.indexOf(image) < 0)
+            .map(image => loadImage(image)))
             .catch(err => console.log("Falied to load images", err));
 
         if (bgUnsplashUrls.length === 0)
