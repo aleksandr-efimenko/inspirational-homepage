@@ -12,15 +12,12 @@ import TaskForm from './components/Tasks/TaskForm';
 import TaskList from './components/Tasks/TaskList';
 import Background from './components/Background';
 import AuthWidget from './components/Authentication/AuthWidget';
-import React, { Suspense } from 'react';
-
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import { auth } from './app/firebase';
+import React from 'react';
+import ModalWindow from './components/ModalWindow/ModalWindow';
 
 library.add(faChevronLeft, faChevronRight, faCircleNotch);
 
 function App() {
-  const ModalWindow = React.lazy(() => import('./components/ModalWindow/ModalWindow'));
   const dispatch = useAppDispatch();
   const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
   //If user currently on the last image from array load next array of image sources
@@ -53,9 +50,7 @@ function App() {
     <div className="App" >
       <Background />
       <AuthWidget />
-      <Suspense>
         <ModalWindow />
-      </Suspense>
       <Weather />
       <div className='slide-btn-container-left'>
         <FontAwesomeIcon onClick={handlePrevBgAndQuote} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
