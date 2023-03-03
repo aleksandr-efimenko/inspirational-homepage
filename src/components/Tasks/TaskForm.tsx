@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import './Tasks.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 
 export default function TaskForm() {
     const [user] = useAuthState(auth);
-
+    const inputReference = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
     const [newTaskText, setNewTaskText] = useState('');
     const { taskForEdit } = useAppSelector(selectTasksState);
@@ -51,6 +51,8 @@ export default function TaskForm() {
     useEffect(() => {
         if (taskForEdit) {
             setNewTaskText(taskForEdit.text);
+            if (inputReference.current)
+                inputReference.current.focus();
         } else {
             setNewTaskText('');
         }
@@ -62,6 +64,7 @@ export default function TaskForm() {
             <form onSubmit={handleSubmit}>
                 <div className='inputs'>
                     <input autoFocus
+                        ref={inputReference}
                         type='text'
                         className='white-text-input'
                         value={newTaskText}

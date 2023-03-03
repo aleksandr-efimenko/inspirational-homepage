@@ -7,7 +7,7 @@ import { query, collection, where, DocumentData } from 'firebase/firestore';
 import { auth, db } from '../../app/firebase';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TaskComponent from './Task';
-import { selectTasksState, initializeTasksFromLocalStorage, Task, setTaskForEditFromFirestore, setTaskIDForEditFromFirestore } from '../../features/tasks/tasksSlice';
+import { selectTasksState, initializeTasksFromLocalStorage, Task, setTaskForEditFromFirestore, setTaskIDForEditFromFirestore, setTaskForEdit } from '../../features/tasks/tasksSlice';
 
 const TASKS_COLLECTION = "tasks";
 const FONT_ICON_SIZE = '2x';
@@ -24,6 +24,7 @@ export default function TaskList() {
     if (!user) {
       dispatch(initializeTasksFromLocalStorage());
     }
+    dispatch(setTaskForEdit(''));
   }, [user, dispatch]);
 
   const { idTaskToLoadFromFireStore } = useAppSelector(selectTasksState);

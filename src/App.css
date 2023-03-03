@@ -118,6 +118,7 @@ button[disabled]:active {
 @media only screen and (max-width: 600px) {
   .App {
     row-gap: 0.5rem;
+    grid-template-columns: 1rem repeat(10, minmax(0, 1fr)) 1rem;
   }
 
   .quote-container p {

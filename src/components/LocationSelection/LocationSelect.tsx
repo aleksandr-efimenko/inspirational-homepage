@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, useMemo, useState } from 'react'
 import citiesWithCountries from './countries.json';
 import countryCodes from './country_codex.json';
 import { nanoid } from 'nanoid';
@@ -49,14 +49,6 @@ export default function LocationSelect() {
         }))
         dispatch(closeModalWindow());
     }
-
-    useEffect(() => {
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.code === 'Escape') dispatch(closeModalWindow());
-        }
-        window.addEventListener('keydown', handleEsc);
-        return () => { window.removeEventListener('keydown', handleEsc); }
-    }, [dispatch])
 
     return (
         <>

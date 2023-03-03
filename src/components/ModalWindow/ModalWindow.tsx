@@ -6,7 +6,7 @@ import LoginForm from '../Authentication/LoginForm';
 import RegistrationForm from '../Authentication/RegistrationForm';
 import ResetPasswordForm from '../Authentication/ResetPasswordForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { Suspense } from 'react';
+import React, {useEffect,  Suspense } from 'react';
 
 export default function ModalWindow() {
   const LocationSelect = React.lazy(() => import('../LocationSelection/LocationSelect'));
@@ -31,6 +31,14 @@ export default function ModalWindow() {
         return <></>
     }
   }
+
+  useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+        if (event.code === 'Escape') dispatch(closeModalWindow());
+    }
+    window.addEventListener('keydown', handleEsc);
+    return () => { window.removeEventListener('keydown', handleEsc); }
+}, [dispatch])
 
   return (
     <>{showModal &&
