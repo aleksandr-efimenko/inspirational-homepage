@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getRandomImageAsync, selectBGImagesUrls, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
+import { getRandomImageAsync, selectBGImagesUrls, selectBGIndex, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectBackgroundLocal, selsectBGLocalList } from "../features/background/backgroundLocalSclice";
 
@@ -10,6 +10,7 @@ export default function Background() {
 
     const bgUnsplashUrls = useAppSelector(selectBGImagesUrls);
     const bgUnsplashUrl = useAppSelector(selectBackgroundUnsplash);
+    const bgUnsplashIndex = useAppSelector(selectBGIndex);
     const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
 
     const [preloadedImgs, setPreloadedImgs] = useState<Array<string>>([]);
@@ -34,13 +35,14 @@ export default function Background() {
         }
         Promise.all(bgUnsplashUrls
             .filter(image => preloadedImgs.indexOf(image) < 0)
+            .slice(0, bgUnsplashIndex + 3)
             .map(image => loadImage(image)))
             .catch(err => console.log("Falied to load images", err));
 
         if (bgUnsplashUrls.length === 0)
             Promise.all(bgLocalList.map(image => loadImage(image)))
                 .catch(err => console.log("Falied to load images", err));
-    }, [bgUnsplashUrls, bgLocalList, bgUnsplashStatus, preloadedImgs])
+    }, [bgUnsplashUrls, bgLocalList, bgUnsplashStatus, preloadedImgs, bgUnsplashIndex])
 
     useEffect(() => {
         if (bgUnsplashUrl) {
