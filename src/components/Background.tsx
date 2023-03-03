@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getRandomImageAsync, selectBGImagesUrls, selectBGIndex, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
+import { getRandomImageAsync, selectBGImagesUrls, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectBackgroundLocal, selsectBGLocalList } from "../features/background/backgroundLocalSclice";
 
@@ -10,9 +10,9 @@ export default function Background() {
 
     const bgUnsplashUrls = useAppSelector(selectBGImagesUrls);
     const bgUnsplashUrl = useAppSelector(selectBackgroundUnsplash);
-    const bgUnspashIndex = useAppSelector(selectBGIndex);
     const bgUnsplashStatus = useAppSelector(selectBackgroundUnsplashStatus);
 
+    const [preloadedImgs, setPreloadedImgs] = useState<Array<string>>([]);
     const [bgStyle, setBgStyle] = useState({});
     useEffect(() => {
         dispatch(getRandomImageAsync());
@@ -21,23 +21,24 @@ export default function Background() {
 
     //Preload images from array for quick slide
     useEffect(() => {
+        if (bgUnsplashStatus === 'loading') return;
         const loadImage = (url: string) => {
             if (!url)
                 return;
             return new Promise((resolve, reject) => {
                 const loadImg = new Image();
                 loadImg.src = url;
+                setPreloadedImgs(items => [...items, url]);
                 loadImg.onerror = err => reject(err);
-                return loadImg.complete;
             })
         }
-        Promise.all(bgUnsplashUrls.slice(bgUnspashIndex + 1, bgUnspashIndex + 2).map(image => loadImage(image)))
+        Promise.all(bgUnsplashUrls.filter(image => preloadedImgs.indexOf(image) > 0).map(image => loadImage(image)))
             .catch(err => console.log("Falied to load images", err));
 
         if (bgUnsplashUrls.length === 0)
             Promise.all(bgLocalList.map(image => loadImage(image)))
                 .catch(err => console.log("Falied to load images", err));
-    }, [bgUnsplashUrls, bgLocalList, bgUnspashIndex])
+    }, [bgUnsplashUrls, bgLocalList, bgUnsplashStatus])
 
     useEffect(() => {
         if (bgUnsplashUrl) {

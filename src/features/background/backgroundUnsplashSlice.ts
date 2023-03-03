@@ -61,7 +61,6 @@ export const { getPreviousBgUnsplash, getNextBgUnsplash } = backgroundUnsplashSl
 
 export const selectBackgroundUnsplash = (state: RootState) => state.backgroundUnsplash.imageUrls[state.backgroundUnsplash.currentIndex];
 export const selectBGImagesUrls = (state: RootState) => state.backgroundUnsplash.imageUrls;
-export const selectBGIndex = (state: RootState) => state.backgroundUnsplash.currentIndex;
 export const selectBackgroundUnsplashStatus = (state: RootState) => state.backgroundUnsplash.status;
 export const selectBackgroundUnsplashNeedNewLoad = (state: RootState) => state.backgroundUnsplash.currentIndex + 2 >= state.backgroundUnsplash.imageUrls.length;
 
