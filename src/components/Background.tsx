@@ -47,9 +47,6 @@ export default function Background() {
 
     useEffect(() => {
 
-            setBgStyle((prev) => prev = {
-                ...prev, animationName: 'none',
-            });
 
         if (bgUnsplashUrl) {
             setBgStyle((prev) => prev = {
@@ -60,12 +57,22 @@ export default function Background() {
                 ...prev, backgroundImage: `url(${bgLocalUrl})`
             });
         }
-        setTimeout(() => {
-            setBgStyle((prev) => prev = {
-                ...prev, animationName: 'a',
-            });
-        }, 10);
 
+        // if ((bgUnsplashStatus === 'idle' || bgUnsplashStatus === 'failed')   && (bgUnsplashUrl || bgLocalUrl)) {
+        //     console.log('upd')
+
+        //     setBgStyle((prev) => prev = {
+        //         ...prev, animationName: 'none',
+        //     });
+
+        //     const timer = setTimeout(() => {
+        //         setBgStyle((prev) => prev = {
+        //             ...prev, animationName: 'a',
+        //         });
+        //     }, 10);
+        //     return () => clearTimeout(timer);
+
+        // }
 
     }, [bgUnsplashUrl, bgLocalUrl, bgUnsplashStatus])
 
