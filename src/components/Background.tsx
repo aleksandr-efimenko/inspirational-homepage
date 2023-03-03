@@ -19,7 +19,6 @@ export default function Background() {
         dispatch(getRandomImageAsync());
     }, [dispatch])
 
-
     //Preload images from array for quick slide
     useEffect(() => {
         if (bgUnsplashStatus === 'loading') return;
@@ -40,24 +39,38 @@ export default function Background() {
             .catch(err => console.log("Falied to load images", err));
 
         if (bgUnsplashUrls.length === 0)
-            Promise.all(bgLocalList.map(image => loadImage(image)))
+            Promise.all(bgLocalList
+                .filter(image => preloadedImgs.indexOf(image) < 0)
+                .map(image => loadImage(image)))
                 .catch(err => console.log("Falied to load images", err));
     }, [bgUnsplashUrls, bgLocalList, bgUnsplashStatus, preloadedImgs, bgUnsplashIndex])
 
     useEffect(() => {
+
+            setBgStyle((prev) => prev = {
+                ...prev, animationName: 'none',
+            });
+
         if (bgUnsplashUrl) {
             setBgStyle((prev) => prev = {
-                backgroundImage: `url(${bgUnsplashUrl})`
+                ...prev, backgroundImage: `url(${bgUnsplashUrl})`
             });
         } else if (bgUnsplashStatus !== 'loading') {
             setBgStyle((prev) => prev = {
-                backgroundImage: `url(${bgLocalUrl})`
+                ...prev, backgroundImage: `url(${bgLocalUrl})`
             });
         }
+        setTimeout(() => {
+            setBgStyle((prev) => prev = {
+                ...prev, animationName: 'a',
+            });
+        }, 10);
+
+
     }, [bgUnsplashUrl, bgLocalUrl, bgUnsplashStatus])
-    
+
     return (
-        <div id='background-image-container' style={bgStyle}></div>
+        <> {<div id='background-image-container' style={bgStyle}></div>}</>
     )
 }
 
