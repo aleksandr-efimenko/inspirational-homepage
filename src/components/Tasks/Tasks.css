@@ -57,6 +57,12 @@ h1 {
     padding: .1rem 1rem;
     position: relative;
     opacity: 0.9;
+    animation: task .5s 1 cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes task {
+  0% { transform:  scale(0); }
+  100% { transform:  scale(1); }
 }
 
 .task:hover .task-action-container {

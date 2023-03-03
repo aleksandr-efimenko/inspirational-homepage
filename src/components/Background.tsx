@@ -55,6 +55,7 @@ export default function Background() {
             });
         }
     }, [bgUnsplashUrl, bgLocalUrl, bgUnsplashStatus])
+    
     return (
         <div id='background-image-container' style={bgStyle}></div>
     )

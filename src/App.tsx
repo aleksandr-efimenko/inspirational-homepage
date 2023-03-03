@@ -50,7 +50,7 @@ function App() {
     <div className="App" >
       <Background />
       <AuthWidget />
-        <ModalWindow />
+      <ModalWindow />
       <Weather />
       <div className='slide-btn-container-left'>
         <FontAwesomeIcon onClick={handlePrevBgAndQuote} className='slide-btn ' size={'2x'} icon={['fas', 'chevron-left']} />
