@@ -7,7 +7,7 @@ import { query, collection, where, DocumentData } from 'firebase/firestore';
 import { auth, db } from '../../app/firebase';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TaskComponent from './Task';
-import { selectTasksState, initializeTasksFromLocalStorage, Task } from '../../features/tasks/tasksSlice';
+import { selectTasksState, initializeTasksFromLocalStorage, Task, setTaskForEditFromFirestore, setTaskIDForEditFromFirestore } from '../../features/tasks/tasksSlice';
 
 const TASKS_COLLECTION = "tasks";
 const FONT_ICON_SIZE = '2x';
@@ -25,6 +25,16 @@ export default function TaskList() {
       dispatch(initializeTasksFromLocalStorage());
     }
   }, [user, dispatch]);
+
+  const { idTaskToLoadFromFireStore } = useAppSelector(selectTasksState);
+  useEffect(() => {
+    if (!idTaskToLoadFromFireStore) return;
+    if (!tasksData) return;
+    const taskFromFirestore = tasksData.find(el => el.id === idTaskToLoadFromFireStore);
+    if (taskFromFirestore)
+      dispatch(setTaskForEditFromFirestore({ ...taskFromFirestore} as Task));
+      dispatch(setTaskIDForEditFromFirestore(''));
+  }, [idTaskToLoadFromFireStore, tasksData, dispatch])
 
   const createTaskList = (taskList: Task[] | DocumentData[]) => {
     return (

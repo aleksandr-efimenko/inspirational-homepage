@@ -1,5 +1,5 @@
 import React from 'react'
-import { Task, removeTaskAsync, removeTaskLocal, setTaskDoneAsync, setTaskDoneLocal } from '../../features/tasks/tasksSlice'
+import { Task, removeTaskAsync, removeTaskLocal, setTaskDoneAsync, setTaskDoneLocal, setTaskForEdit, setTaskIDForEditFromFirestore } from '../../features/tasks/tasksSlice'
 import { useAppDispatch } from '../../app/hooks'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
@@ -23,10 +23,10 @@ export default function TaskComponent({ done, text, bgColor, id }: Task) {
       dispatch(setTaskDoneLocal(id));
   }
   const handleEditTask = (id: string) => {
-    // if (user)
-    //   dispatch(setTaskDoneAsync(id));
-    // else
-    //   dispatch(setTaskDoneLocal(id));
+    if (user)
+      dispatch(setTaskIDForEditFromFirestore(id));
+    else
+      dispatch(setTaskForEdit(id));
   }
 
   return (

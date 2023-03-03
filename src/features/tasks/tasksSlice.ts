@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { nanoid } from "nanoid";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
@@ -8,13 +8,14 @@ export interface Task {
     text: string,
     id: string,
     done: boolean,
-    dateAdd?: Date,
     bgColor?: string,
     uid?: string
 }
 
 export interface TasksState {
     tasksList: Task[],
+    taskForEdit?: Task,
+    idTaskToLoadFromFireStore?: string;
     AddTaksStatus?: 'idle' | 'loading' | 'failed',
     RemoveTaskStatus?: 'idle' | 'loading' | 'failed',
     ChangeTaskStatus?: 'idle' | 'loading' | 'failed',
@@ -25,13 +26,6 @@ export const generateBGColor = () => {
 }
 
 const key = 'taskList'
-
-// const getTasksFromLocalStorage = (key: string) => {
-//     const tasks = JSON.parse(localStorage.getItem(key) ?? 'null') as Task[]
-//     if (!tasks)
-//         return [] as Task[];
-//     return tasks;
-// }
 
 //Set local storage with 
 const setTasksInBrowserStorage = (tasks: Task[], key: string) => {
@@ -61,8 +55,16 @@ export const removeTaskAsync = createAsyncThunk(
 export const setTaskDoneAsync = createAsyncThunk(
     'tasks/setTaskDone',
     async (taskId: string) => {
-        const cityRef = doc(db, TASKS_COLLECTION, taskId);
-        setDoc(cityRef, { done: true }, { merge: true });
+        const taskRef = doc(db, TASKS_COLLECTION, taskId);
+        setDoc(taskRef, { done: true }, { merge: true });
+    }
+)
+
+export const editTaskTextAsync = createAsyncThunk(
+    'tasks/editTaskText',
+    async (editedTask: Task) => {
+        const taskRef = doc(db, TASKS_COLLECTION, editedTask.id);
+        setDoc(taskRef, { text: editedTask.text }, { merge: true });
     }
 )
 
@@ -70,14 +72,12 @@ const initialTaskList = [{
     text: 'Create new feature',
     id: nanoid(),
     done: false,
-    dateAdd: new Date(),
     bgColor: generateBGColor()
 },
 {
     text: 'Workout for 30 minutes',
     id: nanoid(),
     done: false,
-    dateAdd: new Date(),
     bgColor: generateBGColor()
 }];
 
@@ -94,7 +94,6 @@ export const tasksSlice = createSlice({
                 text: action.payload.text,
                 id: nanoid(),
                 done: false,
-                dateAdd: new Date(),
                 bgColor: generateBGColor(),
                 uid: action.payload.uid
             }
@@ -108,6 +107,26 @@ export const tasksSlice = createSlice({
         setTaskDoneLocal: (state, action) => {
             state.tasksList = state.tasksList.map(el => el.id === action.payload ? { ...el, done: true } : el);
             setTasksInBrowserStorage(state.tasksList, key);
+        },
+        editTaskTextLocal: (state, action) => {
+            state.tasksList = state.tasksList.map(el => el.id === action.payload.id ? { ...el, text: action.payload.text } : el);
+            setTasksInBrowserStorage(state.tasksList, key);
+        },
+        setTaskForEdit: (state, action: PayloadAction<string>) => {
+            if (action.payload)
+                state.taskForEdit = state.tasksList.find(el => el.id === action.payload);
+            else
+                state.taskForEdit = undefined;
+        },
+        setTaskForEditFromFirestore: (state, action: PayloadAction<Task>) => {
+            if (action.payload)
+                state.taskForEdit = action.payload;
+        },
+        setTaskIDForEditFromFirestore: (state, action: PayloadAction<string>) => {
+            if (action.payload)
+                state.idTaskToLoadFromFireStore = action.payload;
+            else
+                state.idTaskToLoadFromFireStore = undefined;
         },
         initializeTasksFromLocalStorage: (state) => {
             const tasks = JSON.parse(localStorage.getItem(key) ?? 'null') as Task[]
@@ -148,10 +167,19 @@ export const tasksSlice = createSlice({
             .addCase(setTaskDoneAsync.rejected, (state) => {
                 state.ChangeTaskStatus = 'failed';
             })
+            .addCase(editTaskTextAsync.pending, (state) => {
+                state.ChangeTaskStatus = 'loading';
+            })
+            .addCase(editTaskTextAsync.fulfilled, (state) => {
+                state.ChangeTaskStatus = 'idle';
+            })
+            .addCase(editTaskTextAsync.rejected, (state) => {
+                state.ChangeTaskStatus = 'failed';
+            })
     }
 })
 
-export const { addTaskLocal, removeTaskLocal, setTaskDoneLocal, initializeTasksFromLocalStorage } = tasksSlice.actions;
+export const { addTaskLocal, setTaskForEdit, setTaskForEditFromFirestore, setTaskIDForEditFromFirestore, editTaskTextLocal, removeTaskLocal, setTaskDoneLocal, initializeTasksFromLocalStorage } = tasksSlice.actions;
 
 export const selectTasksState = (state: RootState) => state.tasks;
 

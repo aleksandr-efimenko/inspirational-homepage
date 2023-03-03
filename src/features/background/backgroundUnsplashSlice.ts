@@ -19,7 +19,6 @@ export const getRandomImageAsync = createAsyncThunk(
     'backgroundUnsplash',
     async () => {
         const response: UnsplashBackground[] = await fetchBackgroundUnsplash();
-        // console.log(response);
         if (response.length === 0)
             return;
         return response;
