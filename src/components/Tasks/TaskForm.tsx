@@ -63,7 +63,7 @@ export default function TaskForm() {
             <h1>What's on your mind today?</h1>
             <form onSubmit={handleSubmit}>
                 <div className='inputs'>
-                    <input autoFocus
+                    <input
                         ref={inputReference}
                         type='text'
                         className='white-text-input'

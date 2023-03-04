@@ -27,32 +27,9 @@ export default function Weather() {
 
     const currentManualLocation = useAppSelector(selectManualLocation);
     const currentManualLocationStatus = useAppSelector(selectManualLocationStatus);
-    
 
-    const getAutoGeoLocation = () => {
-        if (currentAutoLocationStatus === 'loading' || weatherLoadingStatus === 'loading')
-            return;
-        dispatch(setAutoLocationStatus('loading'));
-        const options = {
-            enableHighAccuracy: false,
-            timeout: 20_000,
-            maximumAge: 60_000
-        };
 
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                dispatch(setLocationAuto({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                }))
-            },
-            function (error) {
-                dispatch(setAutoLocationStatus('failed'));
-                // console.error("Error Code = " + error.code + " - " + error.message);
-                dispatch(openLocationSelect());
-            }, options
-        );
-    }
+
 
     useEffect(() => {
         if (currentAutoLocationStatus === 'loaded') {
@@ -62,17 +39,47 @@ export default function Weather() {
         }
     }, [dispatch, currentAutoLocation, currentAutoLocationStatus, currentManualLocation, currentManualLocationStatus])
 
-    const renderGeoButton = () => {
-        return (
-            <button
-                // className={classNames('white-button', geoPositionLoadingStatus !== 'idle' && 'button-disabled')}
-                className='white-button'
-                // disabled={currentAutoLocation.status === 'loading'}
-                onClick={getAutoGeoLocation}>
-                Get weather
-            </button>
-        )
-    }
+
+    useEffect(() => {
+        const getAutoGeoLocation = () => {
+            if (currentAutoLocationStatus !== 'not-set')
+                return;
+            dispatch(setAutoLocationStatus('loading'));
+            const options = {
+                enableHighAccuracy: false,
+                timeout: 20_000,
+                maximumAge: 60_000
+            };
+
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    dispatch(setLocationAuto({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    }))
+                },
+                function (error) {
+                    dispatch(setAutoLocationStatus('failed'));
+                    // console.error("Error Code = " + error.code + " - " + error.message);
+                    // dispatch(openLocationSelect());
+                }, options
+            );
+        }
+
+        getAutoGeoLocation();
+    }, [dispatch, currentAutoLocationStatus])
+
+    // const renderGeoButton = () => {
+    //     return (
+    //         <button
+    //             // className={classNames('white-button', geoPositionLoadingStatus !== 'idle' && 'button-disabled')}
+    //             className='white-button'
+    //             // disabled={currentAutoLocation.status === 'loading'}
+    //             onClick={getAutoGeoLocation}>
+    //             Get weather
+    //         </button>
+    //     )
+    // }
     const renderWeatherWidget = () => {
         switch (weatherLoadingStatus) {
             case 'loading':
@@ -94,7 +101,7 @@ export default function Weather() {
     const renderButtonOrWidget = () => {
         //If there were not attmpts to get location show button
         if (currentAutoLocationStatus === 'not-set') {
-            return renderGeoButton();
+            // return renderGeoButton();
         } else if (currentAutoLocationStatus === 'loading') {
             return <FontAwesomeIcon className='spinner' size={'1x'} icon={['fas', 'circle-notch']} />
         }

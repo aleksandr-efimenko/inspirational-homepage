@@ -25,7 +25,7 @@ const locationAutoDetectSlice = createSlice({
     initialState: initialState,
     reducers: {
         setLocationAuto: (state, action: PayloadAction<Coordinates>) => {
-            console.log(action.payload)
+            // console.log(action.payload)
             state.location.latitude = action.payload.latitude;
             state.location.longitude = action.payload.longitude;
             state.status = 'loaded';
