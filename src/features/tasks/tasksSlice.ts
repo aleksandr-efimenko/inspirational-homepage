@@ -183,5 +183,10 @@ export const tasksSlice = createSlice({
 export const { addTaskLocal, setTaskForEdit, setTaskForEditFromFirestore, setTaskIDForEditFromFirestore, editTaskTextLocal, removeTaskLocal, setTaskDoneLocal, initializeTasksFromLocalStorage } = tasksSlice.actions;
 
 export const selectTasksState = (state: RootState) => state.tasks;
+export const selectTasksList = (state: RootState) => state.tasks.tasksList;
+
+export const selectTaskForEditState = (state: RootState) => state.tasks.taskForEdit;
+export const selectTaskForEditID = (state: RootState) => state.tasks.idTaskToLoadFromFireStore;
+
 
 export default tasksSlice.reducer;

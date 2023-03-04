@@ -7,27 +7,30 @@ import { query, collection, where, DocumentData } from 'firebase/firestore';
 import { auth, db } from '../../app/firebase';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TaskComponent from './Task';
-import { selectTasksState, initializeTasksFromLocalStorage, Task, setTaskForEditFromFirestore, setTaskIDForEditFromFirestore, setTaskForEdit } from '../../features/tasks/tasksSlice';
+import { initializeTasksFromLocalStorage, Task, setTaskForEditFromFirestore, setTaskIDForEditFromFirestore, setTaskForEdit, selectTaskForEditID, selectTasksList } from '../../features/tasks/tasksSlice';
+import React from 'react';
 
 const TASKS_COLLECTION = "tasks";
 const FONT_ICON_SIZE = '2x';
 
-export default function TaskList() {
+function TaskList() {
   const dispatch = useAppDispatch();
-  const { tasksList } = useAppSelector(selectTasksState);
+  const tasksList = useAppSelector(selectTasksList);
   const [user, userLoading] = useAuthState(auth);
-
+console.log('task list', tasksList)
   const tasksQuery = query(collection(db, TASKS_COLLECTION), where("uid", "==", user?.uid || '-'));
   const [tasksData, loading, error] = useCollectionData(tasksQuery);
+
   useEffect(() => {
     if (userLoading) return;
     if (!user) {
       dispatch(initializeTasksFromLocalStorage());
     }
     dispatch(setTaskForEdit(''));
+    dispatch(setTaskIDForEditFromFirestore(''));
   }, [user, userLoading, dispatch]);
 
-  const { idTaskToLoadFromFireStore } = useAppSelector(selectTasksState);
+  const  idTaskToLoadFromFireStore = useAppSelector(selectTaskForEditID);
   useEffect(() => {
     if (!idTaskToLoadFromFireStore) return;
     if (!tasksData) return;
@@ -37,7 +40,6 @@ export default function TaskList() {
       dispatch(setTaskForEditFromFirestore({ ...taskFromFirestore } as Task));
     dispatch(setTaskIDForEditFromFirestore(''));
   }, [idTaskToLoadFromFireStore, tasksData, dispatch])
-
 
   const createTaskList = (taskList: Task[] | DocumentData[]) => {
     return (
@@ -78,3 +80,5 @@ export default function TaskList() {
 
   return <div className='task-list'>{displayTasks()}</div>;
 }
+
+export default React.memo(TaskList)

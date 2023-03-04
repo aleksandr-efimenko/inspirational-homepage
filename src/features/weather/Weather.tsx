@@ -17,7 +17,7 @@ library.add(faCircleNotch);
 
 // import { classNames } from '../../classNames';
 
-export default function Weather() {
+function Weather() {
     const dispatch = useDispatch<AppDispatch>();
     const currentWeather: WeatherData = useAppSelector(selectWeather);
     const weatherLoadingStatus = useAppSelector(selectWeatherLoadingStatus);
@@ -125,3 +125,6 @@ export default function Weather() {
         </div>
     )
 }
+
+
+export default React.memo(Weather)

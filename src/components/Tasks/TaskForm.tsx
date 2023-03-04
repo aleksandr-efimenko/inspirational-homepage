@@ -3,16 +3,15 @@ import './Tasks.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../app/firebase';
-import { addTaskAsync, addTaskLocal, editTaskTextAsync, editTaskTextLocal, generateBGColor, selectTasksState, setTaskForEdit } from '../../features/tasks/tasksSlice';
+import { addTaskAsync, addTaskLocal, editTaskTextAsync, editTaskTextLocal, generateBGColor, selectTaskForEditState, setTaskForEdit } from '../../features/tasks/tasksSlice';
 import { nanoid } from 'nanoid';
 
-export default function TaskForm() {
+function TaskForm() {
     const [user] = useAuthState(auth);
     const inputReference = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
     const [newTaskText, setNewTaskText] = useState('');
-    const { taskForEdit } = useAppSelector(selectTasksState);
-
+    const taskForEdit = useAppSelector(selectTaskForEditState);
     const charLimit = 1000;
     const handleTextEdit = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskText(e.target.value)
@@ -76,3 +75,5 @@ export default function TaskForm() {
         </div>
     )
 }
+
+export default React.memo(TaskForm)
