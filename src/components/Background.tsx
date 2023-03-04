@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { getRandomImageAsync, selectBGImagesUrls, selectBGIndex, selectBackgroundUnsplash, selectBackgroundUnsplashStatus } from "../features/background/backgroundUnsplashSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectBackgroundLocal, selsectBGLocalList } from "../features/background/backgroundLocalSclice";
+import React from "react";
 
-export default function Background() {
+function Background() {
     const dispatch = useAppDispatch();
     const bgLocalUrl = useAppSelector(selectBackgroundLocal);
     const bgLocalList = useAppSelector(selsectBGLocalList);
@@ -80,4 +81,6 @@ export default function Background() {
         <> {<div id='background-image-container' style={bgStyle}></div>}</>
     )
 }
+
+export default React.memo(Background);
 
