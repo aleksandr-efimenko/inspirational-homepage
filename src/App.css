@@ -150,9 +150,9 @@ button[disabled]:active {
     border: 1px solid white;
   }
 
-  .quote-container {
+  /* .quote-container {
     grid-row: 10 / 13;
-  }
+  } */
 }
 
 .spinner {
