@@ -16,8 +16,8 @@
 
 .temp p {
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
+  /* overflow: hidden; */
+  /* text-overflow: clip; */
 }
 
 .weather-widget img {
