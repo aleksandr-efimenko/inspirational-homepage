@@ -10,6 +10,7 @@ export interface Task {
     done: boolean,
     bgColor?: string,
     uid?: string
+    timestamp?: number;
 }
 
 export interface TasksState {
@@ -96,7 +97,8 @@ export const tasksSlice = createSlice({
                 id: nanoid(),
                 done: false,
                 bgColor: generateBGColor(),
-                uid: action.payload.uid
+                uid: action.payload.uid,
+                timestamp: Date.now()
             }
             state.tasksList.push(newTask)
             setTasksInBrowserStorage(state.tasksList, key);

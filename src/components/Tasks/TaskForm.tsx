@@ -27,7 +27,8 @@ function TaskForm() {
                 id: nanoid(),
                 done: false,
                 bgColor: generateBGColor(),
-                uid: user?.uid
+                uid: user?.uid,
+                timestamp: Date.now()
             };
 
             if (user) {

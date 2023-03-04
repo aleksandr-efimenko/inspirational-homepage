@@ -17,7 +17,7 @@ function TaskList() {
   const dispatch = useAppDispatch();
   const tasksList = useAppSelector(selectTasksList);
   const [user, userLoading] = useAuthState(auth);
-console.log('task list', tasksList)
+
   const tasksQuery = query(collection(db, TASKS_COLLECTION), where("uid", "==", user?.uid || '-'));
   const [tasksData, loading, error] = useCollectionData(tasksQuery);
 
@@ -30,7 +30,7 @@ console.log('task list', tasksList)
     dispatch(setTaskIDForEditFromFirestore(''));
   }, [user, userLoading, dispatch]);
 
-  const  idTaskToLoadFromFireStore = useAppSelector(selectTaskForEditID);
+  const idTaskToLoadFromFireStore = useAppSelector(selectTaskForEditID);
   useEffect(() => {
     if (!idTaskToLoadFromFireStore) return;
     if (!tasksData) return;
@@ -42,17 +42,18 @@ console.log('task list', tasksList)
   }, [idTaskToLoadFromFireStore, tasksData, dispatch])
 
   const createTaskList = (taskList: Task[] | DocumentData[]) => {
+    taskList = taskList.slice().sort(function(a, b) { return  a.timestamp - b.timestamp ; })
     return (
       <ul>
         {taskList?.map((task) => (
-          <TaskComponent
-            key={task.id}
-            id={task.id}
-            text={task.text}
-            done={task.done}
-            bgColor={task.bgColor}
-          />
-        ))}
+              <TaskComponent
+                key={task.id}
+                id={task.id}
+                text={task.text}
+                done={task.done}
+                bgColor={task.bgColor}
+              />
+            ))}
       </ul>
     );
   };
