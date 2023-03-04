@@ -19,23 +19,25 @@ export default function TaskList() {
 
   const tasksQuery = query(collection(db, TASKS_COLLECTION), where("uid", "==", user?.uid || '-'));
   const [tasksData, loading, error] = useCollectionData(tasksQuery);
-
   useEffect(() => {
+    if (userLoading) return;
     if (!user) {
       dispatch(initializeTasksFromLocalStorage());
     }
     dispatch(setTaskForEdit(''));
-  }, [user, dispatch]);
+  }, [user, userLoading, dispatch]);
 
   const { idTaskToLoadFromFireStore } = useAppSelector(selectTasksState);
   useEffect(() => {
     if (!idTaskToLoadFromFireStore) return;
     if (!tasksData) return;
+
     const taskFromFirestore = tasksData.find(el => el.id === idTaskToLoadFromFireStore);
     if (taskFromFirestore)
-      dispatch(setTaskForEditFromFirestore({ ...taskFromFirestore} as Task));
-      dispatch(setTaskIDForEditFromFirestore(''));
+      dispatch(setTaskForEditFromFirestore({ ...taskFromFirestore } as Task));
+    dispatch(setTaskIDForEditFromFirestore(''));
   }, [idTaskToLoadFromFireStore, tasksData, dispatch])
+
 
   const createTaskList = (taskList: Task[] | DocumentData[]) => {
     return (
