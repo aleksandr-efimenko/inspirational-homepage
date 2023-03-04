@@ -14,6 +14,12 @@
   justify-content: flex-end;
 }
 
+.temp p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
 .weather-widget img {
   height: 100%;
   margin: auto 0;
@@ -24,6 +30,7 @@
 .weather-widget p {
   margin: auto 0;
 }
+
 
 .weather-error-message {
   font-size: 1rem;
