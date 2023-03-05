@@ -51,5 +51,6 @@ To install this application, clone this repo and run npm install to install the 
 
 ## Acknowledgements
 
-The idea for this application was inspired by [CodeAcademy](https://www.codecademy.com/projects/portfolio/inspirational-homepage). Special thanks to Joseph Mawa for his [Freecodecamp article](https://www.freecodecamp.org/news/how-to-access-secret-api-keys-using-netlify-functions-in-a-react-app/) on how to use serverless Netlify functions to access external APIs and secure API secrets.
+The idea for this application was inspired by [CodeAcademy](https://www.codecademy.com/projects/portfolio/inspirational-homepage). 
+Thanks to Joseph Mawa for his [Freecodecamp article](https://www.freecodecamp.org/news/how-to-access-secret-api-keys-using-netlify-functions-in-a-react-app/) on how to use serverless Netlify functions to access external APIs and secure API secrets.
 
