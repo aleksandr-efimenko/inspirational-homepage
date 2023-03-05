@@ -147,14 +147,18 @@ h1 {
         padding: 0 .5rem;
         display: flex;
     }
-
+    
     .task-action-container-small {
-        display: block;
-        margin: auto 0 auto 0.5rem;
+        display: flex;
+        flex-wrap: nowrap;
+        margin: auto 0;
+
     }
 
     .task-action-container-small button{
-        padding: 0.2rem;
+        padding: 0.4rem;
+        margin-left: 0.4rem;
+        margin-right: 0;
     }
 
     .remove {
