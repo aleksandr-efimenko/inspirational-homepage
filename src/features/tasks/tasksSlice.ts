@@ -71,7 +71,7 @@ export const editTaskTextAsync = createAsyncThunk(
 )
 
 const initialTaskList = [{
-    text: 'Create new feature',
+    text: 'Get lunch',
     id: nanoid(),
     done: false,
     bgColor: generateBGColor()
