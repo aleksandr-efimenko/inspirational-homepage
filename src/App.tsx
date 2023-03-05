@@ -1,5 +1,5 @@
 import './App.css';
-import { faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faChevronLeft, faChevronRight, faCircleNotch, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from './app/hooks';
@@ -15,7 +15,7 @@ import AuthWidget from './components/Authentication/AuthWidget';
 import React from 'react';
 import ModalWindow from './components/ModalWindow/ModalWindow';
 
-library.add(faChevronLeft, faChevronRight, faCircleNotch);
+library.add(faChevronLeft, faChevronRight, faCircleNotch, faCheck, faPenToSquare, faTrash);
 
 function App() {
   const dispatch = useAppDispatch();

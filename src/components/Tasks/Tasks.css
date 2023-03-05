@@ -79,7 +79,7 @@ h1 {
 }
 
 .finished-task {
-    opacity: 0.2;
+    opacity: 0.3;
     transition: opacity 0.5s;
     transform: rotate(2deg);
     transition: transform 0.5s;
@@ -108,7 +108,8 @@ h1 {
 }
 
 .task-action-container button,
-.task-action-container-remove button {
+.task-action-container-remove button,
+.task-action-container-small button  {
     color: white;
     border: 1px solid white;
     border-radius: 7px;
@@ -117,8 +118,7 @@ h1 {
 }
 
 .remove {
-    background-color: hsl(0, 55%, 46%);
-    opacity: 0.7;
+    background-color: hsla(0, 55%, 46%, 0.7);
 }
 
 .done {
@@ -127,7 +127,10 @@ h1 {
 
 .edit {
     background-color: hsla(241, 55%, 46%, 0.7);
+}
 
+.task-action-container-small {
+    display: none;
 }
 
 @media only screen and (max-width: 600px) {
@@ -142,6 +145,32 @@ h1 {
     .task {
         margin: .3rem .4rem;
         padding: 0 .5rem;
+        display: flex;
+    }
+
+    .task-action-container-small {
+        display: block;
+        margin: auto 0 auto 0.5rem;
+    }
+
+    .task-action-container-small button{
+        padding: 0.2rem;
+    }
+
+    .remove {
+        background-color: hsl(0, 55%, 46%);
+    }
+    
+    .done {
+        background-color: hsl(103, 55%, 46%);
+    }
+    
+    .edit {
+        background-color: hsl(241, 55%, 46%);
+    }
+
+    .task-action-container, .task-action-container-remove {
+        display: none;
     }
 
     /* .task-form {
