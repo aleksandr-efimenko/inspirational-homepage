@@ -33,6 +33,7 @@ export default function TaskComponent({ done, text, bgColor, id }: Task) {
 
   return (
     <li className={done ? 'finished-task' : ''}>
+      
       <div className='task' style={{ backgroundColor: bgColor }}>
         <p>{text}</p>
         <div className='task-action-container'>

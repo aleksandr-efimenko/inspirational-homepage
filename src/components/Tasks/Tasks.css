@@ -52,12 +52,12 @@ h1 {
 
 .task {
     margin: 0.5rem;
-    border: 1px solid rgb(255, 255, 255);
+    border: .0625rem solid rgb(255, 255, 255);
     border-radius: .5rem;
     padding: .1rem 1rem;
     position: relative;
     opacity: 0.9;
-    min-width: 30px;
+    min-width: 1.875rem;
     animation: task .5s cubic-bezier(.4, 0, .2, 1);
 }
 
@@ -95,8 +95,8 @@ h1 {
 .task-action-container,
 .task-action-container-remove {
     position: absolute;
-    top: -10px;
-    right: -15px;
+    top: -0.625rem;
+    right: -0.9375rem;
     display: flex;
     opacity: 0;
     z-index: 10;
@@ -104,16 +104,16 @@ h1 {
 
 .task-action-container-remove {
     top: inherit;
-    bottom: -10px;
+    bottom: -0.625rem;
 }
 
 .task-action-container button,
 .task-action-container-remove button,
 .task-action-container-small button  {
     color: white;
-    border: 1px solid white;
-    border-radius: 7px;
-    margin: 0 1px;
+    border: .0625rem solid white;
+    border-radius: .4375rem;
+    margin: 0 .0625rem;
     cursor: pointer;
 }
 
@@ -133,7 +133,7 @@ h1 {
     display: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 37.5rem) {
     .task-form h1 {
         font-size: 1.1rem;
     }
@@ -176,12 +176,4 @@ h1 {
     .task-action-container, .task-action-container-remove {
         display: none;
     }
-
-    /* .task-form {
-        grid-row: 2 / 4;
-    }
-
-    .task-list {
-        grid-row: 4 / 10;
-    } */
 }
