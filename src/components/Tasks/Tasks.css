@@ -8,7 +8,7 @@
     background-color: var(--task-bg);
     border-radius: 1rem;
     padding: 1rem 1.2rem;
-    overflow: scroll;
+    overflow: auto;
 }
 
 h1 {

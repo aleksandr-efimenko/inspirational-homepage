@@ -77,7 +77,7 @@
 .quote-container {
   grid-column: 2 / 12;
   grid-row: 11 / 13;
-  overflow: scroll;
+  overflow: auto;
   margin-bottom: 15px;
   text-align: center;
 }
